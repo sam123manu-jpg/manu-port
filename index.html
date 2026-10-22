@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Manu City · Manu Pratap Singh</title>
+    <meta
+      name="description"
+      content="Manu Pratap Singh, Product Manager (AI Strategy). A miniature 3D city where every building is a chapter: GMNG, XY ADS, MR Neo, The Lisbon MBA and more."
+    />
+    <meta name="theme-color" content="#f3d6b8" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23243447'/%3E%3Crect x='12' y='30' width='10' height='22' fill='%23f2c14e'/%3E%3Crect x='27' y='16' width='10' height='36' fill='%23f7f1e3'/%3E%3Crect x='42' y='24' width='10' height='28' fill='%23e07a5f'/%3E%3C/svg%3E" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script type="module" crossorigin src="./assets/index-hukVJPfo.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-BtA8O7Dm.css">
+  </head>
+  <body>
+    <div id="app">
+      <canvas id="scene" aria-hidden="true"></canvas>
+      <div id="tint" aria-hidden="true"></div>
+      <div id="eras" aria-label="The five chapters"></div>
+      <div id="labels" role="list" aria-label="Buildings in the city"></div>
+      <div id="badges" aria-hidden="true"></div>
+
+      <header id="topbar">
+        <button class="brand" id="btn-home" title="Back to the start">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <span class="brand-text">
+            <strong>Manu Pratap Singh</strong>
+            <span>Product Manager, AI Strategy</span>
+          </span>
+        </button>
+        <div class="actions">
+          <button id="btn-mode" class="ghost">Explore freely</button>
+          <button id="btn-quick" class="ghost" title="Read my CV as a page">CV</button>
+          <button id="btn-claim" class="primary">Claim your spot</button>
+        </div>
+      </header>
+
+      <section id="title" aria-label="Introduction" hidden></section>
+      <section id="story" aria-label="The story, chapter by chapter" hidden></section>
+
+      <aside id="panel" aria-live="polite" hidden>
+        <button class="panel-close" id="panel-close" aria-label="Close">×</button>
+        <button class="panel-grip" id="panel-grip" aria-label="Expand or collapse the story"></button>
+        <div class="panel-body" id="panel-body"></div>
+      </aside>
+
+      <div id="claim" class="modal" role="dialog" aria-modal="true" aria-labelledby="claim-title" hidden>
+        <div class="modal-card">
+          <button class="panel-close" data-close aria-label="Close">×</button>
+          <p class="eyebrow">The road's paved to mid-December 2026</p>
+          <h2 id="claim-title">Claim your spot</h2>
+          <p>The next stretch leads to your office. Here's everything you need, one click each.</p>
+          <div class="claim-actions" id="claim-actions"></div>
+        </div>
+      </div>
+
+      <section id="quick" class="quick" aria-label="Quick view" hidden></section>
+
+      <div id="loading"><div class="spinner"></div><span>Raising the islands…</span></div>
+    </div>
+
+    <noscript>
+      <main style="font-family: system-ui; max-width: 720px; margin: 40px auto; padding: 0 16px; line-height: 1.5">
+        <h1>Manu Pratap Singh</h1>
+        <p>Product Manager, AI Strategy · 0→1 platforms in AdTech, Gaming and SaaS · The Lisbon MBA 2026</p>
+        <p>This portfolio is a 3D city and needs JavaScript. Meanwhile: <a href="Manu_Pratap_Singh_CV.pdf">download my CV</a> or
+          <a href="mailto:sam123.manu@gmail.com">email me</a>.</p>
+      </main>
+    </noscript>
+  </body>
+</html>
