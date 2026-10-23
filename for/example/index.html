@@ -45,8 +45,8 @@
       // no title card after ~4 s means the page's script didn't start (old browser, blocked script)
       setTimeout(function () { if (!window.__titleShown) window.__cityFallback('slow'); }, 4000);
     </script>
-    <script type="module" crossorigin src="./assets/main-Bz1jaIDV.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/main-CYfRrPOd.css">
+    <script type="module" crossorigin src="./assets/main-QndW8K9-.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/main-DMXeUgdx.css">
     <script>window.__pitch = {"slug":"example","company":"Example Co","role":"Senior Product Manager, AI Platform","greeting":"Hi Example Co team, I made you a stop in my city. Here's a short look at your product, and why I'd like to build it with you.","sections":[{"kind":"flow","title":"The flow I looked at","text":"Example Co's onboarding: sign-up, connecting a first data source, and the first dashboard. (Fictional example text.)"},{"kind":"issue","title":"One issue I found","text":"After connecting a data source, new users land on an empty dashboard with no next step. (Fictional example text.)","image":{"file":"og.jpg","alt":"Example screenshot (placeholder image)"}},{"kind":"fix","title":"My proposed fix","text":"Open the first dashboard pre-filled from the connected source, with one suggested chart and a 'make it yours' prompt. (Fictional example text.)","link":{"label":"See the prototype","href":"https://example.com"}},{"kind":"why","title":"Why it matters for the role","text":"Activation in the first session is the job of this role. I've done this before: one-field sign-up at GMNG cut sign-up drop-off by about 60%. (Fictional company; the GMNG fact is real.)"}],"suggestedCase":"one-field-signup"};</script>
   </head>
   <body>
@@ -148,7 +148,7 @@
           <button id="btn-ai" class="ghost" type="button" aria-pressed="false" title="Light up the buildings AI helped build"><span class="dot" aria-hidden="true"></span>Show AI work</button>
           <button id="btn-call" class="ghost" title="Five real decisions from my career: make each call, then see mine"><span class="long">Make the call</span><span class="short">Play</span></button>
           <button id="btn-mode" class="ghost">Explore freely</button>
-          <button id="btn-quick" class="ghost" title="The 60-second version: results, three cases and my CV"><span class="long">60-second version</span><span class="short">CV</span></button>
+          <button id="btn-quick" class="ghost" title="My CV: results, three cases and experience"><span class="long">View CV</span><span class="short">CV</span></button>
           <button id="btn-claim" class="primary" title="Email, LinkedIn or my CV">Contact me</button>
         </div>
       </header>
@@ -161,6 +161,7 @@
       <div id="badges" aria-hidden="true"></div>
 
       <button id="btn-buildings" type="button">Buildings</button>
+      <button id="btn-reset" type="button" title="Back to the default view" aria-label="Reset the view" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.4-5.7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M4 4v4.6h4.6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Reset view</span></button>
       <div id="ai-legend" role="status" hidden>
         <span><span class="ai-chip built">✦ Built with AI</span> I used AI tools to build or run it</span>
         <span><span class="ai-chip subject">✦ AI subject</span> AI is the topic, not the tool</span>
