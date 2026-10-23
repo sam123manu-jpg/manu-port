@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-T0kzX2vUTVyCReBzEvMd8myudcuNlxpbpp/GwH5hnQU='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; media-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com 'sha256-T0kzX2vUTVyCReBzEvMd8myudcuNlxpbpp/GwH5hnQU='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; media-src 'self'; connect-src 'self' https://cloudflareinsights.com https://manu-visits.sam123-manu.workers.dev; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests" />
     <meta name="referrer" content="no-referrer" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>Manu City · Manu Pratap Singh</title>
@@ -44,8 +44,8 @@
       // no title card after ~4 s means the page's script didn't start (old browser, blocked script)
       setTimeout(function () { if (!window.__titleShown) window.__cityFallback('slow'); }, 4000);
     </script>
-    <script type="module" crossorigin src="./assets/main-QndW8K9-.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/main-DMXeUgdx.css">
+    <script type="module" crossorigin src="./assets/main-PeYYAJb1.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/main-B-POJKXS.css">
   </head>
   <body>
     <main id="cv-static" aria-labelledby="cvs-name">
@@ -188,5 +188,6 @@
       <div id="loading"><div class="spinner"></div><span>Building the city…</span></div>
     </div>
 
+    <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "22b8115a97054558ac517fe79806ef86"}'></script>
   </body>
 </html>
