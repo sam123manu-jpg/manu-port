@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; media-src 'self'; connect-src 'self' https://cloudflareinsights.com https://manu-visits.sam123-manu.workers.dev; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests" />
+    <meta name="referrer" content="no-referrer" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Dalux notifications map: sources</title>
+<style>
+:root{color-scheme:light;}
+body{margin:0;background:#faf7f2;color:#1d1d1f;font:400 15px/1.5 -apple-system,BlinkMacSystemFont,'SF Pro Text',Inter,system-ui,sans-serif;}
+main{max-width:1000px;margin:0 auto;padding:32px 16px 64px;}
+h1{font:700 30px/1.15 -apple-system,BlinkMacSystemFont,'SF Pro Display',Inter,sans-serif;letter-spacing:-0.02em;margin:0 0 8px;}
+h2{font-size:19px;margin:34px 0 8px;}
+p,li{max-width:72ch;}
+.scroll{overflow-x:auto;border:1px solid rgba(0,0,0,.08);border-radius:12px;background:#fff;}
+table{border-collapse:collapse;width:100%;font-size:13.5px;}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid rgba(0,0,0,.06);vertical-align:top;}
+th{background:#f5f5f7;font-weight:600;}
+td:first-child{font-weight:600;min-width:150px;}
+a{color:#0062c4;font-weight:600;}
+q{color:#3a3a3c;}
+img{max-width:100%;height:auto;border-radius:12px;background:#fff;border:1px solid rgba(0,0,0,.08);}
+</style></head><body><main>
+<p><a href="./">← Back to the Dalux page</a></p>
+<h1>How a Dalux event reaches you: the sources</h1>
+<p>Every cell of the map, with the Dalux help-centre article or release note it comes from, read on Saturday 24 October 2026. Help articles describe intended behaviour; "not described" means I found no article that says so, not that the product can't do it.</p>
+<img src="for/dalux-notifications/issue.svg" alt="The notifications map: eight kinds of event against push, instant email, daily summary and reminder." />
+<h2>Cell by cell</h2>
+<div class="scroll"><table><thead><tr><th>Event</th><th>What the docs say</th><th>Source</th></tr></thead><tbody>
+<tr><td>Task assigned to you</td><td>Push: <q>Immediate alerts on mobile devices when you are assigned new tasks.</q> Email now: the Tasks switch, when you're responsible for an active task or a task you assigned is answered. Summary covers tasks. Remind: selected tasks to one recipient at a time, optional report from a template. Two use-case articles mention overdue reminders, one of them automatic.</td><td><a href="https://support.dalux.com/hc/en-us/articles/27068795279516">Manage notifications</a> · <a href="https://support.dalux.com/hc/en-us/articles/12624788682396">Email notification settings</a> · <a href="https://support.dalux.com/hc/en-us/articles/10308804181276">Task reminder templates</a> · <a href="https://support.dalux.com/hc/en-us/articles/29230681810844">Fire safety inspections</a> · <a href="https://support.dalux.com/hc/en-us/articles/29259561297948">Safety issues</a></td></tr>
+<tr><td>Comment you're responsible for</td><td>Email now: the Comments switch, when you're responsible or on the comment's Notify list. Summary covers comments. Comments have My, Group and Overdue inboxes; no reminder described.</td><td><a href="https://support.dalux.com/hc/en-us/articles/12624788682396">Email notification settings</a> · <a href="https://support.dalux.com/hc/en-us/articles/12727090183708">How to use Comments</a></td></tr>
+<tr><td>File approval</td><td>Email now: the File approvals switch. Summary lists new and updated files. <q>One day before a deadline is due, the responsible user(s)… are notified.</q> The creator is notified when it's overdue.</td><td><a href="https://support.dalux.com/hc/en-us/articles/12624788682396">Email notification settings</a> · <a href="https://support.dalux.com/hc/en-us/articles/4633913437340">How to set up File flows</a></td></tr>
+<tr><td>Submittal</td><td>Email now: the Submittals switch (added to My settings in Build 2025.3). An Overdue deadlines list; no reminder described.</td><td><a href="https://support.dalux.com/hc/en-us/articles/12624788682396">Email notification settings</a> · <a href="https://support.dalux.com/hc/en-us/articles/19257469860252">Build 2025.3</a> · <a href="https://support.dalux.com/hc/en-us/articles/12309702402588">Submit files in Submittals</a></td></tr>
+<tr><td>File change in a subscribed folder</td><td>Changes to files in subscribed folders arrive by email through the summary's folder selection. A project admin can set new users to be subscribed to all folders or none.</td><td><a href="https://support.dalux.com/hc/en-us/articles/4402502586514">Subscribe to folders</a></td></tr>
+<tr><td>Public safety observation</td><td>Build 2026.3: observations are included in the daily summary, and members of the Safety manager group with task notifications on get an additional email for each new one. No separate switch for it.</td><td><a href="https://support.dalux.com/hc/en-us/articles/26774543443356">Build 2026.3</a></td></tr>
+<tr><td>Tender change (bidder)</td><td>Bidders are notified when a deadline changes, can get a daily summary of file changes, and get an automatic email 24 hours before the deadline.</td><td><a href="https://support.dalux.com/hc/en-us/articles/29239547491868">Standardizing tender execution</a></td></tr>
+<tr><td>FM work order</td><td>Push for work orders and tickets you're involved in; email for new and updated work orders. Each email is also kept in FM's notifications section. Admins can switch a type off, but users who turned it on still receive it.</td><td><a href="https://support.dalux.com/hc/en-us/articles/10793783371164">FM on mobile</a> · <a href="https://support.dalux.com/hc/en-us/articles/360005375854">FM on desktop</a> · <a href="https://support.dalux.com/hc/en-us/articles/21890232384796">Email notifications in FM</a></td></tr>
+<tr><td>Push, other types</td><td>Build 2026.2: task push can be switched off separately; push continues for <q>announcements and other registration types</q>.</td><td><a href="https://support.dalux.com/hc/en-us/articles/25721458580508">Build 2026.2</a></td></tr>
+</tbody></table></div>
+<h2>Where it waits</h2>
+<p>Dalux's step-by-step guides advise starting each day by reviewing your inbox: the Field task inbox (<a href="https://support.dalux.com/hc/en-us/articles/27068951678364">construction manager guide</a>), the comment inbox (<a href="https://support.dalux.com/hc/en-us/articles/27068992268956">design issues guide</a>), approvals (<a href="https://support.dalux.com/hc/en-us/articles/360013199360">Approvals</a>) and the safety manager's inbox for public observations (<a href="https://support.dalux.com/hc/en-us/articles/360020667040">Set up Safety</a>).</p>
+</main>  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "22b8115a97054558ac517fe79806ef86"}'></script>
+  </body></html>
