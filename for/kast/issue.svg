@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 560" font-family="Inter, Helvetica, Arial, sans-serif">
+<rect width="760" height="560" fill="#ffffff"/>
+<text x="24" y="36" font-size="16" font-weight="700" fill="#1c2121">KAST · onboarding as the help centre describes it (read 29 Oct 2026)</text>
+<text x="24" y="74" font-size="13" font-weight="700" fill="#1c2121">The fast path</text>
+<rect x="24" y="88" width="160" height="84" rx="10" fill="#eef2ef" stroke="#455c51"/>
+<text x="104" y="114" font-size="13" font-weight="700" fill="#455c51" text-anchor="middle">LEVEL 1</text>
+<text x="104" y="136" font-size="12" fill="#1c2121" text-anchor="middle">phone + OTP, PIN,</text>
+<text x="104" y="154" font-size="12" fill="#1c2121" text-anchor="middle">email, country</text>
+<line x1="184" y1="130" x2="206" y2="130" stroke="#1c2121" stroke-width="2"/><polygon points="206,124 216,130 206,136" fill="#1c2121"/>
+<rect x="218" y="88" width="170" height="84" rx="10" fill="#eef2ef" stroke="#455c51"/>
+<text x="303" y="114" font-size="13" font-weight="700" fill="#455c51" text-anchor="middle">LEVEL 2</text>
+<text x="303" y="136" font-size="12" fill="#1c2121" text-anchor="middle">address typed, then</text>
+<text x="303" y="154" font-size="12" fill="#1c2121" text-anchor="middle">ID photo, liveness, Submit</text>
+<line x1="388" y1="130" x2="410" y2="130" stroke="#1c2121" stroke-width="2"/><polygon points="410,124 420,130 410,136" fill="#1c2121"/>
+<rect x="422" y="88" width="140" height="84" rx="10" fill="#455c51"/>
+<text x="492" y="118" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle">Automated</text>
+<text x="492" y="138" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle">review</text>
+<text x="492" y="158" font-size="12" fill="#ffffff" text-anchor="middle">about 10–15 min</text>
+<line x1="562" y1="130" x2="584" y2="130" stroke="#1c2121" stroke-width="2"/><polygon points="584,124 594,130 584,136" fill="#1c2121"/>
+<rect x="596" y="88" width="140" height="84" rx="10" fill="#eef2ef" stroke="#455c51"/>
+<text x="666" y="114" font-size="13" font-weight="700" fill="#455c51" text-anchor="middle">FIRST DEPOSIT</text>
+<text x="666" y="136" font-size="12" fill="#1c2121" text-anchor="middle">pick asset, network</text>
+<text x="666" y="154" font-size="12" fill="#1c2121" text-anchor="middle">and memo</text>
+<line x1="303" y1="172" x2="303" y2="206" stroke="#c4553a" stroke-width="2" stroke-dasharray="5 4"/><polygon points="297,206 303,216 309,206" fill="#c4553a"/>
+<text x="314" y="198" font-size="12" font-weight="700" fill="#c4553a">photo rejected, or a detail wrong</text>
+<text x="24" y="238" font-size="13" font-weight="700" fill="#1c2121">The slow path</text>
+<rect x="24" y="252" width="350" height="84" rx="10" fill="#fdf0eb" stroke="#ed9d85"/>
+<text x="40" y="278" font-size="13" font-weight="700" fill="#c4553a">NO EDITS IN THE APP AFTER SUBMIT</text>
+<text x="40" y="300" font-size="12" fill="#1c2121">A correction goes through Concierge, then Compliance:</text>
+<text x="40" y="320" font-size="12" fill="#1c2121">“usually within 24–48 hours”</text>
+<line x1="374" y1="294" x2="396" y2="294" stroke="#1c2121" stroke-width="2"/><polygon points="396,288 406,294 396,300" fill="#1c2121"/>
+<rect x="408" y="252" width="328" height="84" rx="10" fill="#fdf0eb" stroke="#ed9d85"/>
+<text x="424" y="278" font-size="13" font-weight="700" fill="#c4553a">MANUAL OR DOCUMENT REVIEW</text>
+<text x="424" y="300" font-size="12" fill="#1c2121">“Usually 1–3 business days”, and only then</text>
+<text x="424" y="320" font-size="12" fill="#1c2121">the first deposit</text>
+<text x="24" y="376" font-size="13" font-weight="700" fill="#1c2121">The seven rejection reasons the help centre lists</text>
+<rect x="24" y="390" width="168" height="34" rx="8" fill="#ed9d85"/><text x="108" y="412" font-size="13" font-weight="700" fill="#1c2121" text-anchor="middle">Blurry</text>
+<rect x="200" y="390" width="168" height="34" rx="8" fill="#ed9d85"/><text x="284" y="412" font-size="13" font-weight="700" fill="#1c2121" text-anchor="middle">Cropped</text>
+<rect x="376" y="390" width="168" height="34" rx="8" fill="#ed9d85"/><text x="460" y="412" font-size="13" font-weight="700" fill="#1c2121" text-anchor="middle">Screenshot</text>
+<rect x="552" y="390" width="184" height="34" rx="8" fill="#ed9d85"/><text x="644" y="412" font-size="13" font-weight="700" fill="#1c2121" text-anchor="middle">Missing information</text>
+<rect x="24" y="432" width="236" height="34" rx="8" fill="#eef2ef" stroke="#455c51"/><text x="142" y="454" font-size="13" fill="#1c2121" text-anchor="middle">Information doesn't match</text>
+<rect x="268" y="432" width="200" height="34" rx="8" fill="#eef2ef" stroke="#455c51"/><text x="368" y="454" font-size="13" fill="#1c2121" text-anchor="middle">Document expired</text>
+<rect x="476" y="432" width="260" height="34" rx="8" fill="#eef2ef" stroke="#455c51"/><text x="606" y="454" font-size="13" fill="#1c2121" text-anchor="middle">Wrong document type</text>
+<rect x="24" y="488" width="712" height="48" rx="8" fill="#fff6d6"/>
+<text x="380" y="510" font-size="13" font-weight="700" fill="#1c2121" text-anchor="middle">Four of the seven (in coral) are about the photo itself, so they can be</text>
+<text x="380" y="528" font-size="13" font-weight="700" fill="#1c2121" text-anchor="middle">caught while the camera is still open, before the slow path starts.</text>
+</svg>
