@@ -280,6 +280,7 @@ body.gl-on #gl { visibility: visible; }
 /* the side panel: the numbers and sentences behind the scene you point at */
 #panel { position: fixed; z-index: 6; right: calc(16px + env(safe-area-inset-right, 0px)); top: 50%; translate: 0 -50%; width: 340px; max-height: calc(100vh - 140px); overflow: auto; overscroll-behavior: contain;
   border-radius: 18px; padding: 16px 14px 10px; color: var(--ink); transition: opacity .25s ease, translate .45s cubic-bezier(.2,.9,.3,1.15); }
+#panel { overscroll-behavior: contain; }
 #panel:not(.open) { opacity: 0; pointer-events: none; translate: 24px -50%; visibility: hidden; transition: opacity .25s ease, translate .45s, visibility 0s .45s; }
 #panel header { display: flex; gap: 10px; align-items: flex-start; padding: 0 40px 0 4px; }
 #ptitle:focus { outline: none; }
@@ -399,14 +400,16 @@ for (const el of cv.querySelectorAll('.entry[data-build]')) {
   [...el.querySelectorAll('.what li')].forEach((li, k) => { if (LINES[id][k] !== undefined) wrap(li, LINES[id][k]); });
   const fig = $('.fig', el); if (fig) { fig.classList.add('go-fig'); fig.dataset.id = id; fig.dataset.v = 0; }
 }
-if (matchMedia('(hover: none)').matches) $('#invite .pt').textContent = 'Tap';
+if (matchMedia('(hover: none)').matches) { $('#invite .pt').textContent = 'Tap'; $('#legend').lastChild.textContent = ' Tap one for the numbers behind it, a logo to get in touch, a skill to see where it was used. Swipe sideways to turn, pinch to zoom.'; }
 let renderer, scene, camera, composer, finalPass, gtao, tiltH, tiltV, sun, envTex;
 let world, built = false, mode = '2d', t = 0, anim = null;
 let geo = null;
 const anims = [], clickables = [], beacons = [], labels = [], fliers = [], tickers = [];
 const clock = new THREE.Clock();
 const camState = { pos: new THREE.Vector3(), look: new THREE.Vector3(), init: false };
-const drag = { yaw: 0, vel: 0, px: 0, py: 0, tx: 0, ty: 0 };
+const drag = { yaw: 0, vel: 0, px: 0, py: 0, tx: 0, ty: 0, zoom: 1 };
+// Phone browsers change innerHeight while the toolbar slides in and out; the camera uses a steady height instead.
+let VW = innerWidth, VH = innerHeight;
 
 // ---------- materials: an architect's model in daylight ----------
 const M = {};
@@ -1528,19 +1531,21 @@ function apply(tt) {
 }
 
 function desiredView(tt, out) {
-  const vw = innerWidth, vh = innerHeight;
+  const vw = innerWidth, vh = VH;
   const H = (vh * S / 2) / Math.tan(THREE.MathUtils.degToRad(FOV / 2));
   const e = ease(tt), narrow = vw / vh < 0.8;
   const hfov = 2 * Math.atan(Math.tan(THREE.MathUtils.degToRad(FOV / 2)) * vw / vh);
   const t2 = new THREE.Vector3((scrollX + vw / 2 - geo.originX) * S, 0, (scrollY + vh / 2) * S);
   const t3 = new THREE.Vector3(t2.x, 0, (scrollY + vh * (narrow ? 0.36 : 0.28)) * S);
   // at the top of the page, bring the sheet up so the first 3D frame isn't half empty sky
-  t3.z += (narrow ? 2.2 : 1.5) * Math.max(0, 1 - scrollY / (vh * 0.7));
+  t3.z += (narrow ? 2.2 : 1.5) * Math.max(0, 1 - scrollY / (vh * 0.7)) * Math.min(1, drag.zoom);
+  // pinching in looks at the middle of the screen, where the fingers usually are
+  if (drag.zoom < 1) t3.z = THREE.MathUtils.lerp(t3.z, (scrollY + vh * 0.5) * S, (1 - drag.zoom) / 0.45 * 1);
   const target = t2.lerp(t3, e);
   const pitch = THREE.MathUtils.lerp(0.0008, (narrow ? PITCH3 * 0.8 : PITCH3) + drag.py * 0.05, e);
   const yaw = ((narrow ? YAW3 * 0.25 : YAW3) + drag.yaw + drag.px * 0.07) * e;
   const fit = (geo.sheet.w * S * 0.56) / Math.tan(hfov / 2);
-  let dist = THREE.MathUtils.lerp(H, Math.max(H * 0.86, fit), e);
+  let dist = THREE.MathUtils.lerp(H, Math.max(H * 0.86, fit) * drag.zoom, e);
   if (focus.f > 0.0005) {
     const fp = focus.p.clone(), k = focus.k;
     if (narrow) fp.z += 1.1 * k; else fp.x += 0.6 * k;
@@ -1564,7 +1569,7 @@ function frame() {
     if (anim.p >= 1) { const done = anim.done; anim = null; done?.(); }
   }
   // camera: exact during the switch, then a damped, fluid follow for scroll / drag / pointer
-  drag.yaw += drag.vel; drag.vel *= 0.92; drag.yaw = Math.max(-0.9, Math.min(0.9, drag.yaw));
+  drag.yaw += drag.vel; drag.vel *= 0.9; drag.yaw = Math.max(-(drag.lim || 0.9), Math.min(drag.lim || 0.9, drag.yaw));
   drag.px += (drag.tx - drag.px) * 0.05; drag.py += (drag.ty - drag.py) * 0.05;
   const H = desiredView(t, want);
   if (anim || t < 1 || !camState.init) { camState.pos.copy(want.pos); camState.look.copy(want.look); camState.init = t >= 1; }
@@ -1688,7 +1693,7 @@ async function to3D() {
 }
 function to2D() {
   if (anim || mode === '2d') return;
-  mode = '2d'; legend.hidden = true; toast.hidden = true; clearBeacons(); hidePanel(); setBtn();
+  mode = '2d'; drag.yaw = 0; drag.vel = 0; drag.zoom = 1; legend.hidden = true; toast.hidden = true; clearBeacons(); hidePanel(); setBtn();
   anim = { from: t, to: 0, dur: reduce ? 0.35 : 1.6, done: () => { document.body.classList.remove('is3d'); requestAnimationFrame(() => document.body.classList.remove('gl-on')); } };
 }
 function setBtn() {
@@ -1703,10 +1708,14 @@ let rebuildTimer;
 addEventListener('resize', () => {
   if (!renderer) return;
   renderer.setSize(innerWidth, innerHeight, false); composer.setSize(innerWidth, innerHeight);
+  if (innerWidth === VW) { VH = Math.max(VH, innerHeight); return; }   // toolbar show/hide: no rebuild
+  VW = innerWidth; VH = innerHeight;
   clearTimeout(rebuildTimer);
   rebuildTimer = setTimeout(() => { built = false; if (mode === '3d') build(); }, 200);
 });
+let lastScroll = 0;
 addEventListener('scroll', () => {
+  lastScroll = performance.now();
   if (mode === '3d' && !anim && innerWidth < 680) legend.hidden = true;
   if (focus.on && performance.now() - (focus.lock || 0) > 900 && Math.abs(scrollY - focus.sy) > 80) { focus.on = false; vigs.forEach(v => (v.lift = 0)); }
 }, { passive: true });
@@ -1766,11 +1775,37 @@ function pick(e) {
   let o = hit.object; while (o && !clickables.includes(o)) o = o.parent;
   return o || hit.object;
 }
-glc.addEventListener('pointerdown', (e) => { down = { x: e.clientX, y: e.clientY, last: e.clientX, moved: false }; });
+const touches = new Map();   // active pointers on the canvas
+let pinch = null;
+glc.addEventListener('pointerdown', (e) => {
+  touches.set(e.pointerId, { x: e.clientX, y: e.clientY });
+  if (touches.size === 2) {
+    const [a, b] = [...touches.values()];
+    pinch = { d: Math.hypot(a.x - b.x, a.y - b.y), ang: Math.atan2(b.y - a.y, b.x - a.x), zoom: drag.zoom, yaw: drag.yaw };
+    down = null; return;
+  }
+  // a tap that only stops a page still gliding from a flick is not a tap
+  down = { x: e.clientX, y: e.clientY, last: e.clientX, moved: false, still: performance.now() - lastScroll > 220, touch: e.pointerType !== 'mouse' };
+});
+function endPointer(e) { touches.delete(e.pointerId); if (touches.size < 2) pinch = null; }
+glc.addEventListener('pointercancel', (e) => { endPointer(e); down = null; });   // the browser took the gesture over (page scroll)
 glc.addEventListener('pointermove', (e) => {
+  if (touches.has(e.pointerId)) touches.set(e.pointerId, { x: e.clientX, y: e.clientY });
+  if (pinch && touches.size === 2) {
+    const [a, b] = [...touches.values()];
+    drag.zoom = Math.max(0.55, Math.min(1.4, pinch.zoom * pinch.d / Math.max(20, Math.hypot(a.x - b.x, a.y - b.y))));
+    let da = Math.atan2(b.y - a.y, b.x - a.x) - pinch.ang; da = Math.atan2(Math.sin(da), Math.cos(da));
+    drag.yaw = Math.max(-0.45, Math.min(0.45, pinch.yaw - da)); drag.lim = 0.45; drag.vel = 0;
+    return;
+  }
   if (e.pointerType === 'mouse') { drag.tx = (e.clientX / innerWidth - 0.5) * 2; drag.ty = (e.clientY / innerHeight - 0.5) * 2; }
   if (down && e.buttons) {
-    if (Math.abs(e.clientX - down.x) > 6) { down.moved = true; drag.vel = (e.clientX - down.last) * 0.0016; drag.yaw += (e.clientX - down.last) * 0.004; }
+    const dx = e.clientX - down.last;
+    if (!down.moved && Math.abs(e.clientX - down.x) > 8 && Math.abs(e.clientX - down.x) > Math.abs(e.clientY - down.y)) { down.moved = true; try { glc.setPointerCapture(e.pointerId); } catch {} }
+    if (down.moved) {
+      const kk = down.touch ? 0.0018 : 0.004, lim = down.touch ? 0.45 : 0.9;   // phones: a gentle turn that keeps the page in view
+      drag.lim = lim; drag.yaw = Math.max(-lim, Math.min(lim, drag.yaw + dx * kk)); drag.vel = dx * (down.touch ? 0.0003 : 0.0016);
+    }
     down.last = e.clientX; return;
   }
   if (mode === '3d' && e.pointerType === 'mouse' && !anim && t >= 1) {
@@ -1779,8 +1814,9 @@ glc.addEventListener('pointermove', (e) => {
   }
 });
 glc.addEventListener('pointerup', (e) => {
+  endPointer(e);
   const d = down; down = null;
-  if (!d || d.moved || Math.hypot(e.clientX - d.x, e.clientY - d.y) > 8 || mode !== '3d' || anim) return;
+  if (!d || d.moved || !d.still || Math.hypot(e.clientX - d.x, e.clientY - d.y) > (d.touch ? 12 : 8) || mode !== '3d' || anim) return;
   const o = pick(e); if (!o) { if (panel.classList.contains('open')) hidePanel(); return; }
   const u = o.userData;
   if (u.href) {
