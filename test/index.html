@@ -221,8 +221,20 @@ body.is3d #topnav { visibility: hidden; }
   * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
 </style>
+<style>
+/* v10: in 3D, a fixed "Back to the city" button at the top left */
+#back3d { display: none; }
+body.is3d #back3d { display: inline-flex; align-items: center; position: fixed; z-index: 25;
+  top: calc(14px + env(safe-area-inset-top, 0px)); left: calc(14px + env(safe-area-inset-left, 0px));
+  min-height: 44px; padding: 0 16px; border-radius: 999px; background: rgba(255,255,255,.9); border: 1px solid rgba(0,0,0,.08);
+  -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); box-shadow: 0 6px 20px rgba(0,0,0,.12);
+  font: 600 14px var(--sys); color: #0071e3; text-decoration: none; }
+body.is3d #back3d:hover { background: #fff; }
+@media print { #back3d { display: none !important; } }
+</style>
 
-<nav id="topnav" aria-label="Site"><a href="https://manupratap.com/">← Back to the city</a></nav>
+<nav id="topnav" aria-label="Site"><a href="https://manupratap.com/">← Back to the portfolio</a></nav>
+<a id="back3d" href="https://manupratap.com/">← Back to the portfolio</a>
 <p id="invite"><svg width="22" height="16" viewBox="0 0 22 16" aria-hidden="true"><path d="M11 1 21 6 11 11 1 6Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M1 10l10 5 10-5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg><span><b>This CV also stands up in 3D.</b> <span class="pt">Click</span> any line under Experience or Education to see it as a scene.</span></p>
 <article id="cv" aria-label="CV of Manu Pratap Singh">
   <header class="head">
