@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Manu Pratap Singh">
+  <defs>
+    <linearGradient id="tile" x1="8" y1="2" x2="48" y2="63" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#17181a"/><stop offset=".55" stop-color="#030304"/><stop offset="1" stop-color="#010102"/>
+    </linearGradient>
+    <linearGradient id="rim" x1="15" y1="1" x2="47" y2="63" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#a5a8ad"/><stop offset=".32" stop-color="#51545a"/><stop offset=".65" stop-color="#303237"/><stop offset="1" stop-color="#73777d"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="14" y1="16" x2="50" y2="48" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ffffff"/><stop offset="0.22" stop-color="#bfe6ee"/><stop offset="0.42" stop-color="#7fc2d2"/><stop offset="0.58" stop-color="#cfe0b8"/><stop offset="0.78" stop-color="#f3c3ac"/><stop offset="1" stop-color="#fbe9dc"/></linearGradient>
+    <linearGradient id="edge" x1="16" y1="15" x2="40" y2="46" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff" stop-opacity=".85"/><stop offset=".5" stop-color="#fff" stop-opacity=".1"/><stop offset="1" stop-color="#fff" stop-opacity=".65"/>
+    </linearGradient>
+  </defs>
+  <rect x="1" y="1" width="62" height="62" rx="15" fill="url(#tile)" stroke="url(#rim)" stroke-width="1.5"/>
+  <path d="M15.5 47V17.5L32 40L48.5 17.5V47" fill="none" stroke="#030405" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" transform="translate(0 1.2)"/>
+  <path d="M15.5 47V17.5L32 40L48.5 17.5V47" fill="none" stroke="url(#glass)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M15.5 47V17.5L32 40L48.5 17.5V47" fill="none" stroke="url(#edge)" stroke-width=".7" stroke-linecap="round" stroke-linejoin="round" transform="translate(-.9 -.5)"/>
+</svg>
