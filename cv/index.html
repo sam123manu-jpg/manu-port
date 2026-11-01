@@ -161,6 +161,7 @@ h2::after { content: ''; flex: 1; height: 1px; background: var(--rule); }
 .skills dt { font-family: var(--sys); font-size: 14.5px; font-weight: 650; color: var(--ink); padding-top: 2px; }
 .chip { background: var(--chip); border: 1px solid var(--rule); border-radius: 999px; font-size: 13px; padding: 3px 10px 3px 8px; }
 .plain { color: var(--muted); }
+@media (max-width: 680px) { .fig .n { font-size: 20px; } }   /* the big number must fit its 100px column ($100k/mo overflowed the page on phones) */
 @media (max-width: 720px) {
   #cv { padding: 28px 18px 40px; border: 0; border-radius: 0; box-shadow: none; }
   .summary { font-size: 15.5px; }
@@ -246,7 +247,7 @@ body.is3d #back3d:hover { background: #fff; }
       <li><svg data-icon="email" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg><a data-pop="email" href="mailto:sam123.manu@gmail.com">sam123.manu@gmail.com</a></li>
       <li><svg data-icon="linkedin" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14zM8.3 10H5.7v8.3h2.6V10zM7 5.8a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM18.3 13.4c0-2.5-1.3-3.6-3.1-3.6-1.4 0-2.1.8-2.4 1.3V10h-2.6v8.3h2.6v-4.4c0-1.1.4-1.9 1.5-1.9s1.4.9 1.4 2v4.3h2.6v-4.9z"/></svg><a data-pop="linkedin" href="https://www.linkedin.com/in/pratapmanusingh" target="_blank" rel="noopener">linkedin.com/in/pratapmanusingh</a></li>
     </ul>
-    <div class="cta-row"><a class="btn primary" href="mailto:sam123.manu@gmail.com">Email me</a><a class="btn" href="https://www.linkedin.com/in/pratapmanusingh" target="_blank" rel="noopener">LinkedIn ↗</a><a class="btn" href="../Manu_Pratap_Singh_CV.pdf" target="_blank" rel="noopener" download>Download CV (PDF)</a></div>
+    <div class="cta-row"><a class="btn" href="../Manu_Pratap_Singh_CV.pdf" target="_blank" rel="noopener" download>Download CV (PDF)</a></div>
     <p class="summary">Product manager with four years building consumer and platform products from zero to scale. I start from the customer problem, prototype with AI tools to decide faster, and get engineering, design and sales behind one roadmap. Now leading AI strategy at a CRM and automation company while finishing The Lisbon MBA. Available full-time from mid-December 2026.</p>
     <div class="reloc">
       <p class="rl-h rl-h1">Based in</p><p class="rl-h rl-h2">Open to relocating</p>
@@ -444,32 +445,30 @@ body.gl-on #gl { visibility: visible; }
 
 
 <script>
-// v9: switch to 3D by itself soon after landing, unless the visitor is clearly reading or chose to stay in 2D
+// v11: 3D is the default. Start the 3D view the moment the page opens; scrolling or tapping no longer cancels it.
+// "Stay in 2D" (shown while 3D loads) still opts out, and is remembered for a week.
 (function () {
-  var STAY = 'cv-stay2d', WEEK = 7 * 864e5, btn = document.getElementById('switch'), box = document.getElementById('auto3d'), stay = document.getElementById('stay2d');
+  var STAY = 'cv-stay2d', WEEK = 7 * 864e5, btn = document.getElementById('switch'), box = document.getElementById('auto3d'), stay = document.getElementById('stay2d'), legend = document.getElementById('legend');
   var q = new URLSearchParams(location.search), force = q.get('auto') === '1';
   var stayed = function () { try { var v = +localStorage.getItem(STAY); return v && Date.now() - v < WEEK; } catch (e) { return false; } };
-  var counting = false, done = false, raf = 0, t0Page = performance.now(), y0 = null;
-  function cancel() { if (counting) { counting = false; cancelAnimationFrame(raf); btn.style.setProperty('--p', 0); box.hidden = true; } done = true; }
-  btn.addEventListener('click', function () { cancel(); }, true);
-  // deliberate input only: a tap, a key, selecting text, or scrolling more than 40 px after the first 1.5 s (not restored scroll or trackpad momentum)
-  ['pointerdown', 'touchstart', 'keydown'].forEach(function (ev) { addEventListener(ev, function (e) { if (btn.contains(e.target) || box.contains(e.target)) return; cancel(); }, { passive: true, capture: true }); });
-  addEventListener('scroll', function () { if (performance.now() - t0Page < 1500) return; if (y0 === null) y0 = scrollY; else if (Math.abs(scrollY - y0) > 40) cancel(); }, { passive: true });
-  setTimeout(function () { if (y0 === null) y0 = scrollY; }, 1500);
-  document.addEventListener('selectionchange', function () { var sel = getSelection(); if (sel && String(sel).trim()) cancel(); });
-  stay.addEventListener('click', function (e) { e.stopPropagation(); try { localStorage.setItem(STAY, String(Date.now())); } catch (er) {} cancel(); btn.focus({ preventScroll: true }); });
   var c = navigator.connection || {}, mem = navigator.deviceMemory, hc = navigator.hardwareConcurrency;
   var allowed = force || (!stayed() && location.hash !== '#3d' && !matchMedia('(prefers-reduced-motion: reduce)').matches && !c.saveData && !(mem !== undefined && mem <= 2) && !(hc !== undefined && hc <= 2));
   if (!allowed) return;
+  var watching = false;
+  stay.addEventListener('click', function (e) {
+    e.stopPropagation(); try { localStorage.setItem(STAY, String(Date.now())); } catch (er) {}
+    box.hidden = true; watching = false;
+    if (btn.getAttribute('aria-pressed') === 'true' || btn.classList.contains('busy')) window.__cv && window.__cv.to2D();
+    btn.focus({ preventScroll: true });
+  });
   function start() {
-    setTimeout(function () {
-      if (done || btn.getAttribute('aria-pressed') === 'true') return;
-      if (document.hidden) { document.addEventListener('visibilitychange', function v() { if (!document.hidden) { document.removeEventListener('visibilitychange', v); start(); } }); return; }
-      counting = true; box.hidden = false; var t0 = performance.now();
-      (function step(now) { if (!counting) return; var p = Math.min(1, (now - t0) / 2500); btn.style.setProperty('--p', p);
-        if (p < 1) raf = requestAnimationFrame(step); else { counting = false; box.hidden = true; btn.style.setProperty('--p', 0); done = true; btn.click(); } })(t0);
-    }, 2500);
+    if (btn.getAttribute('aria-pressed') === 'true') return;
+    btn.click();
+    box.querySelector('span').textContent = 'Opening in 3D…'; box.hidden = false; watching = true;
+    (function wait() { if (!watching) return; if (!legend.hidden) { box.hidden = true; watching = false; return; } setTimeout(wait, 200); })();
   }
-  if (document.hidden) document.addEventListener('visibilitychange', function v() { if (!document.hidden) { document.removeEventListener('visibilitychange', v); start(); } }); else start();
+  // after the module script above has wired up the 3D button (module scripts run just before DOMContentLoaded)
+  function go() { if (document.hidden) document.addEventListener('visibilitychange', function v() { if (!document.hidden) { document.removeEventListener('visibilitychange', v); start(); } }); else start(); }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', go); else go();
 })();
 </script></body></html>
