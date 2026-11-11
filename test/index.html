@@ -46,7 +46,7 @@ body {
 @media (max-width: 680px) { .contact { display: grid; grid-template-columns: 1fr; } }
 .summary { margin: 16px 0 0; max-width: 64ch; color: var(--ink); }
 /* where I live and where I'd move: each round plot is where a small model stands in 3D */
-.reloc { display: grid; grid-template-columns: 150px repeat(4, minmax(0, 1fr)); gap: 6px 14px; margin-top: 20px; align-items: center; }
+.reloc { display: grid; grid-template-columns: 150px repeat(5, minmax(0, 1fr)); gap: 6px 14px; margin-top: 20px; align-items: center; }
 .rl-h { margin: 0; font-family: var(--mono); font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
 .rl-h1 { grid-column: 1; grid-row: 1; } .rl-h2 { grid-column: 2 / -1; grid-row: 1; }
 .rl { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 13px; grid-row: 2; }
@@ -56,10 +56,10 @@ body {
 .rd { display: grid; place-items: center; }
 .rd svg { width: 70%; height: 70%; fill: none; stroke: #4c5a68; stroke-width: 1.35; stroke-linecap: round; stroke-linejoin: round; }
 @media (max-width: 680px) {
-  .reloc { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px 8px; }
+  .reloc { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px 8px; }
   .rl-h1, .rl-h2, .rl-home { grid-column: 1 / -1; }
   .rl-h1 { grid-row: 1; } .rl-home { grid-row: 2; } .rl-h2 { grid-row: 3; margin-top: 8px; }
-  .rl:not(.rl-home) { grid-row: 4; flex-direction: column; gap: 6px; font-size: 12px; }
+  .rl:not(.rl-home) { grid-row: auto; flex-direction: column; gap: 6px; font-size: 12px; }
 }
 
 h2 { font-family: var(--mono); font-weight: 500; font-size: 11.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin: 34px 0 0; padding-bottom: 7px; border-bottom: 1px solid var(--rule); }
@@ -268,6 +268,7 @@ body.is3d #reset3d:hover { background: #fff; }
       <span class="rl"><span class="rd" data-city="london"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 21h10M10 21V10.5h4V21M9.5 10.5V6h5v4.5M9.5 6 12 2l2.5 4"/><circle cx="12" cy="8.2" r="1.2"/></svg></span>London</span>
       <span class="rl"><span class="rd" data-city="amsterdam"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 21h18M4 21v-9h.9v-1.5h.9V9h1.4v1.5h.9V12H9v9M9.5 21V10h.9V8.5h.9V7h1.4v1.5h.9V10h.9v11M15 21v-8h.9v-1.5h.9V10h1.4v1.5h.9V13h.9v8M6.5 15v1.5M12 13v1.5M17.5 16v1.5"/></svg></span>Amsterdam</span>
       <span class="rl"><span class="rd" data-city="copenhagen"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 17.5V12l2.5-3L8 12v5.5M8 17.5v-7l2.5-3 2.5 3v7M13 17.5V12l2.5-3 2.5 3v5.5M18 17.5V13l1.5-1.8L21 13v4.5M2.5 17.5h19M3 20.5q1.5-1 3 0t3 0 3 0 3 0 3 0 3 0"/></svg></span>Copenhagen</span>
+      <span class="rl"><span class="rd" data-city="berlin"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 21h18M4 10h16M4.5 8.5h15M5 8.5 12 6l7 2.5M6 10v11M9 10v11M12 10v11M15 10v11M18 10v11M10.5 6V4.2h3V6M12 4.2 11 2.5h2z"/></svg></span>Berlin</span>
       <span class="rl"><span class="rd" data-city="dubai"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 21h10M12 1.5v3M10.4 21l.5-9 .6-4.5L12 4.5l.5 3 .6 4.5.5 9M9 21l1.1-5.5M15 21l-1.1-5.5"/></svg></span>Dubai</span>
     </div>
   </header>
@@ -279,14 +280,14 @@ body.is3d #reset3d:hover { background: #fff; }
       <h3 class="org">MR Neo</h3>
       <p class="role">Product Manager, AI Strategy · part-time alongside the MBA</p>
       <ul>
-        <li><i></i>Made the whole company AI-native in <b>under two months</b>: shared AI knowledge base, sales AI workspace, automated workflows. Sales decks now need <b>1–2 iterations</b>.</li>
-        <li><i></i>Audited all 60+ pages of the platform, logged <b>588</b> bugs and UX issues, and turned the method into AI skills the team now uses.</li>
-        <li><i></i>Leading the redesign into an AI-first platform for early 2027.</li>
-        <li><i></i>Unblocked a Shopify integration the developers had been stuck on for <b>a month</b>: specced the integration hub, the APIs and the build steps; shipped and approved.</li>
-        <li><i></i>Reset pricing and positioning: try-before-you-upgrade add-ons, and a shift from “a CRM” to helping customers grow their business.</li>
+        <li><i></i>Built an AI operating layer in <b>under two months</b>: a knowledge base with read-only codebase access, a sales AI workspace and daily automations.</li>
+        <li><i></i>Audited a <b>60+</b> page CRM suite, logging <b>600</b> bugs and UX issues, and turned the method into AI skills the team uses.</li>
+        <li><i></i>Set AI strategy, pricing and positioning: decide where AI features go and lead the AI-first redesign for early <b>2027</b>.</li>
+        <li><i></i>Unblocked a Shopify integration stalled for <b>a month</b> by specifying its hub, API choice and build steps; it has shipped.</li>
+        <li><i></i>Set up AI evals with human review: before/after prompt tests, a review of <b>every</b> AI-found bug and fix re-checks on UAT.</li>
       </ul>
     </div>
-    <div class="fig" data-pop="fig"><span class="n">&lt; 2 mo</span><span class="l">to make the whole company AI-native</span></div>
+    <div class="fig" data-pop="fig"><span class="n">&lt; 2 mo</span><span class="l">to build the company’s AI operating layer</span></div>
   </div>
   <div class="entry" data-build="xy-ads" style="--c:#2f6e9e">
     <div class="when">Aug 2023 – Jan 2025<br>Gurgaon, India</div>
@@ -294,9 +295,9 @@ body.is3d #reset3d:hover { background: #fff; }
       <h3 class="org">XY ADS</h3>
       <p class="role">Product Manager, Product &amp; Platform</p>
       <ul>
-        <li><i></i>Built a self-service ad exchange from scratch for small businesses that found agency platforms too complex: <b>$100k/month</b> in ad spend by the time I left, one client at <b>$30k/month</b>.</li>
-        <li><i></i>Wrote the OpenRTB specs, turned each DSP and SSP partner’s API docs into build plans, and architected it for <b>100M+</b> monthly impressions.</li>
-        <li><i></i>Hired and led <b>3 developers</b> and a designer; cut operating costs <b>15%</b> through vendor contracts.</li>
+        <li><i></i>Built a self-serve B2B ad exchange from scratch and moved DSP clients onto it: <b>$100k/month</b> in ad spend ran through it, with one client growing to <b>$30k/month</b>.</li>
+        <li><i></i>Wrote the OpenRTB PRDs, architected for <b>100M+</b> monthly impressions, and integrated DSPs and SSPs by turning each partner’s API docs into build tasks.</li>
+        <li><i></i>Hired and led <b>3 developers</b> and a designer; cut operating costs <b>15%</b> by moving vendors to long-term, tiered, volume-based contracts.</li>
         <li><i></i>Came in with no AdTech background and within <b>three months</b> was the go-to person on ad serving for colleagues with 5–6 years in the industry.</li>
       </ul>
     </div>
@@ -308,13 +309,14 @@ body.is3d #reset3d:hover { background: #fff; }
       <h3 class="org">GMNG</h3>
       <p class="role">Product Manager · promoted from Associate PM in 11 months</p>
       <ul>
-        <li><i></i>Scaled a real-money gaming platform to <b>1M+ users</b> and <b>$500k+</b> in deposits; led a team of nine.</li>
-        <li><i></i>Everybody Wins, my idea: a second chance after a first loss lifted new-user retention <b>30%</b>.</li>
-        <li><i></i>Cut sign-up drop-off by about <b>60%</b> with a single phone-number field.</li>
-        <li><i></i>Designed a 7-day poker onboarding loop: <b>60%</b> of targeted high-value players converted, bringing in <b>$40,000</b>.</li>
-        <li><i></i>Ran a two-tier referral scheme that brought in <b>200,000+</b> users in one month.</li>
-        <li><i></i>Packaged an Offer Wall as a B2B module, licensed to <b>3–4 companies</b> for about <b>$5–6k/month</b>.</li>
-        <li><i></i>Led an engagement push (new games, the 7-day poker loop, faster loading) that <b>tripled</b> gameplay frequency and lifted revenue <b>50%</b> in key games.</li>
+        <li><i></i>Led a team of <b>nine</b> across development, support and sales, growing a real-money gaming platform to <b>1M+ users</b> and <b>$500k+</b> in deposits.</li>
+        <li><i></i><b>Tripled</b> gameplay frequency and lifted revenue <b>50%</b> in key games through new games, a 7-day habit loop and faster loading.</li>
+        <li><i></i>Designed a gamified 7-day onboarding loop for poker: <b>60%</b> of the targeted cohort converted, adding <b>$40,000</b> in revenue.</li>
+        <li><i></i>Designed a deposit-linked, two-tier referral programme that brought in <b>200,000+</b> new users in one month.</li>
+        <li><i></i>Turned paid installs into an in-game Offer Wall, then licensed it as a SaaS module to <b>four</b> gaming firms (about <b>$6k/month</b>).</li>
+        <li><i></i>As Associate PM, designed Everybody Wins, a second chance on a new player’s first paid game, lifting new-user retention <b>30%</b>.</li>
+        <li><i></i>Cut sign-up drop-off by about <b>60%</b> by replacing the registration form with one phone-number field and OTP.</li>
+        <li><i></i>Contributed to shareholder presentations that secured <b>$100k</b> in development funding.</li>
       </ul>
     </div>
     <div class="fig" data-pop="fig"><span class="n">1M+</span><span class="l">users on a gaming platform</span></div>
@@ -340,7 +342,7 @@ body.is3d #reset3d:hover { background: #fff; }
       <h3 class="org">The Lisbon MBA</h3>
       <p class="role">MBA International · Católica | Nova</p>
       <ul>
-        <li><i></i>Sovena internship: recommended repositioning a 59-product tea range from health claims to consumption occasions, and handed the research over as a queryable NotebookLM base.</li>
+        <li><i></i>Sovena internship: reviewed a <b>59</b>-product tea range through surveys and social listening, recommended repositioning it from health claims to consumption occasions, and handed over a searchable AI research base.</li>
         <li><i></i>DHL Express consulting project (confidential).</li>
       </ul>
     </div>
@@ -350,7 +352,7 @@ body.is3d #reset3d:hover { background: #fff; }
     <div class="what">
       <h3 class="org">MIT Sloan</h3>
       <p class="role">Summer Immersion Certificate</p>
-      <ul><li><i></i>Technological innovation, global markets and strategy.</li></ul>
+      <ul><li><i></i>Managing Technological Innovation and Global Strategy.</li></ul>
     </div>
   </div>
   <div class="entry" data-build="manipal" style="--c:#a85d43">
@@ -371,7 +373,7 @@ body.is3d #reset3d:hover { background: #fff; }
     <dt>Tools</dt>
     <dd><span class="chip" data-skill="sql"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><ellipse cx="8" cy="3.5" rx="5" ry="1.8"/><path d="M3 3.5v9c0 1 2.2 1.8 5 1.8s5-.8 5-1.8v-9M3 8c0 1 2.2 1.8 5 1.8S13 9 13 8"/></svg>SQL</span><span class="chip" data-skill="firebase"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 14.5c-2.8 0-4.5-1.8-4.5-4.3 0-2.6 2-4 2.6-6.7 1.4 1 2 2.3 2 3.6.6-.6 1-1.6 1-2.6 1.8 1.4 3.4 3.4 3.4 5.7 0 2.5-1.7 4.3-4.5 4.3z"/></svg>Firebase</span><span class="chip" data-skill="clevertap"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M4 11V7.5a4 4 0 0 1 8 0V11l1.2 1.5H2.8zM6.5 14h3"/><circle cx="12.5" cy="3.5" r="1.3"/></svg>CleverTap</span><span class="chip" data-skill="appsflyer"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="7" cy="9" r="5"/><circle cx="7" cy="9" r="2"/><path d="m7 9 6.5-6.5M11 2.5h2.5V5"/></svg>AppsFlyer</span><span class="chip" data-skill="openrtb"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="m3 7 4-4 3 3-4 4zM8.5 7.5l5 5M2 14.5h7"/></svg>OpenRTB</span><span class="chip" data-skill="jira"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M2 2.5h12v11H2zM6 2.5v11M10 2.5v11M3 4.5h2M3 6.5h2M7 4.5h2M11 4.5h2"/></svg>Jira</span><span class="chip" data-skill="figma"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M2.5 13 6 6l4 4 3.5-7"/><path d="M1.5 12h2v2h-2zM5 5h2v2H5zM9 9h2v2H9zM12.5 2h2v2h-2z"/></svg>Figma</span></dd>
     <dt>Languages</dt>
-    <dd><p class="plain">English (fluent) · Hindi (native)</p></dd>
+    <dd><p class="plain">English (fluent, IELTS band 8) · Hindi (native)</p></dd>
     <dt>Beyond</dt>
     <dd><p class="plain">50m rifle shooting at national level · set up a library for underprivileged children · taught computer skills in Rajasthan</p></dd>
   </dl>
@@ -450,7 +452,7 @@ body.gl-on #gl { visibility: visible; }
 </button>
 <div id="auto3d" role="status" hidden><span>Switching to 3D…</span> <button type="button" id="stay2d">Stay in 2D</button></div>
 
-<script type="module">const n=(e,i=document)=>i.querySelector(e),h=n("#cv"),s=n("#switch"),k=n("#hint"),p=n("#toast"),y={"mr-neo":[0,1,2,3,4],"xy-ads":[0,1,2,3],gmng:[0,1,2,3,4,5,6],lara:[1],mba:[1,2],mit:[0],manipal:[1]};for(const e of h.querySelectorAll(".entry[data-build]")){const i=e.dataset.build,a=n(".org",e),b=(d,u,g)=>{const o=document.createElement("button");o.type="button",o.className="go",o.dataset.id=i,o.dataset.v=u;for(const f of[...d.childNodes])f.nodeType===1&&f.tagName==="I"||o.appendChild(f);g&&o.setAttribute("aria-label",g),d.appendChild(o)};b(a,0,`${a.textContent}: open in 3D`),[...e.querySelectorAll(".what li")].forEach((d,u)=>{y[i][u]!==void 0&&b(d,y[i][u])});const c=n(".fig",e);c&&(c.classList.add("go-fig"),c.dataset.id=i,c.dataset.v=0)}matchMedia("(hover: none)").matches&&(n("#invite .pt").textContent="Tap",n("#legend").lastChild.textContent=" Tap one for the numbers behind it, a logo to get in touch, a skill to see where it was used. Swipe in any direction to move, twist two fingers to turn, pinch to zoom.");const L={width:innerWidth,height:innerHeight,lastScroll:0,reduce:matchMedia("(prefers-reduced-motion: reduce)").matches,lowPower:innerWidth<680||(navigator.hardwareConcurrency||8)<=4};let t,m,l=!1,C;const w=[];function q(e){p.innerHTML=e,p.hidden=!1,clearTimeout(C),C=setTimeout(()=>p.hidden=!0,6e3)}function E(){return m||(m=import("./scene.min.js").then(e=>{t=e.start(L),window.__cv=t.api;for(const[i,a]of w.splice(0))T(i,a);return t}).catch(e=>{throw m=null,l&&(console.error(e),l=!1,w.length=0,s.classList.remove("busy"),s.removeAttribute("aria-busy"),q("<b>3D needs WebGL,</b> which this browser has turned off. The CV above is the full version.")),e}))}function v(){E().catch(()=>{})}function T(e,i){return e.startsWith("api.")?t.api[e.slice(4)](...i):t[e](i)}function r(e,i){return t?T(e,i):(l=!0,k.hidden=!0,s.classList.add("busy"),s.setAttribute("aria-busy","true"),w.push([e,i]),E().catch(()=>{}))}s.addEventListener("click",()=>r("switchClick")),h.addEventListener("click",e=>{!e.target.closest(".go, .go-fig")||e.target.closest("a")||r("cvClick",e)}),h.addEventListener("focusin",e=>{t&&t.cvFocus(e)}),addEventListener("resize",()=>{t&&t.resize()}),addEventListener("scroll",()=>{L.lastScroll=performance.now(),t&&t.scroll()},{passive:!0}),addEventListener("keydown",e=>{t&&t.keydown(e)});for(const e of["pointerenter","mouseover","focus","pointerdown"])s.addEventListener(e,v,{passive:!0});requestAnimationFrame(()=>setTimeout(()=>{"requestIdleCallback"in window?requestIdleCallback(v,{timeout:1e3}):v()},0)),window.__cv={focus(...e){return r("api.focus",e)},to3D(...e){return r("api.to3D",e)},to2D(...e){if(l||t)return r("api.to2D",e)},get t(){return t?t.api.t:0},jump(...e){return r("api.jump",e)}},location.hash==="#3d"&&r("api.to3D",[]);
+<script type="module">const n=(e,i=document)=>i.querySelector(e),h=n("#cv"),s=n("#switch"),k=n("#hint"),p=n("#toast"),y={"mr-neo":[0,1,2,3,4],"xy-ads":[0,1,2,3],gmng:[0,1,2,3,4,5,6,7],lara:[1],mba:[1,2],mit:[0],manipal:[1]};for(const e of h.querySelectorAll(".entry[data-build]")){const i=e.dataset.build,a=n(".org",e),b=(d,u,g)=>{const o=document.createElement("button");o.type="button",o.className="go",o.dataset.id=i,o.dataset.v=u;for(const f of[...d.childNodes])f.nodeType===1&&f.tagName==="I"||o.appendChild(f);g&&o.setAttribute("aria-label",g),d.appendChild(o)};b(a,0,`${a.textContent}: open in 3D`),[...e.querySelectorAll(".what li")].forEach((d,u)=>{y[i][u]!==void 0&&b(d,y[i][u])});const c=n(".fig",e);c&&(c.classList.add("go-fig"),c.dataset.id=i,c.dataset.v=0)}matchMedia("(hover: none)").matches&&(n("#invite .pt").textContent="Tap",n("#legend").lastChild.textContent=" Tap one for the numbers behind it, a logo to get in touch, a skill to see where it was used. Swipe in any direction to move, twist two fingers to turn, pinch to zoom.");const L={width:innerWidth,height:innerHeight,lastScroll:0,reduce:matchMedia("(prefers-reduced-motion: reduce)").matches,lowPower:innerWidth<680||(navigator.hardwareConcurrency||8)<=4};let t,m,l=!1,C;const w=[];function q(e){p.innerHTML=e,p.hidden=!1,clearTimeout(C),C=setTimeout(()=>p.hidden=!0,6e3)}function E(){return m||(m=import("./scene.min.js").then(e=>{t=e.start(L),window.__cv=t.api;for(const[i,a]of w.splice(0))T(i,a);return t}).catch(e=>{throw m=null,l&&(console.error(e),l=!1,w.length=0,s.classList.remove("busy"),s.removeAttribute("aria-busy"),q("<b>3D needs WebGL,</b> which this browser has turned off. The CV above is the full version.")),e}))}function v(){E().catch(()=>{})}function T(e,i){return e.startsWith("api.")?t.api[e.slice(4)](...i):t[e](i)}function r(e,i){return t?T(e,i):(l=!0,k.hidden=!0,s.classList.add("busy"),s.setAttribute("aria-busy","true"),w.push([e,i]),E().catch(()=>{}))}s.addEventListener("click",()=>r("switchClick")),h.addEventListener("click",e=>{!e.target.closest(".go, .go-fig")||e.target.closest("a")||r("cvClick",e)}),h.addEventListener("focusin",e=>{t&&t.cvFocus(e)}),addEventListener("resize",()=>{t&&t.resize()}),addEventListener("scroll",()=>{L.lastScroll=performance.now(),t&&t.scroll()},{passive:!0}),addEventListener("keydown",e=>{t&&t.keydown(e)});for(const e of["pointerenter","mouseover","focus","pointerdown"])s.addEventListener(e,v,{passive:!0});requestAnimationFrame(()=>setTimeout(()=>{"requestIdleCallback"in window?requestIdleCallback(v,{timeout:1e3}):v()},0)),window.__cv={focus(...e){return r("api.focus",e)},to3D(...e){return r("api.to3D",e)},to2D(...e){if(l||t)return r("api.to2D",e)},get t(){return t?t.api.t:0},jump(...e){return r("api.jump",e)}},location.hash==="#3d"&&r("api.to3D",[]);
 </script>
 
 <!-- Visit alert ping (from thread "Email me when portfolio pages open"). Paste right before </body> in test/index.html. -->
