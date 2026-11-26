@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>UVA Negotiation Table</title>
-<meta name="description" content="A fully voiced 3D story game about disagreeing better: negotiate a 100-tonne grape order at Algarve Grapes, with or without UVA, an AI mediator.">
+<meta name="description" content="A fully voiced 3D story game about disagreeing better: negotiate a 100-tonne grape order at Algarve Grapes, with or without UVA, an AI mediator. Eight endings.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="The Negotiation Table">
-<meta property="og:description" content="Negotiate a 100-tonne grape order, with or without UVA, an AI mediator.">
+<meta property="og:description" content="Every choice ripples. Eight endings. Negotiate with or without UVA, an AI mediator.">
 <meta property="og:url" content="https://manupratap.com/neg/">
 <meta property="og:image" content="https://manupratap.com/og.jpg">
 <style>
@@ -38,7 +38,8 @@ body{background:#efc48a;color:var(--ink);font:16px/1.45 -apple-system,BlinkMacSy
 .bar i{display:block;height:100%;border-radius:9px;transition:width .6s ease,background .6s}
 .tools{display:flex;gap:8px;margin-left:auto}
 .ghost{border:0;background:var(--card);color:var(--ink);border-radius:999px;padding:10px 14px;font:600 14px/1 inherit;min-height:40px;cursor:pointer;box-shadow:0 8px 30px rgba(40,20,0,.18)}
-#board{position:absolute;right:16px;top:92px;width:270px;padding:16px;max-height:calc(100% - 120px);overflow:auto}
+#board{position:absolute;right:16px;top:92px;width:270px;overflow:hidden}
+#bin{padding:16px;max-height:calc(100vh - 120px);overflow:auto}
 #board h3{margin:0 0 2px;font-size:17px}
 .eb{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--sub);font-weight:600}
 .grp{margin-top:12px}
@@ -88,7 +89,7 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--blue);outline-o
 .ask input{flex:1;font:16px inherit;padding:12px 14px;border-radius:14px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);min-height:46px}
 .ask .pill{padding:12px 16px}
 .note{font-size:13px;color:var(--sub);margin-top:8px}
-.hints{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:10px}
+.hints{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-top:10px}
 .hint{border-radius:14px;padding:10px;background:var(--chip);font-size:13px}
 .hint b{display:block;font-size:14px;margin-top:2px}
 .hint.unk{background:light-dark(#fff4df,#3a2c10)}
@@ -105,6 +106,27 @@ input[type=range]{width:100%;height:30px;accent-color:#111113;margin:4px 0 0}
 .src{font-size:12px;color:var(--sub);margin-top:8px}
 .src a{color:inherit}
 [hidden]{display:none!important}
+#toast{position:absolute;left:16px;right:16px;margin:0 auto;width:max-content;max-width:calc(100% - 32px);top:80px;background:#111113;color:#fff;border-radius:999px;padding:10px 16px;font-size:14px;display:flex;gap:8px;align-items:center;opacity:0;transition:opacity .4s;pointer-events:none;z-index:4}
+#toast.on{opacity:1}
+#toast i,.rip i{width:10px;height:10px;border-radius:50%;flex:none}
+.tip{display:grid;gap:2px;margin-top:12px;border-radius:14px;padding:10px 12px;background:var(--blueT);font-size:14px}
+.tip b{color:var(--blue);font-size:12px}
+.why{font-size:15px;border-left:4px solid var(--ink);padding-left:10px;margin:8px 0}
+.uvacase{background:var(--blueT)}
+.uvacase .eb{color:var(--blue)}
+.acts{margin:8px 0 0;padding-left:18px;font-size:14px}
+.acts li{margin:4px 0}
+.rip{display:flex;gap:8px;align-items:baseline;font-size:14px;margin-top:6px}
+.kgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:8px}
+.kcol{display:grid;gap:6px;align-content:start}
+.kcol>b{font-size:13px}
+.kc{display:grid;border-left:4px solid;background:var(--card);border-radius:10px;padding:6px 10px;font-size:14px}
+.kc small{color:var(--sub);font-size:12px}
+.endg{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:8px}
+.et{border-radius:12px;background:var(--card);padding:8px 10px;font-size:13px;display:grid}
+.et small{color:var(--sub);font-size:11px}
+.et.lock{background:transparent;border:1.5px dashed var(--line);color:var(--sub)}
+.et.now{outline:2px solid var(--green)}
 #load{position:fixed;inset:0;z-index:10;display:grid;place-items:center;padding:16px;overflow:auto;background:linear-gradient(#86b8de,#f7c27a 56%,#d9b277 56.3%,#b38d55);transition:opacity .8s}
 #load.gone{opacity:0;pointer-events:none}
 .lc{background:#111113;color:#f2f2f4;border-radius:24px;padding:28px;width:min(470px,100%);box-shadow:0 20px 60px rgba(40,20,0,.35)}
@@ -127,7 +149,9 @@ input[type=range]{width:100%;height:30px;accent-color:#111113;margin:4px 0 0}
  .mt .sm{display:inline}
  .brand small{display:none}
  #pin{max-height:62vh;max-height:62dvh;padding:16px}
- .hints{grid-template-columns:minmax(0,1fr)}
+ #toast{top:132px;border-radius:16px}
+ .endg,.kgrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .kgrid{grid-template-columns:minmax(0,1fr)}
  .proj{gap:6px}
 }
 @media(prefers-reduced-motion:reduce){.line,.it.new,.grapes{animation:none}.bar i{transition:none}}
@@ -145,6 +169,7 @@ input[type=range]{width:100%;height:30px;accent-color:#111113;margin:4px 0 0}
   </div>
  </div>
  <aside id="board" class="card" aria-label="Interest board"></aside>
+ <div id="toast" role="status"></div>
  <section id="panel" class="card"><div id="pin" aria-live="polite"></div></section>
 </div>
 <div id="load">
@@ -155,10 +180,10 @@ input[type=range]{width:100%;height:30px;accent-color:#111113;margin:4px 0 0}
    <circle cx="51" cy="78" r="11"/><circle cx="69" cy="78" r="11"/><circle cx="60" cy="97" r="11"/></g><g fill="#fff" opacity=".35"><circle cx="29" cy="36" r="3"/><circle cx="47" cy="34" r="3"/><circle cx="65" cy="34" r="3"/><circle cx="56" cy="54" r="3"/><circle cx="56" cy="93" r="3"/></g></svg>
   <div class="eb">Algarve Grapes · a story game</div>
   <h1>The Negotiation Table</h1>
-  <p class="sub">Two directors, one impossible order and four turns to find a deal. Play once with UVA, the AI mediator, and once without.</p>
+  <p class="sub">Two directors, one impossible order and eight possible endings. Every choice ripples. Play once with UVA, the AI mediator, and once without.</p>
   <div class="lbar"><i id="lfill"></i></div>
   <div id="lmsg">Planting the vineyard…</div>
-  <ul class="lfacts"><li>Sound on, headphones if you have them</li><li>About 6 minutes a run</li><li>Fully voiced, no sign-in</li></ul>
+  <ul class="lfacts"><li>Sound on, headphones if you have them</li><li>About 5 minutes a run</li><li>Fully voiced, no sign-in</li></ul>
   <button class="pill" id="enter" type="button" disabled>Loading…</button>
  </div>
 </div>
@@ -166,7 +191,7 @@ input[type=range]{width:100%;height:30px;accent-color:#111113;margin:4px 0 0}
 {
 const $=id=>document.getElementById(id);
 const clamp=v=>Math.max(0,Math.min(100,Math.round(v)));
-const S={stage:'title',role:'bruna',uva:true,t:0,m:{},found:new Set(),log:[],flags:{},deal:{w1:100,w2:0,fc:false,pr:false,ot:false,pg:false},runs:[],live:null,tts:null,voice:false,speaker:null,busy:false};
+const S={stage:'title',scene:null,role:'bruna',uva:true,m:{},f:{},found:new Set(),hist:[],rip:[],ks:[],acts:[],dmg:0,deal:{w1:100,w2:0,fc:false,pr:false,ot:false,pg:false},final:null,runs:[],ends:[],seed:1,speaker:null,talking:null};
 const ML={cust:'Customer trust',del:'Delivery',trust:'Team trust',ceo:'CEO time'},MS={cust:'Customer',del:'Delivery',trust:'Team',ceo:'CEO'};
 const IN={
  b_target:{who:'b',label:'Hit the sales target'},
@@ -176,80 +201,151 @@ const IN={
  m_forecast:{who:'m',label:'Predictability: see demand early'},
  m_capacity40:{who:'k',label:'40 t can be freed next week, safely'},
  k_promo:{who:'k',label:'Customer needs 40 t now, 60 t can follow'},
+ k_fcok:{who:'k',label:'Customer would trade a forecast for priority slots'},
  s_goal:{who:'s',label:'Profitable growth with reliable delivery'}};
 const OWN={bruna:['b_target','b_longterm'],manu:['m_existing','m_quality','m_forecast','m_capacity40']};
 const NAME={b:'Bruna',m:'Manu',u:'UVA',c:'Customer',n:'Narrator',j:'João'};
 const COL={b:'#e2553f',m:'#2c5d8f',u:'#2f5bff',c:'#6b6b70',n:'#111113',j:'#7a4a2e'};
-const VOICE={b:'rounded',m:'glassy',u:'airy',c:'buttery',n:'buttery',j:'buttery'};
+const SESS={1:['Essential Kit','#f25c54'],2:['Team Negotiation','#f5a524'],3:['Approaches to Conflict','#12a594'],4:['Mediation','#3b6ff5'],5:['Difficult Situations','#7c5cff'],6:['Multiparty','#e2468b']};
 const CUST='Honestly? We need 40 tonnes next week for our promo launch. The other 60 can follow a week later.';
-const me=()=>S.role==='bruna'?'b':'m', ot=()=>S.role==='bruna'?'m':'b';
-const CALL={
- bruna:{open:[['n','Algarve Grapes, Lagoa. Eight forty-two on a Monday morning. The phone rings.'],['c','Bruna, we have an urgent request. Can you deliver an additional one hundred tonnes next week?']],
-  chips:[{t:'Absolutely! Consider it done.',f(){S.flags.yes=true;apply({cust:8,trust:-12,del:-6})}},{t:'Let me confirm with Operations and call you back by five.',f(){apply({cust:-3,trust:6})}}]},
- manu:{open:[['n',"Lagoa, Monday morning. Manu is finishing next week's production plan when Bruna walks in."],['b',"Manu, great news! A major European supermarket wants one hundred extra tonnes. Next week! I've already said yes."]],
-  chips:[{t:'Once again, Commercial committed without asking Operations.',f(){S.flags.angry=true;S.flags.yes=true;apply({trust:-16,ceo:-10})}},{t:"Okay. Let's look at it together.",f(){S.flags.yes=true;apply({trust:6})}}]}};
+const FCOK="If it gets us priority production slots, we'd share a six-month forecast.";
+const UVA_HELLO="Hello, both. I'm UVA. I won't decide who is right. I'll help you understand each other and build an agreement together.";
 const SUMMARY={bruna:'Bruna needs growth and a long-term account. Manu needs reliable delivery and predictability. Different positions, compatible interests: profitable growth with reliable delivery. What deal protects both?',
  manu:'Manu needs reliable delivery and predictability. Bruna needs growth and a long-term account. Different positions, compatible interests: profitable growth with reliable delivery. What deal protects both?'};
+const CAUCUS={bruna:{t:'Manu agreed I could share this: he can free forty tonnes safely, and his crews are exhausted.',g:['m_capacity40','m_quality']},
+ manu:{t:'Bruna agreed I could share this: the customer mostly needs forty tonnes next week. The rest can follow.',g:['k_promo']}};
 const DS={m_over:"That's more than I can release safely next week.",m_ot:'Overtime works, once. Don’t make it a habit.',m_fc:'With a forecast, I can finally plan ahead.',m_ok:'That I can deliver.',
- b_low:'They need more than that for the launch.',b_short:'Short of a hundred tonnes, I risk the account.',b_good:'Priority planning for a forecast. I can sell that.',b_ok:'I can take that to them.',
- c_low:"That won't cover our launch.",c_short:"We'll need another supplier for the rest.",c_fc:'A forecast? What do we get in return?',c_pr:"Priority planning? We'll share a forecast.",c_ok:'Works for us.'};
-const STORIES=['The supermarket stayed, production runs smoothly and the forecast arrives every month. João spent his week on strategy, not refereeing.',
- 'The order shipped, but it cost late nights and some goodwill. The next big request will start the same argument.',
- 'Deliveries slipped, the customer heard the uncertainty and signed with another supplier. The problem reached João when it was too late to act.'];
+ b_low:'They need more than that for the launch.',b_short:'Short of a hundred tonnes, I risk the account.',b_good:'Priority planning for a forecast. I can sell that.',b_ok:'I can take that to them.'};
 const PILOT="Let's pilot UVA. Ninety days, then we decide with the numbers.";
+const ENDINGS={
+ pie:{t:'The Bigger Pie',line:'Three months later, the supermarket is a key account. The forecast arrives every month, production runs smoothly, and Bruna and Manu plan big orders together.',j:'This is what I want: decisions made by the people closest to them.',why:'You traded on different priorities: timing for the customer, predictability for Operations. The pie got bigger instead of being split.'},
+ compromise:{t:'A Fair Split',line:"Three months later, the order shipped and the customer stayed. But nobody fixed how big orders get planned, so next month's request starts the same argument.",why:'You split the difference. A forecast or priority planning would have added an issue to trade and created more value.'},
+ scars:{t:'Saved, With Scars',line:'Three months later, the customer is happy, but weekend shifts caused two late deliveries to existing clients, and Operations is exhausted.',why:'Overtime and over-capacity promises push the cost onto someone outside the room. Check that every side clears its line.'},
+ gaveaway:{t:'Gave It Away',line:'Three months later, the customer expects every rush order to be accepted, and Operations has started saying no first.',why:'A concession with nothing in return teaches the other side to push. Trade, do not give: quid pro quo.'},
+ cleanno:{t:'A Clean No',line:'The customer went elsewhere this time. But Bruna and Manu agreed on why, called them back together, and the buyer promised to return with more notice.',why:'Not every deal should happen. When nothing beats your alternative, walking away together protects the relationship.'},
+ walkout:{t:'The Walkout',line:'Deliveries slipped, the customer heard the uncertainty and signed with another supplier. The problem reached João when it was too late to act.',why:'Positions and blame used up the time you needed. Interests, asked early, usually cost less.'},
+ referee:{t:'The Referee',line:"João's decision shipped the order. Existing customers got late deliveries, Manu updated his CV, and next month João refereed again.",why:'Power is fast but expensive: the side that loses rarely accepts it, so the conflict comes back.'},
+ rulebook:{t:'The Rulebook',line:'The new sign-off rule is fair and clear, but the customer could not wait for it. The next big order went smoothly.',why:"Rights give fair, lasting rules, but they are slower than interests, and this customer needed an answer today."}};
+const END_ORDER=['pie','compromise','scars','gaveaway','cleanno','walkout','referee','rulebook'];
+const me=()=>S.role==='bruna'?'b':'m', ot=()=>S.role==='bruna'?'m':'b';
+const PR=(b,m)=>S.role==='bruna'?b:m;
+const has=k=>!!S.f[k];
+const rl=l=>[l[0]==='P'?me():l[0]==='O'?ot():l[0],l[1],l[2]];
+const K=(label,s,good)=>[label,s,good];
 
-// Scripted turns. Each chip: q quality, reply, think, gain, d deltas, call (customer speaks)
-const SCRIPT={
-bruna:[
- {say:()=>S.flags.yes?"Next week? The schedule is full. Why do I hear about this after you've promised it?":"Thanks for asking first. But next week is already full.",
-  chips:[
-   {q:'good',t:'Fair. What would it take to do this without hurting current customers?',reply:'Honestly? I could free some capacity. Not a hundred tonnes.',think:"She's asking, not telling. That's new.",gain:['m_existing'],d:{trust:12,ceo:4}},
-   {q:'mid',t:'This client is huge. We have to find a way.',reply:'Every client is huge to Commercial. The lines are booked.',think:'Same pressure, still no plan.',d:{trust:-4}},
-   {q:'bad',t:'Operations always blocks growth.',reply:'And Commercial always promises what we can’t make.',think:'Here we go again.',d:{trust:-16,ceo:-12}}],
-  uva:{good:"Thank you both. Manu is protecting deliveries we've already promised. Let's keep that in view.",mid:'Before deciding anything: Manu, what worries you most about next week?',bad:"Let's move from who is right to what each of you needs. Manu, what's your main concern?",rescue:['m_existing']}},
- {say:()=>'So what exactly does the customer need, and by when?',
-  chips:[
-   {q:'good',t:'Good question. Let me ask them which part is truly urgent.',reply:"Do that. I'd rather plan with facts.",think:'Finally, real numbers.',gain:['k_promo'],call:true,d:{trust:8,cust:8}},
-   {q:'mid',t:"All hundred tonnes, next week. That's the deal.",reply:"Then I can't see how we make it.",think:"If it's all or nothing, it's nothing.",d:{trust:-6,cust:-2}},
-   {q:'bad',t:'Does it matter? I already said yes.',reply:"It matters to the customers we'd let down.",think:"She hasn't even asked them.",d:{trust:-14,cust:-4}}],
-  uva:{good:"Asking what's urgent is a good step. Now you're both working with facts.",mid:'Bruna, would it help to check what the customer needs next week versus later?',bad:'Bruna, would it help to check what the customer needs next week versus later?',rescue:['k_promo']}},
- {say:()=>"Look, I'm not trying to block you. I'm trying to protect what we already promised.",
-  chips:[
-   {q:'good',t:'I know. How much could you release safely next week?',reply:"Forty tonnes, without touching anyone else's order.",think:'She heard me.',gain:['m_capacity40'],d:{trust:10,del:4}},
-   {q:'mid',t:"Can't we just run weekend overtime?",reply:'We can, but tired crews make quality mistakes.',think:'Overtime is not a strategy.',gain:['m_quality'],d:{trust:2}},
-   {q:'bad',t:'Push harder. Find the capacity.',reply:'"Push harder" is how we lost the last customer.',think:'She wants a miracle, not a plan.',d:{trust:-12,del:-4}}],
-  uva:{good:"So the question isn't yes or no any more. It's how much, and when.",mid:"Manu, without overtime, what's the safe number for next week?",bad:"Let's slow down. Manu, without overtime, what's the safe number?",rescue:['m_capacity40']}},
- {say:()=>"And next time? I can't keep finding out on a Friday.",
-  chips:[
-   {q:'good',t:'What would help you plan for orders like this?',reply:'Visibility. A six-month forecast, even a rough one.',think:'If I could see it coming, I could say yes.',gain:['m_forecast'],d:{trust:10,ceo:6}},
-   {q:'mid',t:"I'll try to tell you sooner.",reply:"Trying isn't a process.",think:'We need something real.',d:{trust:1}},
-   {q:'bad',t:"That's how sales works. Deal with it.",reply:'Then Operations will keep saying no.',think:'Nothing will change.',d:{trust:-14,ceo:-10}}],
-  uva:{good:'A forecast would give Operations predictability. Could the customer trade one for something they value?',mid:'Manu, what would make future orders easier to plan?',bad:'Manu, what would make future orders easier to plan?',rescue:['m_forecast']}}],
-manu:[
- {say:()=>S.flags.angry?'And once again, Operations is blocking growth before hearing me out.':'Thank you. I know the schedule is tight.',
-  chips:[
-   {q:'good',t:'What does this account mean for us long-term?',reply:'It could become one of our largest accounts. And my target depends on it.',think:"He's actually asking.",gain:['b_longterm','b_target'],d:{trust:12,ceo:4}},
-   {q:'mid',t:"The schedule is full. I can't conjure capacity.",reply:'Then find some. This is growth!',think:'Why is it always no?',d:{trust:-4}},
-   {q:'bad',t:'You care more about your target than this company.',reply:'And you care more about your schedule than our customers.',think:'This is personal now.',d:{trust:-16,ceo:-12}}],
-  uva:{good:"Bruna is thinking about the long-term account, not only this order.",mid:"Let's step back. Bruna, what makes this order so important?",bad:"Let's move from who is right to what each of you needs. Bruna, what makes this order so important?",rescue:['b_longterm','b_target']}},
- {say:()=>'So can you do it or not?',
-  chips:[
-   {q:'good',t:'I can release forty tonnes safely next week. More would hit current customers.',reply:"Forty. Okay, that's something real.",think:'At least I have a number.',d:{trust:10,del:4}},
-   {q:'mid',t:'Maybe, with weekend overtime. Quality could suffer.',reply:'Quality problems would hurt the account too.',think:"I can't sell a risk.",d:{trust:2,del:-4}},
-   {q:'bad',t:'No. Not next week.',reply:"Then I'll have to call them and lose it.",think:"He didn't even look.",d:{trust:-14,cust:-8}}],
-  uva:{good:'A clear number helps. Now you can design around it.',mid:"Manu, is there an amount you could release with no risk at all?",bad:"Manu, is there an amount you could release with no risk at all?"}},
- {say:()=>'They asked for a hundred. What do I tell them?',
-  chips:[
-   {q:'good',t:'Could you ask them which part is truly urgent?',reply:"Good idea. I'll call them now.",think:'I never asked them that.',gain:['k_promo'],call:true,d:{trust:8,cust:8}},
-   {q:'mid',t:"Tell them they'll have to wait.",reply:"They won't wait. They'll switch supplier.",think:"He doesn't see the risk.",d:{trust:-6,cust:-8}},
-   {q:'bad',t:'Not my problem. You made the promise.',reply:"It's the company's problem, Manu.",think:"I'm on my own here.",d:{trust:-14,ceo:-8}}],
-  uva:{good:'Separating urgent from later turns a no into options.',mid:'Bruna, do you know which part of the order is needed next week?',bad:'Bruna, do you know which part of the order is needed next week?',rescue:['k_promo']}},
- {say:()=>'What would make this easier for you next time?',
-  chips:[
-   {q:'good',t:'A forecast. If I see demand early, I can plan for it.',reply:'I could ask them for a six-month forecast.',think:"That's something I can actually get.",d:{trust:10,ceo:6}},
-   {q:'mid',t:'Ask me before you say yes.',reply:'Fair. But I need answers fast.',think:"He's not wrong.",d:{trust:3}},
-   {q:'bad',t:"Stop selling what we can't make.",reply:'Stop treating every order like a threat.',think:'Same fight, every month.',d:{trust:-14,ceo:-10}}],
-  uva:{good:'A forecast in exchange for priority planning could work for both sides.',mid:'Manu, what would help you plan future orders?',bad:'Manu, what would help you plan future orders?'}}]};
+// ---------- the story: scenes are built from the current state, so choices ripple ----------
+const SC={
+call(){return{chap:'Chapter 1 · The call',
+ intro:PR([['n','Algarve Grapes, Lagoa. Eight forty-two on a Monday morning. The phone rings.'],['c','Bruna, we have an urgent request. Can you deliver an additional one hundred tonnes next week?']],
+  [['n',"Lagoa, Monday morning. Manu is finishing next week's production plan when Bruna walks in."],['O',"Manu, great news! A major European supermarket wants one hundred extra tonnes. Next week! I've already said yes."]]),
+ choices:PR([
+  {t:'Absolutely! Consider it done.',res:[['c',"Wonderful. I'll tell my team it's confirmed."]],d:{cust:8,trust:-8},set:{committed:1},rip:['You promised 100 t before asking Operations.',0],k:[K('Committing before your team is aligned',2,0)]},
+  {t:'Let me check with Operations and call you back by five.',res:[['c','Fine, but we need an answer today.']],d:{cust:-3,trust:4},rip:['You bought time to align with Operations first.',1],k:[K('Prepare together before the table',2,1)]},
+  {t:'We want this. Which part do you need most urgently?',res:[['c',CUST]],d:{cust:4},gain:['k_promo'],rip:['You asked about interests and learned the real deadline.',1],k:[K('Positions vs interests',1,1)]}],
+ [{t:'Once again, Commercial committed without asking Operations.',res:[['O','And once again, Operations is blocking growth before hearing me out.','Here we go again.']],d:{trust:-12,ceo:-6},set:{angry:1},rip:['Bruna heard blame, not a question.',0],k:[K('Villain story',3,0)]},
+  {t:'Okay. Walk me through it. What exactly did they ask for?',res:[['O','One hundred tonnes, next week. It could become one of our biggest accounts.',"He's actually listening."]],d:{trust:6},gain:['b_longterm'],rip:['You listened first. Bruna noticed.',1],k:[K('Active listening, step one of the FBI stairway',5,1)]},
+  {t:'Then call them back and say no. The schedule is full.',res:[['O',"I'm not calling anyone. If you won't help, I'm going to João.","He didn't even look."]],d:{trust:-10,cust:-4},set:{angry:1,threat:1},rip:['A flat no turned this into a power contest.',0],k:[K('A position used as a wall',3,0)]}])};},
+channel(){return{chap:'Chapter 2 · First contact',
+ intro:[['n',PR('Bruna needs Operations on board before five. How does she start the conversation?','Bruna wants an answer before five. How does Manu start the conversation?')]],
+ tip:'Hard conversations go better live and side by side than by message.',
+ choices:PR([
+  {t:'Send Manu a quick message: need 100 t next week, can you make it work?',res:[['O','Next week? The schedule has been full for a month. Thanks for the heads-up.','Another drive-by request.']],d:{trust:-8},set:{ch:'text'},rip:['Text strips the tone. Manu read it as an order.',0],k:[K('Text is the worst channel for conflict',4,0)],u:'Messages lose tone. Could you two talk live for ten minutes?',act:'Tone check: moved a tense message to a live talk'},
+  {t:'Book a meeting room and sit across the table from him.',res:[['O','A meeting room. This must be serious.',"Across the table. She's here to win."]],d:{trust:-2},set:{ch:'across'},rip:['Across the table feels like a contest.',0],k:[K('Seating: across the table signals competition',3,0)],u:'Shall we sit on the same side of the problem?',act:'Suggested a cooperative seating'},
+  {t:'Walk over with two coffees and sit beside him.',res:[['O','Coffee. Okay, what do you need?','At least she came in person.']],d:{trust:6},set:{ch:'side'},rip:['Side by side, the problem sits in front of you both.',1],k:[K('Seating: side by side signals cooperation',3,1)],u:"Good setup. Let's start with how each of you sees it."}],
+ [{t:"Reply later by message once you've checked the schedule.",res:[['O',"A message? I've got a customer waiting, Manu.","He's hiding behind his inbox."]],d:{trust:-8,cust:-2},set:{ch:'text'},rip:['Text strips the tone. Bruna felt brushed off.',0],k:[K('Text is the worst channel for conflict',4,0)],u:'Messages lose tone. Could you two talk live for ten minutes?',act:'Tone check: moved a tense message to a live talk'},
+  {t:'Call her into your office and sit behind your desk.',res:[['O',"Fine. I'm here. Let's hear the no.",'Across a desk, like a hearing.']],d:{trust:-2},set:{ch:'across'},rip:['Behind a desk, it felt like a hearing.',0],k:[K('Seating: across the table signals competition',3,0)],u:'Shall we sit on the same side of the problem?',act:'Suggested a cooperative seating'},
+  {t:'Pull up two chairs at the planning board, side by side.',res:[['O','Okay. Show me what the week really looks like.',"He's letting me see the real schedule."]],d:{trust:6},set:{ch:'side'},rip:['Side by side, the problem sits in front of you both.',1],k:[K('Seating: side by side signals cooperation',3,1)],u:"Good setup. Let's start with how each of you sees it."}])};},
+story(){return{chap:'Chapter 2 · Two stories',
+ intro:[PR(has('committed')?['O','So. Did you already promise them?']:['O',"So what's the request?"],has('angry')?['O','So? Are you going to help or not?']:['O','So, can we do it?'])],
+ tip:'Describe the situation the way a neutral observer would: two views, no blame.',
+ choices:PR([
+  {t:'I think we see this differently. Let me share how I see it, then I want to hear your side.',res:[['O',"Fair. I'll hear you out.","No blame. That's new."]],d:{trust:8},set:{angry:0},rip:['You opened with the Third Story: two views, no blame.',1],k:[K('The Third Story',3,1)],u:"Thank you. Two views and no blame. That's a strong start."},
+  {t:'Operations blocks every big order. This one matters.',res:[['O','Blocks? We protect the customers you already sold to.','So I am the villain again.']],d:{trust:-10},set:{angry:1},rip:['A villain story. Manu is now defending, not listening.',0],k:[K('Villain story',3,0)],u:"Let's move from who is right to what each of you needs.",act:'Turned blame into needs'},
+  {t:'I had no choice. The customer needed an answer on the spot.',res:[['O','You always have a choice. You could have called me.',"So now it's my problem."]],d:{trust:-4},rip:['A helpless story hands the problem to Manu.',0],k:[K('Helpless story',3,0)],u:"Let's look at the choices you both still have. Nothing is decided yet.",act:'Reopened options after a helpless story'}],
+ [{t:"I think we see this differently. Tell me how you see it, then I'll share mine.",res:[['O','Thank you. This client could become one of our largest accounts.',"He's actually asking."]],d:{trust:8},set:{angry:0},gain:['b_longterm'],rip:['You opened with the Third Story: two views, no blame.',1],k:[K('The Third Story',3,1)],u:"Thank you. Two views and no blame. That's a strong start."},
+  {t:'Commercial sells first and thinks later. Every time.',res:[['O','And Operations says no first and thinks never.','This is personal now.']],d:{trust:-10},set:{angry:1},rip:['A villain story. Bruna is now defending, not listening.',0],k:[K('Villain story',3,0)],u:"Let's move from who is right to what each of you needs.",act:'Turned blame into needs'},
+  {t:"There's nothing I can do. The lines are booked.",res:[['O',"Nothing? You haven't even looked.",'He gave up before we started.']],d:{trust:-4},rip:['A helpless story closes every door at once.',0],k:[K('Helpless story',3,0)],u:"Let's look at the choices you both still have. Nothing is decided yet.",act:'Reopened options after a helpless story'}])};},
+heat(){return{chap:'Chapter 2 · The heat',
+ intro:[PR(['O','Every month it is the same. You promise, my crews work weekends, and nobody asks us first!'],['O','Every time I bring growth, I get a lecture about schedules! I have a target too!'])],
+ tip:'Anger that built up over time needs listening, not matching.',
+ choices:[
+  {t:PR("You're right to be frustrated. Tell me what this does to your team's week.","You're under real pressure. Tell me what's riding on this."),res:[PR(['O','Honestly? Current orders slip, and the crews are already tired.','Finally, someone asks.'],['O','My target, yes. But mostly a key account we may never get again.','He gets it.'])],d:{trust:10},gain:PR(['m_existing','m_quality'],['b_target','b_longterm']),set:{angry:0},rip:['You treated it as genuine anger: you acknowledged it and let it out.',1],k:[K('Handling genuine anger',5,1)],u:'That took courage. Feelings first, then facts.',calm:1},
+  {t:PR("Don't raise your voice at me. This order is happening.","Don't shout at me. The answer is still no."),res:[PR(['O','Then it happens without Operations.','She wants a fight.'],['O',"Then I'm taking it to João.",'He wants a fight.'])],d:{trust:-12,ceo:-6},set:{escalate:1},rip:['Power-matching is for strategic anger. This anger was genuine.',0],k:[K('Matching genuine anger with power',5,0)],u:'Strong words on both sides. Let me speak with each of you separately for a few minutes.'},
+  {t:"Let's take ten minutes and come back with fresh heads.",res:[PR(['O','Fine. Ten minutes.','Maybe that is wise.'],['O','Fine. But the customer is waiting.','At least he did not slam the door.'])],d:{trust:4,ceo:-2},set:{angry:0},rip:['You went to the balcony instead of reacting.',1],k:[K('Go to the balcony',5,1)],u:'A short break often saves the conversation.',act:'Backed a cooling-off break'}]};},
+joao(){return{chap:"Chapter 2 · João's office",
+ intro:[['n',"Ten minutes later, both directors are standing in João's office."],['j','I have a board call at eleven. What do you need from me?']],
+ choices:[
+  {t:'Decide for us. You are the CEO.',res:[['j','Fine. We ship the hundred tonnes. Operations, make it work.']],d:{cust:10,del:-22,trust:-16,ceo:-25},set:{path:'power'},rip:['Power settled it fast. Someone had to lose.',0],k:[K('Power: who is stronger?',3,0)]},
+  {t:'We need a rule. Who signs off on large orders?',res:[['j',"From today, any order over fifty tonnes needs Operations' sign-off first. That includes this one."]],d:{cust:-14,trust:-4,ceo:-12,del:6},set:{path:'rights'},rip:['Rights gave you a fair rule, but the customer was still waiting.',0],k:[K('Rights: who is right?',3,0)]},
+  {t:"Give us one hour. We'll come back with a plan together.",res:[['j','One hour. Then I decide.']],d:{trust:6,ceo:-8},set:{escalate:0},rip:['You kept the decision with the people closest to it.',1],k:[K('Interests before rights and power',3,1)]}]};},
+ask1(){return askScene(1)},ask2(){return askScene(2)},
+customer(){const D=S.deal,tot=D.w1+D.w2,fails=D.w1<40||tot<100,x=S.final||computeDeal();
+ const ask=D.w1<40?"That won't cover our launch. We need at least forty tonnes next week.":tot<100?"We need the full hundred. Otherwise we'll have to look elsewhere.":'Could you push next week to sixty? Otherwise we may have to look elsewhere.';
+ return{chap:'Chapter 4 · The customer',
+ intro:[x.says[0],['n','Bruna puts the customer on speakerphone.'],['c',ask]],
+ tip:'If you give something, get something back. And a threat is not a reason to give in.',
+ choices:[
+  {t:PR('We can look at more, if you share a six-month forecast so we can plan for it.','With a six-month forecast, we can plan for more next time. This week, our plan is the reliable one.'),res:[fails?['c',"I understand, but without the volume we can't launch. We'll go elsewhere."]:['c',"That's fair. Let's go with your plan, and we'll send the forecast."]],d:fails?{cust:-22}:{cust:6,trust:4},set:fails?{lost:1}:{fcPromised:1},rip:fails?['A good trade, but the plan itself did not cover their need.',0]:['You traded: more volume later for a forecast now.',1],k:[K('Concessions: quid pro quo',1,1)]},
+  {t:"Okay. Whatever you need, we'll make it work.",res:[['c','Perfect, thank you!']],d:{cust:8,del:-16,trust:-10},set:{gaveIn:1},rip:['A concession for nothing: the customer smiled, Operations paid.',0],k:[K('Conceding under pressure',1,0)]},
+  {t:"I hope you're not saying you'd walk away. Here's why our plan is the reliable one.",res:[fails?['c',"I'm sorry. Without the volume, we really can't wait."]:['c','No, no. We just need to be sure of the launch.']],d:fails?{cust:-18}:{cust:2,trust:4},set:fails?{lost:1}:{},rip:fails?['Calm and firm, but the plan did not cover their need.',0]:['You named the threat calmly and did not give in.',1],k:[K('Responding to a threat',5,1)]}]};}
+};
+function askScene(n){
+ const used=S.f.asked||[];
+ const opts=PR([
+  {id:'q1',t:'What would need to be true for you to release some volume safely?',res:[['O',"Forty tonnes, without touching anyone else's order.",'She asked instead of pushing.']],gain:['m_capacity40','m_existing'],d:{trust:6},rip:['A good question revealed the safe number.',1],k:[K('Open questions uncover interests',4,1)],u:'Good question. Now you both know the safe number.'},
+  S.found.has('k_promo')
+   ?{id:'q2',t:'Call the customer: would they share a demand forecast?',res:[['c',FCOK]],gain:['k_fcok'],d:{cust:2},rip:['You found something the customer can give that costs them little.',1],k:[K('More issues, more currency',1,1)],u:'A new issue on the table. That gives you something to trade.'}
+   :{id:'q2',t:'Step out and call the customer: which part is truly urgent?',res:[['c',CUST]],gain:['k_promo'],d:{cust:4},rip:["You checked the customer's real need instead of guessing.",1],k:[K("Ask, don't assume",3,1)],u:'Now you are working with facts, not assumptions.'},
+  {id:'q3',t:"Let's be practical: give me eighty tonnes next week.",res:[['O','Eighty? Impossible. Forty is my safe limit.','Is she even listening?']],gain:['m_capacity40'],d:{trust:-5},rip:['Your anchor pulled out a real number, at a cost in goodwill.',0],k:[K('Anchoring a colleague, not a counterpart',1,0)],u:'Manu, you mentioned forty. What makes that the safe number?',act:'Turned an anchor into a question'},
+  {id:'q4',t:'What would make orders like this easier to plan in future?',res:[['O','Visibility. A six-month forecast, even a rough one.','If I could see it coming, I could say yes.']],gain:['m_forecast'],d:{trust:6,ceo:2},rip:['You found what Operations really needs: predictability.',1],k:[K('Interests behind the position',1,1)],u:'Predictability. That might be something the customer can help with.'}],
+ [{id:'q1',t:'What does this account mean for us long-term?',res:[['O','It could become one of our largest accounts. And my target depends on it.','He is actually asking.']],gain:['b_longterm','b_target'],d:{trust:6},rip:['A good question showed what is really at stake for Bruna.',1],k:[K('Open questions uncover interests',4,1)],u:'So this is about the long-term account, not only this order.'},
+  S.found.has('k_promo')
+   ?{id:'q2',t:'Could you ask them for a demand forecast?',res:[['O',"I'll ask."],['c',FCOK]],gain:['k_fcok'],d:{cust:2,trust:2},rip:['You found something the customer can give that costs them little.',1],k:[K('More issues, more currency',1,1)],u:'A new issue on the table. That gives you something to trade.'}
+   :{id:'q2',t:'Could you ask the customer which part is truly urgent?',res:[['O',"Good idea. I'll call them now."],['c',CUST]],gain:['k_promo'],d:{trust:4,cust:4},rip:["You asked about the customer's real need instead of assuming.",1],k:[K("Ask, don't assume",3,1)],u:'Now you are working with facts, not assumptions.'},
+  {id:'q3',t:"Here's what I can do safely: forty tonnes next week.",res:[['O',"Forty. Okay, that's something real.",'At least I have a number.']],d:{trust:6},rip:['Sharing your real limit built trust.',1],k:[K('Trust: share information',1,1)],u:'A clear number helps. Now you can design around it.'},
+  {id:'q4',t:'Best case, twenty tonnes. Take it or leave it.',res:[['O',"Twenty won't even cover their launch.",'An ultimatum. Great.']],d:{trust:-8,cust:-2},rip:['An ultimatum put Bruna on the defensive.',0],k:[K('Take-it-or-leave-it ultimatum',5,0)],u:'Manu, is twenty the safe limit, or a starting point?',act:'Questioned an ultimatum'}]);
+ return{chap:`Chapter 3 · What's underneath (${n} of 2)`,
+  intro:[['n',n===1?'Time to look underneath the positions. You have time for two moves.':'One more move before you build the deal.']],
+  tip:'Open questions reveal what is underneath. Each move uncovers something different.',
+  choices:opts.filter(o=>!used.includes(o.id))};
+}
+const SCENES=['call','channel','story','heat','joao','ask1','ask2','customer'];
+function nextScene(id){const o=['call','channel','story','heat','joao','ask1','ask2','deal','customer','end'];let i=o.indexOf(id)+1;
+ for(;;){const s=o[i];if(S.f.path&&s!=='end'){i=o.length-1;continue}if(s==='heat'&&!S.f.angry){i++;continue}if(s==='joao'&&!S.f.escalate){i++;continue}return s}}
+function computeDeal(){
+ const D=S.deal,cap=40+(D.ot?15:0)+(D.pg?20:0),over=Math.max(0,D.w1-cap),tot=D.w1+D.w2;
+ const d={cust:(D.w1>=40?10:-Math.round((40-D.w1)*0.8))+(tot>=100?8:-Math.round((100-tot)*0.4))+(D.pr?6:0)+(D.fc&&!D.pr?-6:0),
+  del:-Math.round(over*0.9)+(D.ot?-6:0)+(D.pg?-4:0)+(D.fc?8:0)+(D.w1<=40&&!D.ot?6:0),
+  trust:(D.fc?6:0)+(D.pr?3:0)+(over>0?-12:0)+(over===0&&tot>=100?8:0),
+  ceo:(over>0?-10:6)+(D.fc&&D.pr?4:0)};
+ const says=[S.role==='bruna'?['m',over>0?DS.m_over:D.ot?DS.m_ot:D.fc?DS.m_fc:DS.m_ok]:['b',D.w1<40?DS.b_low:tot<100?DS.b_short:D.pr&&D.fc?DS.b_good:DS.b_ok]];
+ return{d,says,cap,over};
+}
+function endingId(){const f=S.f,D=S.deal,x=S.final||{};
+ if(f.path==='power')return'referee';if(f.path==='rights')return'rulebook';
+ if(f.lost)return S.m.trust>=60?'cleanno':'walkout';
+ if(f.gaveIn)return'gaveaway';
+ if(x.over>0||D.ot)return'scars';
+ if(D.fc&&D.pr&&S.m.trust>=65&&S.m.cust>=60)return'pie';
+ return'compromise';}
+// every scripted line, so each can be recorded in advance
+function ALL_LINES(){
+ const L=[],keep={role:S.role,f:S.f,found:S.found,deal:S.deal,final:S.final};
+ const DEALS=[{w1:30,w2:70},{w1:40,w2:40},{w1:40,w2:60,fc:true,pr:true},{w1:60,w2:40,ot:true},{w1:100,w2:0},{w1:40,w2:60,fc:true}];
+ const add=ls=>ls.forEach(l=>{if(l&&l[1])L.push(rl(l))});
+ for(const role of['bruna','manu']){S.role=role;
+  for(const cm of[0,1])for(const an of[0,1])for(const pk of[0,1])for(const dl of DEALS){
+   S.f={committed:cm,angry:an,asked:[]};S.found=new Set(OWN[role]);if(pk)S.found.add('k_promo');
+   S.deal=Object.assign({w1:100,w2:0,fc:false,pr:false,ot:false,pg:false},dl);S.final=computeDeal();
+   for(const id of SCENES){const sc=SC[id]();add(sc.intro);sc.choices.forEach(c=>{add([['P',c.t]]);add(c.res||[]);if(c.u)L.push(['u',c.u])})}}
+  L.push(['u',SUMMARY[role]],['u',CAUCUS[role].t]);
+ }
+ Object.assign(S,keep);
+ L.push(['u',UVA_HELLO],['n','Three months later.'],['j',PILOT]);for(const k in DS)L.push([k[0],DS[k]]);
+ for(const e in ENDINGS){L.push(['n',ENDINGS[e].line]);if(ENDINGS[e].j)L.push(['j',ENDINGS[e].j])}
+ const seen=new Set();return L.filter(([w,t])=>{const k=w+'|'+t;if(seen.has(k))return false;seen.add(k);return true});
+}
+window.UVA_LINES=()=>ALL_LINES().map(([w,t])=>({w,t,k:hk(w,t)}));
 
 // ---------- small DOM helpers ----------
 function el(tag,cls,text){const e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e}
@@ -267,13 +363,13 @@ function discoverable(){return Object.keys(IN).filter(id=>!OWN[S.role].includes(
 function gain(ids){const n=[];(ids||[]).forEach(id=>{if(IN[id]&&!S.found.has(id)){S.found.add(id);n.push(id)}});if(n.length){renderBoard(n);blip()}return n}
 function renderBoard(fresh=[]){
  const g={b:'Bruna needs',m:'Manu needs',k:'Key facts',s:'Shared goal'};
- const B=$('board');B.replaceChildren();
+ const B0=$('board');B0.replaceChildren();const B=el('div');B.id='bin';B0.append(B);
  const disc=discoverable(),got=disc.filter(i=>S.found.has(i)).length;
- B.append(el('div','eb','Interest board'),el('h3',null,`${got} of ${disc.length} uncovered`));
+ B.append(el('div','eb',S.uva?'UVA interest map':'Your notes'),el('h3',null,`${got} of ${disc.length} uncovered`));
  for(const w in g){const box=el('div','grp');box.append(el('div','eb',g[w]));
   Object.keys(IN).filter(id=>IN[id].who===w).forEach(id=>{const f=S.found.has(id);const it=el('div','it'+(f?'':' off')+(f&&(w==='k'||w==='s')?' '+w:'')+(fresh.includes(id)?' new':''),f?IN[id].label:'Not uncovered yet');box.append(it)});
   B.append(box)}
- B.append(el('div','note',S.uva?'UVA adds what it hears. Positions are what people demand; interests are why.':'No mediator this time. You only learn what people tell you.'));
+ B.append(el('div','note',S.uva?'UVA maps what it hears. Positions are what people demand; interests are why.':'No mediator this time. You only learn what people tell you.'));
  $('boardBtn').textContent=`Interests ${got}/${disc.length}`;
 }
 function lineEl(w,text,think){
@@ -320,156 +416,117 @@ function beat(lines,label,next){
  const r=el('div','row');r.append(btn('pill',label,next));P.append(r);
  playLines(lines,show);
 }
-// every scripted line, so each can be recorded in advance
-function ALL_LINES(){
- const L=[],sv={role:S.role,flags:S.flags};
- for(const role of['bruna','manu']){S.role=role;const m=role==='bruna'?'b':'m',o=role==='bruna'?'m':'b';
-  CALL[role].open.forEach(l=>L.push(l));CALL[role].chips.forEach(c=>L.push([m,c.t]));
-  SCRIPT[role].forEach(T=>{[{},{yes:true},{yes:true,angry:true}].forEach(f=>{S.flags=f;L.push([o,T.say()])});T.chips.forEach(c=>L.push([m,c.t],[o,c.reply]));['good','mid','bad'].forEach(q=>{if(T.uva[q])L.push(['u',T.uva[q]])})});
-  L.push(['u',SUMMARY[role]])}
- S.role=sv.role;S.flags=sv.flags;
- L.push(['c',CUST]);for(const k in DS)L.push([k[0],DS[k]]);L.push(['n','Three months later.']);STORIES.forEach(x=>L.push(['n',x]));L.push(['j',PILOT]);
- const seen=new Set();return L.filter(([w,t])=>{const k=w+'|'+t;if(seen.has(k))return false;seen.add(k);return true});
-}
-window.UVA_LINES=()=>ALL_LINES().map(([w,t])=>({w,t,k:hk(w,t)}));
-
 // ---------- stages ----------
-function go(st){stopAudio();S.stage=st;({title:renderTitle,call:renderCall,turn:renderTurn,deal:renderDeal,end:renderEnd})[st]();if(R)R.cam(st)}
-function reset(){S.t=0;S.m={cust:60,del:70,trust:55,ceo:80};S.found=new Set(OWN[S.role]);S.log=[];S.flags={};S.deal={w1:100,w2:0,fc:false,pr:false,ot:false,pg:false};renderMeters();renderBoard()}
-
+function toast(t,good){const T=$('toast');T.replaceChildren();const d=el('i');d.style.background=good?'var(--green)':'var(--amber)';T.append(d,el('span',null,t));T.classList.add('on');clearTimeout(T._t);T._t=setTimeout(()=>T.classList.remove('on'),3800)}
+function go(st){stopAudio();S.stage=st;if(st==='title')renderTitle();else if(st==='deal')renderDeal();else if(st==='end')renderEnd();else runScene(st);if(R)R.cam(st)}
+function reset(){S.m={cust:60,del:70,trust:55,ceo:80};S.f={asked:[]};if(S.role==='manu')S.f.committed=1;S.found=new Set(OWN[S.role]);S.hist=[];S.rip=[];S.ks=[];S.acts=[];S.dmg=0;S.tips=0;S.reinf=0;S.final=null;S.seed=Math.floor(Math.random()*1e6);
+ S.deal={w1:100,w2:0,fc:false,pr:false,ot:false,pg:false};renderMeters();renderBoard()}
 function renderTitle(){
  chap('Lagoa, 08:42');setPanel(true);
  P.append(el('div','eb','A story game about disagreeing better'),el('h1',null,'The Negotiation Table'),
-  el('p','sub','A European supermarket wants 100 extra tonnes of grapes, next week. The schedule is already full. Commercial and Operations have four turns to find a deal, or lose the customer.'));
+  el('p','sub','A supermarket wants 100 extra tonnes of grapes next week, and the schedule is full. Every choice ripples through the story. There are eight endings. Play once with UVA, the AI mediator, and once without.'));
  const seg=el('div','seg');seg.setAttribute('role','group');
  [['bruna','Play Bruna · Commercial'],['manu','Play Manu · Operations']].forEach(([r,t])=>{const b=btn('',t,()=>{S.role=r;renderTitle()});b.setAttribute('aria-pressed',S.role===r);seg.append(b)});
- const sw=el('label','sw');sw.append(el('span',null,'UVA mediates the conversation'));const cb=el('input');cb.type='checkbox';cb.id='uvaToggle';cb.checked=S.uva;cb.onchange=()=>{S.uva=cb.checked;if(R)R.mood()};sw.append(cb);
+ const sw=el('label','sw');sw.append(el('span',null,'UVA mediates the conversation'));const cb=el('input');cb.type='checkbox';cb.id='uvaToggle';cb.checked=S.uva;cb.onchange=()=>{S.uva=cb.checked;if(R)R.mood();renderBoard()};sw.append(cb);
  P.append(seg,sw);
- const r=el('div','row');r.append(btn('pill','Start the morning',()=>{reset();go('call')}));
- if(S.live)r.append(el('span','pillTag','Live AI on: type your own replies'));
- P.append(r);
- if(S.runs.length)P.append(el('div','runs sub','Your runs: '+S.runs.map(x=>`${NAME[x.role==='bruna'?'b':'m']}, UVA ${x.uva?'on':'off'}: ${x.score}`).join(' · ')));
+ const r=el('div','row');r.append(btn('pill','Start the morning',()=>{reset();go('call')}));P.append(r);
+ if(S.ends.length)P.append(el('div','runs sub',`Endings found: ${S.ends.length} of 8 · `+S.ends.map(e=>ENDINGS[e].t).join(', ')));
 }
-function renderCall(){
- chap('Chapter 1 · The call');setPanel();
- const C=CALL[S.role],show=showLines(C.open);
- const c=el('div','chips');C.chips.forEach(o=>c.append(btn('chip',o.t,()=>{S.log.push([me(),o.t]);S.carry=[me(),o.t];o.f();go('turn')})));P.append(c);
- if(S.role==='bruna'&&AU.on&&AU.ctx){ring();S.speaker='b';setTimeout(()=>{if(S.stage==='call')playLines(C.open,show)},1500)}else playLines(C.open,show);
+function order(id,ch){return ch.map(c=>({c,k:hk('',S.seed+id+c.t)})).sort((a,b)=>a.k<b.k?-1:1).map(x=>x.c)}
+function runScene(id){
+ S.scene=id;const sc=SC[id]();chap(sc.chap);setPanel();
+ const intro=sc.intro.map(rl),show=showLines(intro);
+ if(sc.tip&&S.f.met)S.tips=(S.tips||0)+1;
+ if(S.uva&&sc.tip&&S.f.met){const t=el('div','tip');t.append(el('b',null,'UVA suggests'),el('span',null,sc.tip));P.append(t)}
+ const box=el('div','chips');order(id,sc.choices).forEach(c=>box.append(btn('chip',c.t,()=>choose(id,sc,c))));P.append(box);
+ S.speaker=intro.length?intro[intro.length-1][0]:null;playLines(intro,show);
 }
-function renderTurn(){
- const T=SCRIPT[S.role][S.t];chap(`Chapter 2 · The table · Turn ${S.t+1} of 4`);setPanel();
- const say=T.say();
- if(!S.liveSaid){const ls=(S.carry?[S.carry]:[]).concat([[ot(),say]]);S.carry=null;S.log.push([ot(),say]);const show=showLines(ls);playLines(ls,show)}else{P.append(lineEl(ot(),S.liveSaid))}
- S.liveSaid=null;S.speaker=ot();
- const c=el('div','chips');T.chips.forEach((ch,i)=>c.append(btn('chip',ch.t,()=>choose(i))));P.append(c);
- if(S.live){const f=el('form','ask');const i=el('input');i.id='say';i.placeholder='Or say it in your own words…';i.maxLength=300;i.autocomplete='off';const b=el('button','pill','Say');b.type='submit';f.append(i,b);f.onsubmit=e=>{e.preventDefault();const v=i.value.trim();if(v&&!S.busy)liveTurn(v)};P.append(f)}
-}
-function afterTurn(lines){
- S.t++;
- const next=S.t>=4?()=>{if(S.uva){gain(['s_goal']);const sum=SUMMARY[S.role];beat([['u',sum]],'Build the deal',()=>go('deal'))}else go('deal')}:()=>go('turn');
- beat(lines,S.t>=4?'Continue':'Next turn',next);
-}
-function choose(ci){
- const T=SCRIPT[S.role][S.t],c=T.chips[ci];
- apply(c.d,c.q==='bad'?(S.uva?0.6:1.5):1);
- const lines=[[me(),c.t],[ot(),c.reply,c.think]];S.log.push([me(),c.t],[ot(),c.reply]);
- let fresh=gain(c.gain);
- if(c.call)lines.push(['c',CUST]);
- if(S.uva){lines.push(['u',T.uva[c.q]]);if(c.q!=='good'&&T.uva.rescue){const n=gain(T.uva.rescue);if(n.includes('k_promo'))lines.push(['c',CUST]);apply({trust:3})}}
- afterTurn(lines);
-}
-async function liveTurn(text){
- S.busy=true;const T=SCRIPT[S.role][S.t];const O=NAME[ot()],Pn=NAME[me()];
- const note=el('div','note','…'+O+(S.uva?' and UVA are':' is')+' thinking');P.append(note);
- const facts=S.role==='bruna'
-  ?'He can release 40 t next week safely without hurting current customers (id m_capacity40). He protects current customers\' deliveries (m_existing). Overtime hurts quality (m_quality). He wants predictability through a demand forecast (m_forecast).'
-  :'The account could become one of the company\'s largest (b_longterm). Her sales target depends on it (b_target).';
- const persona=S.role==='bruna'?'Manu, Operations Director: calm, analytical, protective of quality, tired of surprises':'Bruna, Commercial Director: energetic, ambitious, customer-focused, afraid of losing the deal';
- const open=discoverable().filter(i=>!S.found.has(i)&&i!=='s_goal').map(i=>`${i} = ${IN[i].label}`).join('; ')||'none';
- const prompt=`You are the game engine of "The Negotiation Table", a short negotiation game at Algarve Grapes, a Portuguese grape exporter.
-The player is ${Pn}. You voice ${persona}${S.uva?', and UVA, a calm, neutral AI mediator':''}.
-Situation: a major European supermarket asked for 100 extra tonnes next week. The production schedule is full. ${S.flags.yes?'Bruna already said yes to the customer without asking Operations.':'Bruna has not committed yet.'}
-${O}'s private facts, revealed only when the player asks a genuine open question about needs or constraints, never when blamed: ${facts}
-Customer's private fact: they need 40 t next week for a promo launch and the other 60 t can follow a week later (id k_promo). Only if someone asks the customer what is truly urgent, put the customer's one-sentence answer in "customer".
-${O} reacts to tone: blame, ultimatums and sarcasm lower trust and make them defensive; curiosity, acknowledgement and sharing information raise trust. Stay in character, plain spoken, no stage directions.
-${S.uva?'UVA never takes sides, never decides, never proposes the final deal. It reflects interests, turns blame into needs, and asks one open question. One or two sentences.':'There is no mediator in this session, so "uva" must be "".'}
-Interest ids still hidden from the player: ${open}. Include an id in "interests" only if this reply actually reveals it.
-Conversation so far:
-${S.log.slice(-8).map(([w,t])=>`${NAME[w]}: ${t}`).join('\n')}
-${Pn} now says: ${JSON.stringify(text.slice(0,300))}
-Answer with JSON only: {"reply": "${O}'s answer, under 35 words", "think": "${O}'s unspoken feeling, under 14 words", "customer": "", "uva": "", "interests": [], "delta": {"trust": 0, "cust": 0, "del": 0, "ceo": 0}} with deltas as integers: trust -20..15, cust -15..10, del -15..10, ceo -15..8.`;
- let v=null;
- try{v=await S.live.json(prompt,{modelTier:'quick'})}catch(e){if(e&&e.code==='not_granted'){S.live=null}else{try{const r=await S.live(prompt,{modelTier:'quick'});const s=r.text;v=JSON.parse(s.slice(s.indexOf('{'),s.lastIndexOf('}')+1))}catch(e2){v=null}}}
- S.busy=false;
- if(!v||typeof v.reply!=='string'||!v.reply.trim()){note.textContent='The live AI did not answer this time. Pick one of the replies above.';return}
- const d=v.delta||{},lim={trust:[-20,15],cust:[-15,10],del:[-15,10],ceo:[-15,8]},dd={};
- for(const k in lim){const n=Math.round(Number(d[k])||0);dd[k]=Math.max(lim[k][0],Math.min(lim[k][1],n))}
- apply(dd,S.uva?0.7:1.3);
- const lines=[[me(),text],[ot(),String(v.reply).slice(0,280),typeof v.think==='string'?v.think.slice(0,120):'']];
- S.log.push([me(),text],[ot(),String(v.reply).slice(0,280)]);
- gain((Array.isArray(v.interests)?v.interests:[]).filter(i=>discoverable().includes(i)&&i!=='s_goal'));
- if(typeof v.customer==='string'&&v.customer.trim()){lines.push(['c',v.customer.slice(0,200)]);gain(['k_promo'])}
- if(S.uva&&typeof v.uva==='string'&&v.uva.trim())lines.push(['u',v.uva.slice(0,280)]);
- afterTurn(lines);
-}
-
-function computeDeal(){
- const D=S.deal,cap=40+(D.ot?15:0)+(D.pg?20:0),over=Math.max(0,D.w1-cap),tot=D.w1+D.w2;
- const d={cust:(D.w1>=40?12:-Math.round((40-D.w1)*0.8))+(tot>=100?10:-Math.round((100-tot)*0.4))+(D.pr?6:0)+(D.fc&&!D.pr?-6:0),
-  del:-Math.round(over*0.9)+(D.ot?-6:0)+(D.pg?-4:0)+(D.fc?8:0)+(D.w1<=40&&!D.ot?6:0),
-  trust:(D.fc?6:0)+(D.pr?3:0)+(over>0?-12:0)+(over===0&&tot>=100?8:0),
-  ceo:(over>0?-10:6)+(D.fc&&D.pr?4:0)};
- const says=[];
- if(S.role==='bruna')says.push(['m',over>0?DS.m_over:D.ot?DS.m_ot:D.fc?DS.m_fc:DS.m_ok]);
- else says.push(['b',D.w1<40?DS.b_low:tot<100?DS.b_short:D.pr&&D.fc?DS.b_good:DS.b_ok]);
- says.push(['c',D.w1<40?DS.c_low:tot<100?DS.c_short:D.fc&&!D.pr?DS.c_fc:D.pr?DS.c_pr:DS.c_ok]);
- return{d,says,cap,over};
+function choose(id,sc,c){
+ S.hist.push(id);
+ const negs=Object.values(c.d||{}).filter(v=>v<0).reduce((a,v)=>a-v,0),k=S.uva?0.6:1.3;
+ S.dmg+=negs*Math.abs(1.3-k)*(S.uva?1:-1);
+ apply(c.d||{},k);
+ if(c.set)for(const x in c.set)S.f[x]=c.set[x];
+ if(c.id)S.f.asked=(S.f.asked||[]).concat(c.id);
+ const lines=[['P',c.t]].concat(c.res||[]).map(rl);
+ gain(c.gain);
+ if(c.rip){S.rip.push(c.rip);toast(c.rip[0],c.rip[1])}
+ (c.k||[]).forEach(x=>S.ks.push(x));
+ const act=(a)=>S.acts.push([a,S.uva]);
+ if(id==='channel'&&S.uva&&!S.f.met){S.f.met=1;lines.push(['u',UVA_HELLO])}
+ if(id==='channel'&&!S.uva)S.f.met=1;
+ if(c.u&&S.uva)lines.push(['u',c.u]);
+ if(c.act)act(c.act);else if(c.u&&S.f.met)S.reinf=(S.reinf||0)+1;
+ if(id==='heat'){
+  if(S.f.threat&&!c.calm)S.f.escalate=1;
+  if(S.f.escalate){act('Held separate sessions so the talks did not collapse');
+   if(S.uva){S.f.escalate=0;S.f.angry=0;const cl=CAUCUS[S.role];lines.push(['u',cl.t]);gain(cl.g);S.ks.push(K('Separate sessions (caucus)',4,1));S.rip.push(['UVA held separate sessions and kept the talks alive.',1])}}}
+ if(id==='ask2'){act('Summarised both sides into one shared goal');if(S.uva){lines.push(['u',SUMMARY[S.role]]);gain(['s_goal'])}}
+ const nx=nextScene(id);
+ beat(lines,nx==='end'?'Three months later':nx==='deal'?'Build the deal':'Continue',()=>go(nx));
 }
 function renderDeal(){
- chap('Chapter 3 · The deal');setPanel();S.speaker='u';
+ chap('Chapter 4 · Build the deal');setPanel();S.speaker=null;
  P.append(el('div','eb','Build the agreement'),el('h2',null,'Design a deal both of you can sign'));
- const H=[[S.found.has('m_capacity40'),'Safe capacity next week','40 t'],[S.found.has('k_promo'),'What the customer needs now','40 t, then 60 t'],[S.found.has('m_forecast'),"Operations' planning need",'A demand forecast']];
+ const capK=S.role==='manu'||S.found.has('m_capacity40'),fcK=S.role==='manu'||S.found.has('m_forecast');
+ const H=[[capK,'Safe capacity next week','40 t'],[S.found.has('k_promo'),'What the customer needs now','40 t, then 60 t'],[fcK,"Operations' planning need",'A demand forecast'],[S.found.has('k_fcok'),'What the customer would trade','A forecast for priority slots']];
  const h=el('div','hints');H.forEach(([k,a,b])=>{const x=el('div','hint'+(k?'':' unk'));x.append(el('span',null,a),el('b',null,k?b:'Unknown'));h.append(x)});P.append(h);
+ if(S.uva){const t=el('div','tip');t.append(el('b',null,'UVA checks'),el('span',null,'Does every side clear its line? Move the sliders and watch all four bars.'));P.append(t)}
  const D=S.deal;
- [['w1','Next week','Week 1'],['w2','The week after','Week 2']].forEach(([k,lab])=>{const w=el('div','rng');const l=el('label');l.htmlFor='r_'+k;const o=el('output');o.id='o_'+k;o.textContent=D[k]+' t';l.append(el('span',null,lab),o);const r=el('input');r.type='range';r.id='r_'+k;r.min=0;r.max=100;r.step=5;r.value=D[k];r.oninput=()=>{D[k]=+r.value;o.textContent=D[k]+' t';upd()};w.append(l,r);P.append(w)});
+ [['w1','Next week'],['w2','The week after']].forEach(([k,lab])=>{const w=el('div','rng');const l=el('label');l.htmlFor='r_'+k;const o=el('output');o.textContent=D[k]+' t';l.append(el('span',null,lab),o);const r=el('input');r.type='range';r.id='r_'+k;r.min=0;r.max=100;r.step=5;r.value=D[k];r.oninput=()=>{D[k]=+r.value;o.textContent=D[k]+' t';upd()};w.append(l,r);P.append(w)});
  [['fc','Ask the customer for a six-month forecast'],['pr','Offer them priority production planning'],['ot','Run weekend overtime (+15 t, quality risk)'],['pg','Buy 20 t from a partner grower (lower margin)']].forEach(([k,t])=>{const s=el('label','sw');s.append(el('span',null,t));const c=el('input');c.type='checkbox';c.id='t_'+k;c.checked=D[k];c.onchange=()=>{D[k]=c.checked;upd()};s.append(c);P.append(s)});
  const pj=el('div','proj');pj.id='proj';P.append(pj);
- const re=el('div');re.id='react';P.append(re);
- const r=el('div','row');r.append(btn('pill','Propose it at the table',()=>{const x=computeDeal();apply(x.d);S.final=x;S.stage='verdict';beat(x.says,'Three months later',()=>go('end'))}));P.append(r);
+ const r=el('div','row');r.append(btn('pill','Propose it to the customer',()=>{const x=computeDeal();S.final=x;apply(x.d);
+  if(x.over>0)S.ks.push(K('Promising past capacity',6,0));if(D.fc&&D.pr)S.ks.push(K('Package deal: trade on different priorities',2,1));if(D.w1>=40&&D.w1<=x.cap&&D.w1+D.w2>=100)S.ks.push(K('Every party clears its line',6,1));
+  go('customer')}));P.append(r);
  upd();
  function upd(){const x=computeDeal();
-  $('proj').innerHTML=Object.keys(ML).map(k=>{const v=clamp(S.m[k]+x.d[k]),dv=v-S.m[k];return`<div><div class="mt"><span class="lg">${ML[k]}</span><span class="sm">${MS[k]}</span> <b>${v}</b></div><div class="bar"><i style="width:${v}%;background:${tone(v)}"></i></div><div class="d" style="color:${dv>=0?'var(--green)':'var(--red)'}">${dv>=0?'+':''}${dv}</div></div>`}).join('');
-  const rr=$('react');rr.replaceChildren(...x.says.map(s=>lineEl(s[0],s[1])));}
+  $('proj').innerHTML=Object.keys(ML).map(k=>{const v=clamp(S.m[k]+x.d[k]),dv=v-S.m[k];return`<div><div class="mt"><span class="lg">${ML[k]}</span><span class="sm">${MS[k]}</span> <b>${v}</b></div><div class="bar"><i style="width:${v}%;background:${tone(v)}"></i></div><div class="d" style="color:${dv>=0?'var(--green)':'var(--red)'}">${dv>=0?'+':''}${dv}</div></div>`}).join('')}
 }
 function renderEnd(){
  chap('Three months later');setPanel();S.speaker=null;
- const sc=Math.round((S.m.cust+S.m.del+S.m.trust+S.m.ceo)/4);
- S.runs.push({role:S.role,uva:S.uva,score:sc});
- const tier=sc>=72?0:sc>=52?1:2;
- const head=['Account won. Team stronger.','Deal saved, with scars.','The customer walked.'][tier];
- const story=STORIES[tier];
- P.append(el('div','eb',`Score ${sc} / 100 · UVA ${S.uva?'on':'off'}`),el('h2',null,head),el('p','sub',story));
+ const id=endingId(),E=ENDINGS[id],sc=Math.round((S.m.cust+S.m.del+S.m.trust+S.m.ceo)/4),idx=END_ORDER.indexOf(id)+1;
+ if(!S.ends.includes(id))S.ends.push(id);try{localStorage.setItem('uvaEnds',JSON.stringify(S.ends))}catch(e){}
+ S.runs.push({role:S.role,uva:S.uva,score:sc,end:id});
+ P.append(el('div','eb',`Ending ${idx} of 8 · UVA ${S.uva?'on':'off'} · score ${sc}`),el('h2',null,E.t),el('p','sub',E.line),el('p','why',E.why));
  const pj=el('div','proj');pj.innerHTML=Object.keys(ML).map(k=>`<div><div class="mt"><span class="lg">${ML[k]}</span><span class="sm">${MS[k]}</span> <b>${S.m[k]}</b></div><div class="bar"><i style="width:${S.m[k]}%;background:${tone(S.m[k])}"></i></div></div>`).join('');P.append(pj);
- const on=S.runs.filter(x=>x.uva).map(x=>x.score),off=S.runs.filter(x=>!x.uva).map(x=>x.score);
- const best=a=>a.length?Math.max(...a):'not played';
- P.append(el('div','runs',`Best with UVA: ${best(on)} · Best without UVA: ${best(off)}`));
+ // where UVA helped, or would have
+ const ua=el('div','case uvacase');ua.append(el('div','eb',S.uva?'Where UVA helped in this run':'Where UVA would have stepped in'));
+ const acts=S.acts.map(a=>a[0]);const fnd=[...S.found].filter(x=>!OWN[S.role].includes(x)).length;
+ const items=acts.length?acts.slice():[];
+ if(S.tips)items.unshift(`${S.uva?'Gave':'Would have given'} ${S.tips} tips at decision points`);if(S.reinf)items.push(`${S.uva?'Reinforced':'Would have reinforced'} ${S.reinf} good moves out loud, so both sides heard them`);
+ if(S.uva){items.unshift(`Mapped ${fnd} of the other side's interests and key facts on the interest map`);if(S.dmg>0)items.push(`Absorbed about ${Math.round(S.dmg)} points of damage from risky moves`)}
+ else{items.unshift('An interest map of what each side really needs, kept up to date as you talk');if(S.dmg<0)items.push(`Risky moves cost about ${Math.round(-S.dmg)} extra points without a mediator`)}
+ const ul=el('ul','acts');items.forEach(x=>ul.append(el('li',null,x)));ua.append(ul);
+ ua.append(el('div','src','UVA never decides. People keep every decision; legal, ethical or safety issues go to a human.'));P.append(ua);
+ // ripple trail
+ const rt=el('div','case');rt.append(el('div','eb','How your choices rippled'));
+ S.rip.forEach(([t,g])=>{const r=el('div','rip');const d=el('i');d.style.background=g?'var(--green)':'var(--amber)';r.append(d,el('span',null,t));rt.append(r)});P.append(rt);
+ // course concepts
+ const cc=el('div','case');cc.append(el('div','eb','Course concepts in this run'));
+ const seen=new Set(),good=el('div','kcol'),bad=el('div','kcol');good.append(el('b',null,'What worked'));bad.append(el('b',null,'What cost you'));
+ S.ks.forEach(([l,s,g])=>{if(seen.has(l))return;seen.add(l);const ch=el('span','kc');ch.style.borderColor=SESS[s][1];ch.append(el('span',null,l),el('small',null,`Session ${s} · ${SESS[s][0]}`));(g?good:bad).append(ch)});
+ const kg=el('div','kgrid');kg.append(good,bad);cc.append(kg);P.append(cc);
+ // endings gallery
+ const eg=el('div','case');eg.append(el('div','eb',`Endings found · ${S.ends.length} of 8`));const g=el('div','endg');
+ END_ORDER.forEach((e,i)=>{const f=S.ends.includes(e),t=el('div','et'+(f?'':' lock')+(e===id?' now':''));t.append(el('small',null,`Ending ${i+1}`),el('b',null,f?ENDINGS[e].t:'Not found yet'));g.append(t)});eg.append(g);
+ const on=S.runs.filter(x=>x.uva).map(x=>x.score),off=S.runs.filter(x=>!x.uva).map(x=>x.score),best=a=>a.length?Math.max(...a):'not played';
+ eg.append(el('div','runs',`Best score with UVA: ${best(on)} · without UVA: ${best(off)}`));P.append(eg);
  // business case
  const cs=el('div','case');cs.append(el('div','eb','The pilot case for João'));
- const res=el('div','big');res.id='gbp';
- const ctl=[['hc','Employees',50,1000,10,250],['rc','Share of conflict cost UVA reaches',10,50,5,20],['cut','Cost reduction where it reaches',25,75,5,50]];
- const vals={};
- const calc=()=>{const v=vals.hc*1000*(vals.rc/100)*(vals.cut/100);res.textContent='£'+Math.round(v).toLocaleString('en-GB');$('expo').textContent=`of £${(vals.hc*1000).toLocaleString('en-GB')} yearly exposure protected`};
- cs.append(res);const ex=el('div','sub');ex.id='expo';cs.append(ex);
- ctl.forEach(([k,lab,mn,mx,st,dv])=>{vals[k]=dv;const w=el('div','rng');const l=el('label');l.htmlFor='c_'+k;const o=el('output');o.textContent=dv+(k==='hc'?'':'%');l.append(el('span',null,lab),o);const r=el('input');r.type='range';r.id='c_'+k;r.min=mn;r.max=mx;r.step=st;r.value=dv;r.oninput=()=>{vals[k]=+r.value;o.textContent=r.value+(k==='hc'?'':'%');calc()};w.append(l,r);cs.append(w)});
+ const res=el('div','big');const ex=el('div','sub');cs.append(res,ex);
+ const vals={};const calc=()=>{const v=vals.hc*1000*(vals.rc/100)*(vals.cut/100);res.textContent='£'+Math.round(v).toLocaleString('en-GB');ex.textContent=`of £${(vals.hc*1000).toLocaleString('en-GB')} yearly exposure protected`};
+ [['hc','Employees',50,1000,10,250],['rc','Share of conflict cost UVA reaches',10,50,5,20],['cut','Cost reduction where it reaches',25,75,5,50]].forEach(([k,lab,mn,mx,st,dv])=>{vals[k]=dv;const w=el('div','rng');const l=el('label');l.htmlFor='c_'+k;const o=el('output');o.textContent=dv+(k==='hc'?'':'%');l.append(el('span',null,lab),o);const r=el('input');r.type='range';r.id='c_'+k;r.min=mn;r.max=mx;r.step=st;r.value=dv;r.oninput=()=>{vals[k]=+r.value;o.textContent=r.value+(k==='hc'?'':'%');calc()};w.append(l,r);cs.append(w)});
  const src=el('div','src');src.append('Benchmark: Acas estimates workplace conflict costs UK employers just over £1,000 per employee a year (2021 report, 2018–19 data). Illustrative, not a forecast. ');const a=el('a',null,'Source');a.href='https://www.acas.org.uk/research-and-commentary/estimating-the-costs-of-workplace-conflict/report';a.target='_blank';a.rel='noopener';src.append(a);cs.append(src);
  P.append(cs);calc();
  const r=el('div','row');
- r.append(btn('pill','João: pilot UVA',()=>{if(R)R.party();blip();playLines([['j',PILOT]]);const n=$('pilotNote');n.textContent='Pilot approved: 90 days, measure resolution time and escalations to the CEO, scale only if the numbers hold. People keep every decision.'}));
+ r.append(btn('pill','João: pilot UVA',()=>{if(R)R.party();blip();playLines([['j',PILOT]]);$('pilotNote').textContent='Pilot approved: 90 days, measure resolution time and escalations to the CEO, scale only if the numbers hold. People keep every decision.'}));
  r.append(btn('chip',S.uva?'Replay without UVA':'Replay with UVA',()=>{S.uva=!S.uva;reset();go('call')}));
+ r.append(btn('chip','Replay, try new choices',()=>{reset();go('call')}));
  r.append(btn('chip',`Play as ${S.role==='bruna'?'Manu':'Bruna'}`,()=>{S.role=S.role==='bruna'?'manu':'bruna';reset();go('call')}));
  r.querySelectorAll('.chip').forEach(b=>b.style.width='auto');
  P.append(r);const pn=el('div','note');pn.id='pilotNote';P.append(pn);
- playLines([['n','Three months later.'],['n',story]]);
+ const lines=[['n','Three months later.'],['n',E.line]].concat(E.j?[['j',E.j]]:[]);playLines(lines);
 }
 
 // ---------- 3D scene ----------
@@ -548,7 +605,7 @@ function init3D(){
  const clock=new T.Clock();let bl=0;
  (function loop(){
   requestAnimationFrame(loop);const t=clock.getElapsedTime(),k=reduce?1:0.035;
-  if(S.stage==='turn'&&S.speaker&&!reduce){const sp=S.speaker;const f=sp==='b'?[[2.4,3.3,8.2],[-2.2,1.9,0]]:sp==='m'?[[-2.4,3.3,8.2],[2.2,1.9,0]]:sp==='u'?[[0,3.3,7.2],[0,2.2,0]]:null;if(f){tp.set(...f[0]);tl.set(...f[1])}}
+  if(!['title','deal','end'].includes(S.stage)&&S.speaker&&!reduce){const sp=S.speaker;const f=sp==='b'?[[2.4,3.3,8.2],[-2.2,1.9,0]]:sp==='m'?[[-2.4,3.3,8.2],[2.2,1.9,0]]:sp==='u'?[[0,3.3,7.2],[0,2.2,0]]:null;if(f){tp.set(...f[0]);tl.set(...f[1])}}
   camPos.lerp(tp,k);camLook.lerp(tl,k);cam.position.copy(camPos);cam.lookAt(camLook);
   [[PB,'b'],[PM,'m']].forEach(([p,w])=>{const on=S.talking===w&&!reduce;p.body.position.y=on?Math.abs(Math.sin(t*7))*0.04:0;p.head.rotation.x=on?Math.sin(t*5)*0.06:0;p.head.rotation.y=Math.sin(t*0.6+(w==='b'?0:2))*0.08});
   U.position.y=2.55+(reduce?0:Math.sin(t*1.6)*0.08);U.rotation.y=reduce?0:t*0.4;
@@ -564,10 +621,7 @@ function init3D(){
 // ---------- boot ----------
 $('boardBtn').onclick=()=>$('board').classList.toggle('open');
 $('soundBtn').onclick=()=>{AU.on=!AU.on;const b=$('soundBtn');b.textContent=AU.on?'Sound on':'Sound off';b.setAttribute('aria-pressed',AU.on);if(!AU.on)stopAudio();padTo(0.035,0.3)};
-function hookCaps(){
- const C=window.claude;if(!C||!C.use)return;
- C.use('sample').then(x=>{if(x){S.live=x;if(S.stage==='title')renderTitle();if(S.stage==='turn'&&!S.busy){const ls=P.querySelectorAll('.line .say');S.liveSaid=ls.length?ls[ls.length-1].textContent:null;renderTurn()}}}).catch(()=>{});
-}
+function hookCaps(){}
 function loadThree(){return new Promise(res=>{if(window.THREE)return res(true);const sc=document.createElement('script');sc.src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';sc.onload=()=>res(true);sc.onerror=()=>res(false);document.head.append(sc)})}
 async function pool(arr,n,fn){let i=0;await Promise.all(Array.from({length:n},async()=>{while(i<arr.length)await fn(arr[i++])}))}
 async function boot(){
@@ -588,11 +642,11 @@ $('enter').onclick=()=>{
  $('pin').querySelector('button')?.focus();
 };
 function start(d){
- if(d&&Array.isArray(d.runs))S.runs=d.runs;
+ if(d&&Array.isArray(d.runs))S.runs=d.runs;if(d&&Array.isArray(d.ends))S.ends=d.ends;else try{const e=JSON.parse(localStorage.getItem('uvaEnds')||'[]');if(Array.isArray(e))S.ends=e.filter(x=>ENDINGS[x])}catch(e){}
  S.m={cust:60,del:70,trust:55,ceo:80};S.found=new Set(OWN[S.role]);
  boot();hookCaps();
 }
-window.claude?.hot?.snapshot?.(()=>({runs:S.runs}));
+window.claude?.hot?.snapshot?.(()=>({runs:S.runs,ends:S.ends}));
 window.claude?.hot?.ready?window.claude.hot.ready(start):start(window.claude?.hot?.data??{});
 }
 </script>
