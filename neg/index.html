@@ -95,6 +95,29 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--blue);outline-o
 .rules{margin:12px 0 0;padding-left:18px;font-size:14px;color:var(--sub)}
 .rules li{margin-top:4px}
 .dnotes{display:grid;gap:6px;margin-top:10px}
+.tm h3{margin:4px 0 2px;font-size:20px}
+.chart svg{width:100%;height:auto;display:block;margin-top:8px}
+.chart .gl{stroke:var(--line);stroke-width:1}
+.chart .ax{font-size:11px;fill:var(--sub)}
+.chart polyline{fill:none;stroke-width:3;stroke-linejoin:round;stroke-linecap:round}
+.chart .s0{stroke:var(--ink)}.chart .s1{stroke:var(--blue);stroke-dasharray:7 5}.chart .s2{stroke:#a1a1a8;stroke-dasharray:3 5}
+.chart .s0d{fill:var(--ink)}.chart .s1d{fill:var(--blue)}.chart .s2d{fill:#a1a1a8}
+.chart .mk{fill:var(--amber)}.chart .mkt{fill:#fff;font-size:11px;font-weight:700}
+.legend{display:flex;flex-wrap:wrap;gap:12px;margin-top:6px;font-size:13px}
+.lgi{display:flex;align-items:center;gap:6px}.lgi i{width:18px;height:3px;border-radius:2px;background:var(--ink)}
+.lgi.s1 i{background:var(--blue)}.lgi.s2 i{background:#a1a1a8}
+.ends2{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;margin-top:12px}
+.e2{border-radius:12px;padding:10px;background:var(--card);border-top:4px solid var(--ink)}.e2.s1{border-top-color:var(--blue)}.e2.s2{border-top-color:#a1a1a8}
+.e2 small{display:block;font-size:12px;color:var(--sub)}.e2 b{display:block;font-size:16px;margin-top:2px}
+.e2m{display:flex;flex-wrap:wrap;gap:4px 10px;margin-top:6px;font-size:12px;color:var(--sub)}
+.e2m em{font-style:normal;font-weight:700}.e2m em.up{color:var(--green)}.e2m em.dn{color:var(--red)}
+.moms{display:grid;gap:8px;margin-top:10px}
+.mom{border-radius:12px;background:var(--card);padding:10px;display:grid;grid-template-columns:1fr 1fr;gap:10px;border:2px solid transparent;transition:border-color .2s}
+.mom.on{border-color:var(--blue)}
+.mh{grid-column:1/-1;font-size:12px;font-weight:700;color:var(--amber)}
+.mc small{display:block;font-size:12px;font-weight:600;color:var(--sub)}.mc.alt small{color:var(--blue)}
+.mc p{margin:4px 0 0;font-size:14px}.mc .nt{font-style:italic;color:var(--blue)}.mc .rs{color:var(--sub)}
+@media(max-width:560px){.mom{grid-template-columns:1fr}}
 .dcheck{margin-top:12px;border-radius:14px;padding:10px 12px;background:var(--chip)}
 .ckr{display:flex;gap:8px;align-items:center;font-size:14px;margin-top:6px;color:var(--sub)}
 .ckr i{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;font-style:normal;font-size:12px;flex:none}
@@ -518,7 +541,7 @@ function beat(lines,label,next){
 function toast(t,good){const T=$('toast');T.replaceChildren();const d=el('i');d.style.background=good?'var(--green)':'var(--amber)';T.append(d,el('span',null,t));T.classList.add('on');clearTimeout(T._t);T._t=setTimeout(()=>T.classList.remove('on'),3800)}
 function go(st){stopAudio();S.stage=st;if(st==='title')renderTitle();else if(st==='how')renderHow();else if(st==='deal')renderDeal();else if(st==='end')renderEnd();else runScene(st);if(R)R.cam(st)}
 function reset(){S.m={cust:60,del:70,trust:55,ceo:80};S.f={asked:[]};if(S.role==='manu')S.f.committed=1;S.found=new Set(OWN[S.role]);S.hist=[];S.rip=[];S.ks=[];S.acts=[];S.dmg=0;S.tips=0;S.reinf=0;S.final=null;S.seed=Math.floor(Math.random()*1e6);
- S.deal={w1:100,w2:0,fc:false,pr:false,ot:false,pg:false};S.caught=[];S.passed=[];S.missed=[];S.sharedN=0;S.privN=0;renderMeters();renderBoard()}
+ S.deal={w1:100,w2:0,fc:false,pr:false,ot:false,pg:false};S.caught=[];S.passed=[];S.missed=[];S.sharedN=0;S.privN=0;S.trail=[{lab:'Start',m:{...S.m}}];S.alts=[];S.rt=null;renderMeters();renderBoard()}
 function renderHow(){
  chap('Algarve Grapes · company policy');setPanel();S.speaker=null;
  P.append(el('div','eb','Before the morning starts'),el('h2',null,'Where UVA works'),
@@ -552,18 +575,31 @@ function runScene(id){
  const box=el('div','chips');order(id,sc.choices).forEach(c=>box.append(btn('chip',c.t,()=>choose(id,sc,c))));P.append(box);
  S.speaker=intro.length?intro[intro.length-1][0]:null;playLines(intro,show);
 }
+// ---------- two mornings: what the other version of this morning would have looked like ----------
+const SHORT={call:'Call',channel:'Contact',story:'Stories',heat:'Heat',offer:'Before João',joao:'João',ask1:'Ask',ask2:'Ask',customer:'Customer'};
+const dsum=d=>Object.values(d||{}).reduce((a,v)=>a+v,0);
+const ddiff=(a,b)=>{const o={};for(const k of Object.keys(ML))o[k]=((a||{})[k]||0)-((b||{})[k]||0);return o};
+function bestOf(chs,not){return chs.filter(o=>o!==not&&!o.pre&&o.k&&o.k[0]&&o.k[0][2]).sort((a,b)=>dsum(b.d)-dsum(a.d))[0]||null}
+function firstRes(o){const l=(o&&o.res||[])[0];return l?rl(l):null}
+function trail(id){S.trail.push({lab:SHORT[id]||id,m:{...S.m}})}
 function choose(id,sc,c,go_on){
  if(c.pre&&S.uva&&!go_on){
   // UVA flags the move privately first; the player keeps the decision
   const box=P.querySelector('.chips');if(box)box.hidden=true;const nd=el('div','nudge');
   nd.append(el('div','eb','UVA · private, only you see'),el('p',null,PRE[c.pre].t()));
   const r=el('div','row');
-  r.append(btn('pill','Rethink',()=>{nd.remove();if(box){box.hidden=false;box.querySelector('button')?.focus()}if(!S.caught.includes(PRE[c.pre].label))S.caught.push(PRE[c.pre].label);stopAudio()}));
+  r.append(btn('pill','Rethink',()=>{nd.remove();S.rt={id,opt:c};if(box){box.hidden=false;box.querySelector('button')?.focus()}if(!S.caught.includes(PRE[c.pre].label))S.caught.push(PRE[c.pre].label);stopAudio()}));
   r.append(btn('chip','Go ahead anyway',()=>{nd.remove();S.passed.push(PRE[c.pre].label);choose(id,sc,c,true)}));
   nd.append(r);P.append(nd);P.scrollTop=P.scrollHeight;S.privN++;playLines([['v',PRE[c.pre].t()]]);r.querySelector('button').focus();return}
  if(c.pre&&!S.uva)S.missed.push(PRE[c.pre].label);
  if(c.pre&&S.uva&&go_on)S.caught=S.caught.filter(x=>x!==PRE[c.pre].label);
  S.hist.push(id);
+ {const at=S.trail.length,best=bestOf(sc.choices,c);
+  if(c.pre&&best&&(!S.uva||go_on))S.alts.push({kind:S.uva?'skip':'off',pre:c.pre,at,mine:c.t,alt:best.t,altRes:firstRes(best),note:PRE[c.pre].t(),dd:ddiff(best.d,c.d),fix:best.trade||best.fix?1:0});
+  else if(S.rt&&S.rt.id===id&&S.rt.opt!==c){const f=S.rt.opt;S.alts.push({kind:'saved',pre:f.pre,at,mine:c.t,alt:f.t,altRes:firstRes(f),note:PRE[f.pre].t(),dd:ddiff(f.d,c.d)})}
+  if(id==='offer'&&c.set&&c.set.caucus){const jo=SC.joao().choices[0];S.alts.push({kind:'saved',pre:'joao',at,mine:c.t,alt:jo.t,altRes:firstRes(jo),note:'',dd:ddiff(jo.d,c.d),path:'power'})}
+  if(id==='joao'&&!S.uva){const cu=SC.offer().choices[0];S.alts.push({kind:'off',pre:'joao',at,mine:c.t,alt:cu.t,altRes:null,note:'Before you go to João, would ten minutes each with me help? Separately, off the record. You can still go to him after.',dd:ddiff(cu.d,c.d),path:null})}
+  if(S.rt&&S.rt.id!==id)S.rt=null;if(S.rt&&S.rt.opt!==c)S.rt=null}
  apply(c.d||{});
  if(c.set)for(const x in c.set)S.f[x]=c.set[x];
  if(R&&c.set&&(c.set.angry||c.set.threat))R.react(S.role==='bruna'?'m':'b');
@@ -585,6 +621,7 @@ function choose(id,sc,c,go_on){
   if(S.f.threat&&!c.calm)S.f.escalate=1;
 }
  if(id==='ask2'){act('Summarised both sides into one shared goal');if(S.uva){lines.push(['u',SUMMARY[S.role]]);S.sharedN++;gain(['s_goal'])}}
+ trail(id);
  const nx=nextScene(id);
  beat(lines,nx==='end'?'Three months later':nx==='deal'?'Build the deal':'Continue',()=>go(nx));
 }
@@ -600,7 +637,7 @@ function renderDeal(){
  [['fc','Ask the customer for a six-month forecast'],['pr','Offer them priority production planning'],['ot','Run weekend overtime (+15 t, quality risk)'],['pg','Buy 20 t from a partner grower (lower margin)']].forEach(([k,t])=>{const s=el('label','sw');s.append(el('span',null,t));const c=el('input');c.type='checkbox';c.id='t_'+k;c.checked=D[k];c.onchange=()=>{D[k]=c.checked;upd()};s.append(c);P.append(s)});
  const pj=el('div','proj');pj.id='proj';P.append(pj);const dn=el('div','dnotes');dn.id='dnotes';const ck=el('div','dcheck');ck.id='dcheck';P.append(ck,dn);
  const r=el('div','row');r.append(btn('pill','Propose it to the customer',()=>{const x=computeDeal();S.final=x;apply(x.d);
-  if(x.over>0)S.ks.push(K('Promising past capacity',6,0));if(D.fc&&D.pr)S.ks.push(K('Package deal: trade on different priorities',2,1));if(D.w1>=40&&D.w1<=x.cap&&D.w1+D.w2>=100)S.ks.push(K('Every party clears its line',6,1));
+  if(x.over>0)S.ks.push(K('Promising past capacity',6,0));if(D.fc&&D.pr)S.ks.push(K('Package deal: trade on different priorities',2,1));if(D.w1>=40&&D.w1<=x.cap&&D.w1+D.w2>=100)S.ks.push(K('Every party clears its line',6,1));S.trail.push({lab:'Deal',m:{...S.m}});
   go('customer')}));P.append(r);
  upd();
  function upd(){const x=computeDeal();
@@ -612,6 +649,55 @@ function renderDeal(){
   const ck=$('dcheck');ck.replaceChildren();ck.append(el('div','eb',S.uva?'Shared screen · does every side clear its line?':'Does every side clear its line?'));C.forEach(([ok,t])=>{const r=el('div','ckr'+(ok?' ok':''));r.append(el('i',null,ok?'✓':''),el('span',null,t));ck.append(r)});
   $('proj').innerHTML=Object.keys(ML).map(k=>{const v=clamp(S.m[k]+x.d[k]),dv=v-S.m[k];return`<div><div class="mt"><span class="lg">${ML[k]}</span><span class="sm">${MS[k]}</span> <b>${v}</b></div><div class="bar"><i style="width:${v}%;background:${tone(v)}"></i></div><div class="d" style="color:${dv>=0?'var(--green)':'var(--red)'}">${dv>=0?'+':''}${dv}</div></div>`}).join('')}
 }
+function altEnding(alts,mode,m){
+ const keepM=S.m,keepF=S.f,f={...S.f};let early=false;
+ alts.forEach(a=>{if(a.pre==='free'){if(mode==='follow'){f.gaveIn=0;if(a.fix)f.trade=1}else f.gaveIn=1}
+  if(a.pre==='joao'){if(mode==='follow'){f.path=null;if(!S.final)early=true}else f.path='power'}});
+ if(early)return'atleast';
+ S.m=m;S.f=f;const e=endingId();S.m=keepM;S.f=keepF;return e}
+function twoMornings(endId){
+ const T=S.trail,avg=m=>Math.round((m.cust+m.del+m.trust+m.ceo)/4),cl=v=>Math.max(0,Math.min(100,v));
+ const series=alts=>{const acc={cust:0,del:0,trust:0,ceo:0},stop=alts.filter(a=>a.path==='power').map(a=>a.at);const cut=stop.length?Math.min(...stop):T.length;return T.slice(0,cut+1).map((p,i)=>{alts.filter(a=>a.at===i).forEach(a=>{for(const k in acc)acc[k]+=a.dd[k]});const m={};for(const k in acc)m[k]=cl(p.m[k]+acc[k]);return m})};
+ const off=S.alts.filter(a=>a.kind==='off'),skip=S.alts.filter(a=>a.kind==='skip'),saved=S.alts.filter(a=>a.kind==='saved');
+ const L=[{name:'Your morning',m:T.map(p=>p.m),cls:'s0'}];
+ if(!S.uva&&off.length)L.push({name:'The same morning with UVA',m:series(off),cls:'s1',alts:off,mode:'follow'});
+ if(S.uva&&saved.length)L.push({name:'The same morning without UVA',m:series(saved),cls:'s2',alts:saved,mode:'without'});
+ if(S.uva&&skip.length)L.push({name:"Taking every UVA note",m:series(skip),cls:'s1',alts:skip,mode:'follow'});
+ const box=el('div','case tm');box.append(el('div','eb','Two mornings'));
+ const last=s=>s.m[s.m.length-1],you=avg(last(L[0]));
+ let head,sub;
+ if(!S.uva){const w=L[1]?avg(last(L[1])):you;head=L[1]?`UVA would have added ${w-you>0?'+':''}${w-you} to your score`:'You played it the way UVA would have coached';sub=L[1]?'Same people, same order. At each moment marked below, UVA would have stepped in with a private note.':'No risky moves this time, so UVA would mostly have run the shared screen.'}
+ else{const wo=L.find(x=>x.cls==='s2'),fo=L.find(x=>x.cls==='s1');
+  if(wo){head=`UVA protected ${you-avg(last(wo))>0?'+':''}${you-avg(last(wo))} points of your score`}else head=skip.length?'You kept every decision':'No nudges needed this time';
+  sub=skip.length?`That is exactly how UVA should work: it suggests, you decide. ${fo&&avg(last(fo))>you?`Its notes had another +${avg(last(fo))-you} on the table.`:''}`:wo?'These are the moments UVA caught before they happened.':`UVA's value was on the shared screen: ${[...S.found].filter(x=>!OWN[S.role].includes(x)).length} of ${discoverable().length} interests mapped for both of you.`}
+ box.append(el('h3',null,head),el('p','sub',sub));
+ // chart: overall score after each step
+ const W=600,H=210,pl=34,pr=12,pt=14,pb=34,N=T.length;const all=L.flatMap(s=>s.m.map(avg));let lo=Math.min(...all)-6,hi=Math.max(...all)+6;lo=Math.max(0,Math.floor(lo/5)*5);hi=Math.min(100,Math.ceil(hi/5)*5);
+ const X=i=>pl+(N<2?0:i*(W-pl-pr)/(N-1)),Y=v=>pt+(hi-v)*(H-pt-pb)/Math.max(1,hi-lo);
+ let svg=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Score after each step: ${L.map(s=>s.name+' ends at '+avg(last(s))).join(', ')}">`;
+ for(let v=lo;v<=hi;v+=Math.max(5,Math.round((hi-lo)/4/5)*5))svg+=`<line x1="${pl}" x2="${W-pr}" y1="${Y(v)}" y2="${Y(v)}" class="gl"/><text x="${pl-6}" y="${Y(v)+4}" class="ax" text-anchor="end">${v}</text>`;
+ T.forEach((p,i)=>{if(N<=9||i%2===0||i===N-1)svg+=`<text x="${X(i)}" y="${H-12}" class="ax" text-anchor="middle">${p.lab}</text>`});
+ L.slice().reverse().forEach(s=>{svg+=`<polyline class="${s.cls}" points="${s.m.map((m,i)=>X(i)+','+Y(avg(m))).join(' ')}"/>`;const lm=last(s);svg+=`<circle class="${s.cls}d" cx="${X(s.m.length-1)}" cy="${Y(avg(lm))}" r="4"/>`;if(s.m.length<N)svg+=`<text x="${X(s.m.length-1)+8}" y="${Y(avg(lm))+4}" class="ax">João decides</text>`});
+ const moms=S.alts.slice().sort((a,b)=>a.at-b.at);
+ moms.forEach((a,i)=>{const px=X(a.at),py=Y(avg(T[a.at].m));svg+=`<circle cx="${px}" cy="${py}" r="9" class="mk"/><text x="${px}" y="${py+4}" text-anchor="middle" class="mkt">${i+1}</text>`});
+ svg+='</svg>';const ch=el('div','chart');ch.innerHTML=svg;box.append(ch);
+ const lg=el('div','legend');L.forEach(s=>{const x=el('span','lgi '+s.cls);x.append(el('i'),el('span',null,`${s.name} · ${avg(last(s))}`));lg.append(x)});box.append(lg);
+ // endings side by side
+ const eg=el('div','ends2');L.forEach(s=>{const e=s.alts?altEnding(s.alts,s.mode,last(s)):endId;const t=el('div','e2 '+s.cls);t.append(el('small',null,s.name),el('b',null,e==='atleast'?'Talks continue to a deal':ENDINGS[e].t));const dm=el('div','e2m');Object.keys(ML).forEach(k=>{const v=last(s)[k],d=v-last(L[0])[k];const q=el('span',null,`${MS[k]} ${v}`);if(s!==L[0]&&d)q.append(el('em',d>0?'up':'dn',` ${d>0?'+':''}${d}`));dm.append(q)});t.append(dm);eg.append(t)});box.append(eg);
+ // the moments, with a voiced replay
+ if(moms.length){const ml=el('div','moms'),lines=[],map=[];
+  moms.forEach((a,i)=>{const c=el('div','mom');c.append(el('div','mh',`${i+1} · ${T[a.at].lab}`));
+   const lft=el('div','mc'),rgt=el('div','mc alt');
+   const kindL={off:'With a UVA note',skip:'What UVA suggested',saved:'Without UVA, likely'}[a.kind];
+   lft.append(el('small',null,a.kind==='saved'?'What you did, with UVA':'What you did'),el('p',null,a.mine));
+   rgt.append(el('small',null,kindL));if(a.note&&a.kind!=='saved')rgt.append(el('p','nt',(a.pre==='joao'?'UVA, to both: ':'UVA, privately: ')+a.note));rgt.append(el('p',null,a.alt));if(a.altRes)rgt.append(el('p','rs',`${NAME[a.altRes[0]]}: ${a.altRes[1]}`));
+   c.append(lft,rgt);ml.append(c);
+   const seq=a.kind==='saved'?[[me(),a.alt]].concat(a.altRes?[a.altRes]:[]).concat([[me(),a.mine]]):[[me(),a.mine]].concat(a.note?[[a.pre==='joao'?'u':'v',a.note]]:[]).concat([[me(),a.alt]]).concat(a.altRes?[a.altRes]:[]);
+   seq.forEach(l=>{lines.push(l);map.push(c)})});
+  const rb=btn('chip','Replay the two mornings',()=>{ml.querySelectorAll('.mom').forEach(x=>x.classList.remove('on'));playLines(lines,i=>{ml.querySelectorAll('.mom').forEach(x=>x.classList.remove('on'));map[i].classList.add('on');map[i].scrollIntoView({block:'nearest',behavior:'smooth'})},()=>ml.querySelectorAll('.mom').forEach(x=>x.classList.remove('on')))});rb.style.width='auto';rb.style.marginTop='12px';
+  box.append(rb,ml)}
+ P.append(box);
+}
 function renderEnd(){
  chap('Three months later');setPanel();S.speaker=null;
  const id=endingId(),E=ENDINGS[id],sc=Math.round((S.m.cust+S.m.del+S.m.trust+S.m.ceo)/4),idx=END_ORDER.indexOf(id)+1;
@@ -619,6 +705,7 @@ function renderEnd(){
  S.runs.push({role:S.role,uva:S.uva,score:sc,end:id});
  P.append(el('div','eb',`Ending ${idx} of 8 · UVA ${S.uva?'on':'off'} · score ${sc}`),el('h2',null,E.t),el('p','sub',E.line),el('p','why',E.why));
  const pj=el('div','proj');pj.innerHTML=Object.keys(ML).map(k=>`<div><div class="mt"><span class="lg">${ML[k]}</span><span class="sm">${MS[k]}</span> <b>${S.m[k]}</b></div><div class="bar"><i style="width:${S.m[k]}%;background:${tone(S.m[k])}"></i></div></div>`).join('');P.append(pj);
+ twoMornings(id);
  // where UVA helped, or would have, grouped by where it works
  const ua=el('div','case uvacase');ua.append(el('div','eb',S.uva?'What UVA did in this run':'Where UVA would have stepped in'));
  const fnd=[...S.found].filter(x=>!OWN[S.role].includes(x)).length,tot=discoverable().length;
@@ -675,17 +762,23 @@ function init3D(){
  try{
  const T=THREE,cv=$('scene');
  const ren=new T.WebGLRenderer({canvas:cv,antialias:true});ren.setPixelRatio(Math.min(devicePixelRatio,2));
- const fx=T.OutlineEffect?new T.OutlineEffect(ren,{defaultThickness:0.0042,defaultColor:[0.2,0.13,0.09],defaultAlpha:0.85}):null;
+ // two looks: toon with outlines, or soft (filmic light, real shadows, calmer palette)
+ const SOFT=/look=soft/.test(location.search);
+ if(SOFT){ren.outputEncoding=T.sRGBEncoding;ren.toneMapping=T.ACESFilmicToneMapping;ren.toneMappingExposure=0.95;ren.shadowMap.enabled=true;ren.shadowMap.type=T.PCFSoftShadowMap}
+ const lin=c=>(c&&c.isColor?c.clone():new T.Color(c)).convertSRGBToLinear();
+ const SW={0xb89863:0xcdb894,0x8a5a36:0x7a5a42,0x6f9a3c:0x86a062,0x7a4a2e:0x7e573c,0x5d3822:0x6e4e38,0xefe7da:0xe4dbcd,0xb07a45:0xb89470,0xa06c3a:0xa8845f};
+ const fx=!SOFT&&T.OutlineEffect?new T.OutlineEffect(ren,{defaultThickness:0.0042,defaultColor:[0.2,0.13,0.09],defaultAlpha:0.85}):null;
  const NOL={outlineParameters:{visible:false}};
  const sc=new T.Scene();sc.fog=new T.Fog(0xf3c98e,45,150);
  const cam=new T.PerspectiveCamera(45,1,0.1,600);
  // one toon ramp for everything: three flat bands, no gradients
  const ramp=new T.DataTexture(new Uint8Array([110,110,110,188,188,188,240,240,240]),3,1,T.RGBFormat);ramp.minFilter=ramp.magFilter=T.NearestFilter;ramp.generateMipmaps=false;
- const toon=(col,o={})=>new T.MeshToonMaterial(Object.assign({color:col,gradientMap:ramp},o));
- const sky=new T.Mesh(new T.SphereGeometry(320,24,12),new T.ShaderMaterial({side:T.BackSide,fog:false,uniforms:{a:{value:new T.Color(0x86b8de)},b:{value:new T.Color(0xf7c27a)}},vertexShader:'varying vec3 w;void main(){w=(modelMatrix*vec4(position,1.)).xyz;gl_Position=projectionMatrix*viewMatrix*vec4(w,1.);}',fragmentShader:'uniform vec3 a;uniform vec3 b;varying vec3 w;void main(){float h=max(normalize(w).y,0.);gl_FragColor=vec4(mix(b,a,pow(h,.55)),1.);}'}));sky.material.userData=NOL;sc.add(sky);
+ const toon=SOFT?(col,o={})=>new T.MeshStandardMaterial(Object.assign({color:lin(SW[col]??col),roughness:0.85,metalness:0},o)):(col,o={})=>new T.MeshToonMaterial(Object.assign({color:col,gradientMap:ramp},o));
+ const sky=new T.Mesh(new T.SphereGeometry(320,24,12),new T.ShaderMaterial({side:T.BackSide,fog:false,uniforms:{a:{value:new T.Color(SOFT?0xa8c7e2:0x86b8de)},b:{value:new T.Color(SOFT?0xf2dcc0:0xf7c27a)}},vertexShader:'varying vec3 w;void main(){w=(modelMatrix*vec4(position,1.)).xyz;gl_Position=projectionMatrix*viewMatrix*vec4(w,1.);}',fragmentShader:'uniform vec3 a;uniform vec3 b;varying vec3 w;void main(){float h=max(normalize(w).y,0.);gl_FragColor=vec4(mix(b,a,pow(h,.55)),1.);}'}));sky.material.userData=NOL;sc.add(sky);
  const sunDisc=new T.Mesh(new T.CircleGeometry(9,32),new T.MeshBasicMaterial({color:0xfff0c8,fog:false}));sunDisc.material.userData=NOL;sunDisc.position.set(-120,26,-260);sunDisc.lookAt(0,0,0);sc.add(sunDisc);
- const hemi=new T.HemisphereLight(0xfff1d6,0x8a6a3a,0.75);sc.add(hemi);
- const sun=new T.DirectionalLight(0xffe2b8,0.85);sun.position.set(-30,24,12);sc.add(sun);
+ const hemi=new T.HemisphereLight(SOFT?lin(0xeef3ff):0xfff1d6,SOFT?lin(0xb7a283):0x8a6a3a,SOFT?0.75:0.75);sc.add(hemi);
+ const sun=new T.DirectionalLight(SOFT?lin(0xfff0dc):0xffe2b8,SOFT?2.1:0.85);sun.position.set(SOFT?-16:-30,SOFT?17:24,SOFT?12:12);sc.add(sun);
+ if(SOFT){sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);Object.assign(sun.shadow.camera,{left:-13,right:13,top:13,bottom:-13,near:1,far:70});sun.shadow.bias=-0.0006;sun.shadow.normalBias=0.03;sc.fog.color=lin(0xf0dfc6)}
  const Hf=(x,z)=>{const d=Math.max(0,-z-14),f=Math.min(1,d/12);return f*(Math.sin(x*0.05)*1.8+Math.cos(z*0.07+x*0.02)*1.4)+d*0.06};
  const gg=new T.PlaneGeometry(500,500,90,90);gg.rotateX(-Math.PI/2);const p=gg.attributes.position;
  for(let i=0;i<p.count;i++)p.setY(i,Hf(p.getX(i),p.getZ(i))-0.02);gg.computeVertexNormals();
@@ -696,7 +789,7 @@ function init3D(){
  for(let z=-10;z<14;z+=3.2)for(let x of[-60,-48,-36,-24,24,36,48,60])for(let k=0;k<6;k++)rows.push([x+k*1.7,z]);
  const vg=new T.IcosahedronGeometry(0.72,0),vm=toon(0xffffff,{flatShading:true});vm.userData=NOL;
  const vines=new T.InstancedMesh(vg,vm,rows.length);const dm=new T.Object3D(),c=new T.Color();
- rows.forEach(([x,z],i)=>{dm.position.set(x,Hf(x,z)+0.55,z);const k=0.8+rnd()*0.4;dm.scale.set(k,0.85*k,k*1.2);dm.rotation.y=rnd()*3;dm.updateMatrix();vines.setMatrixAt(i,dm.matrix);c.setHSL(0.24+rnd()*0.05,0.42,0.3+rnd()*0.08);vines.setColorAt(i,c)});
+ rows.forEach(([x,z],i)=>{dm.position.set(x,Hf(x,z)+0.55,z);const k=0.8+rnd()*0.4;dm.scale.set(k,0.85*k,k*1.2);dm.rotation.y=rnd()*3;dm.updateMatrix();vines.setMatrixAt(i,dm.matrix);c.setHSL(0.24+rnd()*0.05,0.42,0.3+rnd()*0.08);if(SOFT){c.setHSL(0.25+rnd()*0.04,0.3,0.36+rnd()*0.07);c.convertSRGBToLinear()}vines.setColorAt(i,c)});
  sc.add(vines);
  // pavilion: a standing table, characters stand around it
  const add=(g,m,x=0,y=0,z=0,par=sc)=>{const o=new T.Mesh(g,m);o.position.set(x,y,z);par.add(o);return o};
@@ -729,7 +822,7 @@ function init3D(){
  const P={},mixers=[];
  function rig(w,gl){
   const C=CAST[w],m=gl.scene;m.scale.setScalar(2.75/C.h);m.position.set(C.x,0.32,C.z);m.rotation.y=C.dir;
-  m.traverse(o=>{if(!o.isMesh)return;const one=x=>{const col=C.rc[x.name]!=null?new T.Color(C.rc[x.name]):x.color.clone().convertLinearToSRGB();return toon(col,{skinning:!!o.isSkinnedMesh})};o.material=Array.isArray(o.material)?o.material.map(one):one(o.material);o.frustumCulled=false});
+  m.traverse(o=>{if(!o.isMesh)return;const one=x=>{const col=C.rc[x.name]!=null?new T.Color(C.rc[x.name]):x.color.clone().convertLinearToSRGB();return toon(col,{skinning:!!o.isSkinnedMesh})};o.castShadow=SOFT;o.material=Array.isArray(o.material)?o.material.map(one):one(o.material);o.frustumCulled=false});
   sc.add(m);
   const mx=new T.AnimationMixer(m);mixers.push(mx);const A={};gl.animations.forEach(a=>A[a.name]=mx.clipAction(a));
   ['Interact','Wave','HitRecieve'].forEach(n=>{if(A[n]){A[n].setLoop(T.LoopOnce,1);A[n].clampWhenFinished=true}});
@@ -745,7 +838,7 @@ function init3D(){
  function plant(gl,picks){
   const src={};gl.scene.traverse(o=>{if(o.isMesh)src[o.name]=o});
   picks.forEach(([name,x,z,hgt,ry])=>{const o=src[name];if(!o)return;const g=o.geometry.clone();g.computeBoundingBox();const bb=g.boundingBox,k=hgt/(bb.max.y-bb.min.y);
-   const mats=[].concat(o.material).map(x=>{const t=toon(x.map?0xffffff:x.color.clone().convertLinearToSRGB(),{map:x.map||null,alphaTest:x.alphaTest||0,transparent:false,side:x.side});if(t.map)t.map.encoding=T.LinearEncoding;return t});
+   const mats=[].concat(o.material).map(x=>{const t=toon(x.map?0xffffff:x.color.clone().convertLinearToSRGB(),{map:x.map||null,alphaTest:x.alphaTest||0,transparent:false,side:x.side});if(t.map)t.map.encoding=SOFT?T.sRGBEncoding:T.LinearEncoding;return t});
    const mesh=new T.Mesh(g,mats.length>1?mats:mats[0]);mesh.scale.setScalar(k);mesh.position.set(x,Hf(x,z)-bb.min.y*k,z);mesh.rotation.y=ry||0;sc.add(mesh)})
  }
  const SCENERY={
@@ -781,7 +874,7 @@ function init3D(){
   const pn=$('panel');if(pn){const r=pn.getBoundingClientRect();if(r.height>0&&r.top>top+60)bot=r.top}
   const bd=$('board');if(bd&&getComputedStyle(bd).display!=='none'){const r=bd.getBoundingClientRect();if(r.left>w*0.55)right=r.left-8}
   return[w/2-right/2,h/2-(top+bot)/2]}
- const hemiTense=new T.Color(0xff9c7e),hemiCalm=new T.Color(0xfff1d6),fogT=new T.Color(0xe9a27c),fogC=new T.Color(0xf3c98e);
+ const hemiTense=SOFT?lin(0xffc2a8):new T.Color(0xff9c7e),hemiCalm=SOFT?lin(0xeef3ff):new T.Color(0xfff1d6),fogT=SOFT?lin(0xeac3a6):new T.Color(0xe9a27c),fogC=SOFT?lin(0xf0dfc6):new T.Color(0xf3c98e);
  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
  function resize(){const w=innerWidth,h=innerHeight;ren.setSize(w,h,false);cam.aspect=w/h;cam.fov=w<600?58:45;cam.updateProjectionMatrix()}
  addEventListener('resize',resize);resize();
@@ -793,6 +886,7 @@ function init3D(){
   async loadCast(tick){
    await Promise.all(Object.keys(CAST).map(async w=>{const g=await load(CAST[w].file);try{g?rig(w,g):fallback(w)}catch(e){fallback(w)}tick&&tick()}));
    await Promise.all(Object.keys(SCENERY).map(async f=>{const g=await load(f);try{g&&plant(g,SCENERY[f])}catch(e){}tick&&tick()}));
+   shade();
   },
   react(w){gesture(w,'HitRecieve')},
   cam(st){const s=SHOTS[st]||SHOTS.turn;tp.set(...s[0]);tl.set(...s[1]);if(st!=='end')R.joaoOn=false},
@@ -800,6 +894,7 @@ function init3D(){
    um.color.set(S.uva?0x5266ff:0x8a8a96);um.emissive.set(S.uva?0x2a3bff:0x000000);ul.intensity=S.uva?1.1:0},
   party(){R.joaoOn=true;gesture('j','Wave',0);for(let i=0;i<70;i++){const o=new T.Mesh(new T.SphereGeometry(0.12+Math.random()*0.08,10,8),confM);o.position.set((Math.random()-0.5)*10,7+Math.random()*5,(Math.random()-0.5)*8);o.userData.v=0.02+Math.random()*0.04;sc.add(o);conf.push(o)}tp.set(0,8.5,15);tl.set(0,2.2,-3)}
  };
+ function shade(){if(!SOFT)return;sc.traverse(o=>{if(!o.isMesh||o===sky||o===sunDisc||o===vines)return;o.receiveShadow=true;if(o.geometry&&o.geometry.type!=='PlaneGeometry')o.castShadow=true})}shade();
  const clock=new T.Clock();let bl=0,lastTalk=null;
  (function loop(){
   requestAnimationFrame(loop);const dt=Math.min(clock.getDelta(),0.1),t=clock.elapsedTime,k=reduce?1:0.035;
