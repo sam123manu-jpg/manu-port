@@ -1,0 +1,1958 @@
+== HOW THE GAME WORKS (context for reviewers)
+Starting meters: Customer trust 60, Delivery 70, Team trust 55, CEO time 80 (0-100).
+UVA on: every negative meter change is multiplied by 0.6. UVA off: by 1.3. Positive changes are the same.
+Manu runs always start with committed=1 (Bruna said yes before telling him).
+Scene order: call, channel, story, heat (only if someone is still angry), joao (only if someone escalated; with UVA on, UVA runs separate sessions instead and João's office is skipped), ask 1, ask 2, build the deal, customer, ending. Choosing Power or Rights in João's office jumps straight to the ending.
+Chapter 3: the option picked in ask 1 is hidden in ask 2.
+Build the deal (no dialogue): the player sets tonnes next week and the week after (steps of 5) and can tick: ask for a six-month forecast, offer priority planning, weekend overtime (+15 t safe capacity, quality risk), partner grower (+20 t, lower margin). Safe capacity is 40 t. UVA only shows "Does every side clear its line?" there and never proposes numbers. The other director then reacts in one line (the first line of Chapter 4).
+Taking back a confirmed hundred (committed=1, less than 100 t next week) costs Customer trust 6 on top of the plan's own effect.
+otherFactKnown means the player has learned the other side's key fact (Bruna: Manu's 40 t limit and forecast need; Manu: the long-term account). channel=text means the player chose the text message in Chapter 2.
+
+state committed=0 angry=0 promoKnown=0 otherFactKnown=0 channel=side deal=40/60
+== BRUNA · call · Chapter 1 · The call
+  NARRATOR: Algarve Grapes, Lagoa. Eight forty-two on a Monday morning. The phone rings.
+  CUSTOMER: Bruna, we have an urgent request. Can you deliver an additional one hundred tonnes next week?
+   [1] YOU: Absolutely! Consider it done.
+        CUSTOMER: Wonderful. I'll tell my team it's confirmed.
+        concept: Committing before your team is aligned · Session 2 Team Negotiation · cost you
+        feedback shown: You promised 100 t before asking Operations.
+        meters: Customer trust +8, Team trust -8
+   [2] YOU: Let me check with Operations and call you back by five.
+        CUSTOMER: Five at the latest, please. We're under real pressure.
+        concept: Prepare together before the table · Session 2 Team Negotiation · worked
+        feedback shown: You bought time to align with Operations first.
+        meters: Customer trust -1, Team trust +4
+   [3] YOU: We want this, but I must align with Operations first. Which part is truly urgent?
+        CUSTOMER: Honestly? We need 40 tonnes next week for our promo launch. The other 60 can follow a week later.
+        concept: Positions vs interests · Session 1 Essential Kit · worked
+        feedback shown: You asked about interests and learned the real deadline.
+        meters: Customer trust +4
+
+state committed=0 angry=0 promoKnown=0 otherFactKnown=0 channel=side deal=40/60
+== BRUNA · channel · Chapter 2 · First contact
+  NARRATOR: The customer wants an answer today. How does Bruna bring Operations in?
+   [1] YOU: Send Manu a quick message: urgent order for next week, can you check capacity?
+        OTHER: Another rush? I'm on the line. Two o'clock, if I can.
+        (UVA, only when UVA is on: Messages lose tone. Could you two talk live for ten minutes?)
+        concept: Text is the worst channel for conflict · Session 4 Mediation · cost you
+        feedback shown: Text strips the tone. Manu read it as one more demand.
+        meters: Team trust -8
+   [2] YOU: Book the meeting room, take the head of the table and lay out the numbers.
+        OTHER: A meeting room. This must be serious.
+        (UVA, only when UVA is on: Formal rooms raise defences. Could you go over the schedule together instead?)
+        concept: Seating: across the table signals competition · Session 3 Approaches to Conflict · cost you
+        feedback shown: The head of the table turned it into a contest.
+        meters: Team trust -2
+   [3] YOU: Grab two coffees and go over his planning board together.
+        OTHER: Coffee. Okay, what do you need?
+        (UVA, only when UVA is on: Let's start with how each of you sees it.)
+        concept: Seating: side by side signals cooperation · Session 3 Approaches to Conflict · worked
+        feedback shown: Side by side, the problem sits in front of you both.
+        meters: Team trust +6
+
+state committed=1 angry=0 promoKnown=0 otherFactKnown=0 channel=side deal=40/60
+== BRUNA · channel · Chapter 2 · First contact
+  NARRATOR: Bruna has already said yes. Now she has to tell Operations. How?
+   [1] YOU: Send Manu a quick message: confirmed 100 t for next week, please slot it in.
+        OTHER: Slot it in? Don't plan my floor by text. Come and talk to me.
+        (UVA, only when UVA is on: Messages lose tone. Could you two talk live for ten minutes?)
+        concept: Text is the worst channel for conflict · Session 4 Mediation · cost you
+        feedback shown: Text strips the tone. Manu read it as an order.
+        meters: Team trust -8
+   [2] YOU: Book the meeting room, take the head of the table and lay out the numbers.
+        OTHER: A meeting room. This must be serious.
+        (UVA, only when UVA is on: Formal rooms raise defences. Could you go over the schedule together instead?)
+        concept: Seating: across the table signals competition · Session 3 Approaches to Conflict · cost you
+        feedback shown: The head of the table turned it into a contest.
+        meters: Team trust -2
+   [3] YOU: Grab two coffees and go over his planning board together.
+        OTHER: Coffee. Okay, what do you need?
+        (UVA, only when UVA is on: Let's start with how each of you sees it.)
+        concept: Seating: side by side signals cooperation · Session 3 Approaches to Conflict · worked
+        feedback shown: Side by side, the problem sits in front of you both.
+        meters: Team trust +6
+
+state committed=0 angry=0 promoKnown=0 otherFactKnown=0 channel=side deal=40/60
+== BRUNA · story · Chapter 2 · Two stories
+  NARRATOR: Bruna explains the request.
+  OTHER: Next week? Impossible. The schedule has been full for a month.
+   [1] YOU: I know the lines are tight, and this account is huge. Walk me through how you see it.
+        OTHER: Fair. Here's what next week looks like.
+        (UVA, only when UVA is on: Both views are on the table. Let's list what each side must protect.)
+        concept: The Third Story · Session 3 Approaches to Conflict · worked
+        feedback shown: You named both sides before pushing yours: the Third Story.
+        meters: Team trust +8
+   [2] YOU: Every time I bring in a big order, Operations finds a reason to say no.
+        OTHER: We protect the customers you already sold to.
+        (UVA, only when UVA is on: Let's move from who is right to what each of you needs.)
+        (then, only when UVA is on, OTHER: Fair. What I actually need is to protect our existing orders.)
+        concept: Villain story · Session 3 Approaches to Conflict · cost you
+        feedback shown: A villain story. Manu is now defending, not listening.
+        meters: Team trust -10
+   [3] YOU: Then it's out of my hands. I'll tell them we're full.
+        OTHER: If that's how you see it.
+        (UVA, only when UVA is on: Before anyone says no, let's look at what is possible.)
+        concept: Helpless story · Session 3 Approaches to Conflict · cost you
+        feedback shown: A helpless story closes every door at once.
+        meters: Team trust -4, Customer trust -4
+
+state committed=0 angry=0 promoKnown=1 otherFactKnown=0 channel=side deal=40/60
+== BRUNA · story · Chapter 2 · Two stories
+  NARRATOR: Bruna explains the request.
+  OTHER: Even forty extra next week is tight. The schedule has been full for a month.
+   [1] YOU: I know the lines are tight, and this account is huge. Walk me through how you see it.
+        OTHER: Fair. Here's what next week looks like.
+        (UVA, only when UVA is on: Both views are on the table. Let's list what each side must protect.)
+        concept: The Third Story · Session 3 Approaches to Conflict · worked
+        feedback shown: You named both sides before pushing yours: the Third Story.
+        meters: Team trust +8
+   [2] YOU: Every time I bring in a big order, Operations finds a reason to say no.
+        OTHER: We protect the customers you already sold to.
+        (UVA, only when UVA is on: Let's move from who is right to what each of you needs.)
+        (then, only when UVA is on, OTHER: Fair. What I actually need is to protect our existing orders.)
+        concept: Villain story · Session 3 Approaches to Conflict · cost you
+        feedback shown: A villain story. Manu is now defending, not listening.
+        meters: Team trust -10
+   [3] YOU: Then it's out of my hands. I'll tell them we're full.
+        OTHER: If that's how you see it.
+        (UVA, only when UVA is on: Before anyone says no, let's look at what is possible.)
+        concept: Helpless story · Session 3 Approaches to Conflict · cost you
+        feedback shown: A helpless story closes every door at once.
+        meters: Team trust -4, Customer trust -4
+
+state committed=1 angry=0 promoKnown=0 otherFactKnown=0 channel=side deal=40/60
+== BRUNA · story · Chapter 2 · Two stories
+  NARRATOR: Bruna explains the request.
+  OTHER: You already said yes? Without asking me?
+   [1] YOU: I said yes too fast. You see the risk, I see the account. Show me what it breaks.
+        OTHER: Okay. I appreciate that.
+        (UVA, only when UVA is on: Both views are on the table. Let's list what each side must protect.)
+        concept: The Third Story · Session 3 Approaches to Conflict · worked
+        feedback shown: You owned your part and invited his view: the Third Story.
+        meters: Team trust +8
+   [2] YOU: If I waited for Operations, we would never win anything. This one matters.
+        OTHER: We protect the customers you already sold to.
+        (UVA, only when UVA is on: Let's move from who is right to what each of you needs.)
+        (then, only when UVA is on, OTHER: Fair. What I actually need is to protect our existing orders.)
+        concept: Villain story · Session 3 Approaches to Conflict · cost you
+        feedback shown: A villain story. Manu is now defending, not listening.
+        meters: Team trust -10
+   [3] YOU: The buyer cornered me on the phone. Don't blame me for doing my job.
+        OTHER: You always have a choice. You could have called me.
+        (UVA, only when UVA is on: How it happened matters less now. What can each of you do from here?)
+        concept: Victim story · Session 3 Approaches to Conflict · cost you
+        feedback shown: A victim story: "not my fault." Manu heard an excuse.
+        meters: Team trust -4
+
+state committed=1 angry=0 promoKnown=0 otherFactKnown=0 channel=text deal=40/60
+== BRUNA · story · Chapter 2 · Two stories
+  NARRATOR: Bruna explains the request.
+  OTHER: So you said yes before asking me.
+   [1] YOU: I said yes too fast. You see the risk, I see the account. Show me what it breaks.
+        OTHER: Okay. I appreciate that.
+        (UVA, only when UVA is on: Both views are on the table. Let's list what each side must protect.)
+        concept: The Third Story · Session 3 Approaches to Conflict · worked
+        feedback shown: You owned your part and invited his view: the Third Story.
+        meters: Team trust +8
+   [2] YOU: If I waited for Operations, we would never win anything. This one matters.
+        OTHER: We protect the customers you already sold to.
+        (UVA, only when UVA is on: Let's move from who is right to what each of you needs.)
+        (then, only when UVA is on, OTHER: Fair. What I actually need is to protect our existing orders.)
+        concept: Villain story · Session 3 Approaches to Conflict · cost you
+        feedback shown: A villain story. Manu is now defending, not listening.
+        meters: Team trust -10
+   [3] YOU: The buyer cornered me on the phone. Don't blame me for doing my job.
+        OTHER: You always have a choice. You could have called me.
+        (UVA, only when UVA is on: How it happened matters less now. What can each of you do from here?)
+        concept: Victim story · Session 3 Approaches to Conflict · cost you
+        feedback shown: A victim story: "not my fault." Manu heard an excuse.
+        meters: Team trust -4
+
+state committed=0 angry=0 promoKnown=0 otherFactKnown=0 channel=side deal=40/60
+== BRUNA · heat · Chapter 2 · The heat
+  NARRATOR: Manu pulls up the plan. A month of rescheduling comes out at once.
+  OTHER: Every month, the same. Commercial chases a target, my crews lose their weekends, and nobody asks how!
+   [1] YOU: You're right to be frustrated. Tell me what this does to your team's week.
+        OTHER: Honestly? Forty tonnes is safe. Beyond that, current orders slip and the crews burn out.
+        (UVA, only when UVA is on: Thank you both. Now the real cost is on the table.)
+        concept: Handling genuine anger · Session 5 Difficult Situations · worked
+        feedback shown: You treated it as genuine anger: you acknowledged it and let it out.
+        meters: Team trust +10
+   [2] YOU: I hear you, but the customer won't wait. We need the hundred.
+        OTHER: Then it happens without Operations.
+        (UVA, only when UVA is on: You're both heated. Let me talk to each of you separately for a few minutes.)
+        concept: Pushing a position against genuine anger · Session 5 Difficult Situations · cost you
+        feedback shown: "I hear you, but" pushed your position. The anger was genuine and needed listening.
+        meters: Team trust -12, CEO time -6
+   [3] YOU: I want to answer this properly, not react. Give me ten minutes?
+        OTHER: Fine. Ten minutes.
+        (UVA, only when UVA is on: A break can help. When you're back, start with what this costs Manu's team.)
+        concept: Go to the balcony · Session 5 Difficult Situations · worked
+        feedback shown: You went to the balcony instead of reacting.
+        meters: Team trust +4
+
+state committed=0 angry=0 promoKnown=1 otherFactKnown=0 channel=side deal=40/60
+== BRUNA · heat · Chapter 2 · The heat
+  NARRATOR: Manu pulls up the plan. A month of rescheduling comes out at once.
+  OTHER: Every month, the same. Commercial chases a target, my crews lose their weekends, and nobody asks how!
+   [1] YOU: You're right to be frustrated. Tell me what this does to your team's week.
+        OTHER: Honestly? Forty tonnes is safe. Beyond that, current orders slip and the crews burn out.
+        (UVA, only when UVA is on: Thank you both. Now the real cost is on the table.)
+        concept: Handling genuine anger · Session 5 Difficult Situations · worked
+        feedback shown: You treated it as genuine anger: you acknowledged it and let it out.
+        meters: Team trust +10
+   [2] YOU: I hear you, but they need forty next week and sixty after. We can't stall.
+        OTHER: Then it happens without Operations.
+        (UVA, only when UVA is on: You're both heated. Let me talk to each of you separately for a few minutes.)
+        concept: Pushing a position against genuine anger · Session 5 Difficult Situations · cost you
+        feedback shown: "I hear you, but" pushed your position. The anger was genuine and needed listening.
+        meters: Team trust -12, CEO time -6
+   [3] YOU: I want to answer this properly, not react. Give me ten minutes?
+        OTHER: Fine. Ten minutes.
+        (UVA, only when UVA is on: A break can help. When you're back, start with what this costs Manu's team.)
+        concept: Go to the balcony · Session 5 Difficult Situations · worked
+        feedback shown: You went to the balcony instead of reacting.
+        meters: Team trust +4
+
+state committed=1 angry=0 promoKnown=0 otherFactKnown=0 channel=side deal=40/60
+== BRUNA · heat · Chapter 2 · The heat
+  NARRATOR: Manu pulls up the plan. A month of rescheduling comes out at once.
+  OTHER: Every month, the same. You promise, my crews lose their weekends, and nobody asks us first!
+   [1] YOU: You're right to be frustrated. Tell me what this does to your team's week.
+        OTHER: Honestly? Forty tonnes is safe. Beyond that, current orders slip and the crews burn out.
+        (UVA, only when UVA is on: Thank you both. Now the real cost is on the table.)
+        concept: Handling genuine anger · Session 5 Difficult Situations · worked
+        feedback shown: You treated it as genuine anger: you acknowledged it and let it out.
+        meters: Team trust +10
+   [2] YOU: I hear you, but the customer won't wait. We need the hundred.
+        OTHER: Then it happens without Operations.
+        (UVA, only when UVA is on: You're both heated. Let me talk to each of you separately for a few minutes.)
+        concept: Pushing a position against genuine anger · Session 5 Difficult Situations · cost you
+        feedback shown: "I hear you, but" pushed your position. The anger was genuine and needed listening.
+        meters: Team trust -12, CEO time -6
+   [3] YOU: I want to answer this properly, not react. Give me ten minutes?
+        OTHER: Fine. Ten minutes.
+        (UVA, only when UVA is on: A break can help. When you're back, start with what this costs Manu's team.)
+        concept: Go to the balcony · Session 5 Difficult Situations · worked
+        feedback shown: You went to the balcony instead of reacting.
+        meters: Team trust +4
+
+state committed=1 angry=0 promoKnown=1 otherFactKnown=0 channel=side deal=40/60
+== BRUNA · heat · Chapter 2 · The heat
+  NARRATOR: Manu pulls up the plan. A month of rescheduling comes out at once.
+  OTHER: Every month, the same. You promise, my crews lose their weekends, and nobody asks us first!
+   [1] YOU: You're right to be frustrated. Tell me what this does to your team's week.
+        OTHER: Honestly? Forty tonnes is safe. Beyond that, current orders slip and the crews burn out.
+        (UVA, only when UVA is on: Thank you both. Now the real cost is on the table.)
+        concept: Handling genuine anger · Session 5 Difficult Situations · worked
+        feedback shown: You treated it as genuine anger: you acknowledged it and let it out.
+        meters: Team trust +10
+   [2] YOU: I hear you, but they need forty next week and sixty after. We can't stall.
+        OTHER: Then it happens without Operations.
+        (UVA, only when UVA is on: You're both heated. Let me talk to each of you separately for a few minutes.)
+        concept: Pushing a position against genuine anger · Session 5 Difficult Situations · cost you
+        feedback shown: "I hear you, but" pushed your position. The anger was genuine and needed listening.
+        meters: Team trust -12, CEO time -6
+   [3] YOU: I want to answer this properly, not react. Give me ten minutes?
+        OTHER: Fine. Ten minutes.
+        (UVA, only when UVA is on: A break can help. When you're back, start with what this costs Manu's team.)
+        concept: Go to the balcony · Session 5 Difficult Situations · worked
+        feedback shown: You went to the balcony instead of reacting.
+        meters: Team trust +4
+
+state committed=0 angry=0 promoKnown=0 otherFactKnown=0 channel=side deal=40/60
+== BRUNA · joao · Chapter 2 · João's office
+  NARRATOR: Word of the order reaches João. He calls both directors in.
+  JOAO: Big order, full schedule. I have a board call in twenty minutes. What do you need?
+   [1] YOU: A major buyer wants a hundred tonnes next week and Operations won't move. Make the call.
+        JOAO: Fine. We ship the hundred tonnes. Operations, make it work.
+        NARRATOR: João's decision stands.
+        concept: Power: who is stronger? · Session 3 Approaches to Conflict · cost you
+        feedback shown: Power settled it fast. Someone had to lose.
+        meters: Customer trust +10, Delivery -22, Team trust -16, CEO time -25
+   [2] YOU: We need a clear rule: who decides when a key account needs extra volume?
+        JOAO: This needs a proper sign-off policy. Bring it to Friday's exec meeting. Until then, nothing new ships.
+        NARRATOR: João's decision stands.
+        concept: Rights: a fair rule, but slow for this deal · Session 3 Approaches to Conflict · cost you
+        feedback shown: Rights gave you a fair rule, but it took days, and this customer was waiting.
+        meters: Customer trust -14, Team trust -4, CEO time -12, Delivery +6
+   [3] YOU: Give us one hour. We'll come back with a plan together.
+        JOAO: One hour. Then I decide.
+        concept: Interests before rights and power · Session 3 Approaches to Conflict · worked
+        feedback shown: You kept the decision with the people closest to it.
+        meters: Team trust +6, CEO time -8
+
+state committed=0 angry=0 promoKnown=1 otherFactKnown=0 channel=side deal=40/60
+== BRUNA · joao · Chapter 2 · João's office
+  NARRATOR: Word of the order reaches João. He calls both directors in.
+  JOAO: Big order, full schedule. I have a board call in twenty minutes. What do you need?
+   [1] YOU: A major buyer needs volume next week and Operations won't move. Make the call.
+        JOAO: Fine. We ship the hundred tonnes. Operations, make it work.
+        NARRATOR: João's decision stands.
+        concept: Power: who is stronger? · Session 3 Approaches to Conflict · cost you
+        feedback shown: Power settled it fast. Someone had to lose.
+        meters: Customer trust +10, Delivery -22, Team trust -16, CEO time -25
+   [2] YOU: We need a clear rule: who decides when a key account needs extra volume?
+        JOAO: This needs a proper sign-off policy. Bring it to Friday's exec meeting. Until then, nothing new ships.
+        NARRATOR: João's decision stands.
+        concept: Rights: a fair rule, but slow for this deal · Session 3 Approaches to Conflict · cost you
+        feedback shown: Rights gave you a fair rule, but it took days, and this customer was waiting.
+        meters: Customer trust -14, Team trust -4, CEO time -12, Delivery +6
+   [3] YOU: Give us one hour. We'll come back with a plan together.
+        JOAO: One hour. Then I decide.
+        concept: Interests before rights and power · Session 3 Approaches to Conflict · worked
+        feedback shown: You kept the decision with the people closest to it.
+        meters: Team trust +6, CEO time -8
+
+state committed=0 angry=0 promoKnown=0 otherFactKnown=0 channel=side deal=40/60
+== BRUNA · ask1 · Chapter 3 · What's underneath (1 of 2)
+  NARRATOR: Time to look underneath the positions. You have time for two moves.
+   [1] YOU: What would need to be true for you to release some volume safely?
+        OTHER: Forty tonnes, without touching anyone else's order.
+        (UVA, only when UVA is on: So forty is the safe number. What does that open up?)
+        concept: Ask, don't assume · Session 3 Approaches to Conflict · worked
+        feedback shown: A good question surfaced his real limit: forty tonnes.
+        meters: Team trust +6
+   [2] YOU: Step out and call the customer: which part is truly urgent?
+        CUSTOMER: Honestly? We need 40 tonnes next week for our promo launch. The other 60 can follow a week later.
+        (UVA, only when UVA is on: Now you are working with facts, not assumptions.)
+        concept: Ask, don't assume · Session 3 Approaches to Conflict · worked
+        feedback shown: You checked the customer's real need instead of guessing.
+        meters: Customer trust +4
+   [3] YOU: Let's be practical: give me eighty tonnes next week.
+        OTHER: Eighty? Impossible. The schedule is full.
+        (UVA, only when UVA is on: Manu, is there any volume you could release safely?)
+        (then, only when UVA is on, OTHER: Forty, without touching other orders.)
+        concept: Anchoring a colleague, not a counterpart · Session 1 Essential Kit · cost you
+        feedback shown: Your anchor put Manu on the defensive.
+        meters: Team trust -5
+   [4] YOU: What would make orders like this easier to plan in future?
+        OTHER: Visibility. A six-month forecast, even a rough one.
+        (UVA, only when UVA is on: Predictability. Who else could help with that?)
+        concept: Interests behind the position · Session 1 Essential Kit · worked
+        feedback shown: You found what Operations really needs: predictability.
+        meters: Team trust +6, CEO time +2
+   [5] YOU: With weekend overtime you could do sixty, right?
+        OTHER: Right. And who pays for that? My crews.
+        (UVA, only when UVA is on: Manu, what would overtime cost your team?)
+        (then, only when UVA is on, OTHER: Tired crews and quality mistakes. Forty is safe.)
+        concept: Ask, don't assume · Session 3 Approaches to Conflict · cost you
+        feedback shown: You assumed his answer instead of asking. Manu heard a decision, not a question.
+        meters: Team trust -4
+
+state committed=0 angry=0 promoKnown=0 otherFactKnown=1 channel=side deal=40/60
+== BRUNA · ask1 · Chapter 3 · What's underneath (1 of 2)
+  NARRATOR: Time to look underneath the positions. You have time for two moves.
+   [1] YOU: Beyond forty tonnes, what would it take to do more?
+        OTHER: Weekend overtime. But tired crews make quality mistakes.
+        (UVA, only when UVA is on: So more volume has a quality cost. Worth knowing before you decide.)
+        concept: Open questions uncover interests · Session 4 Mediation · worked
+        feedback shown: A follow-up question showed the real cost of going past forty.
+        meters: Team trust +6
+   [2] YOU: Step out and call the customer: which part is truly urgent?
+        CUSTOMER: Honestly? We need 40 tonnes next week for our promo launch. The other 60 can follow a week later.
+        (UVA, only when UVA is on: Now you are working with facts, not assumptions.)
+        concept: Ask, don't assume · Session 3 Approaches to Conflict · worked
+        feedback shown: You checked the customer's real need instead of guessing.
+        meters: Customer trust +4
+   [3] YOU: Let's be practical: give me eighty tonnes next week.
+        OTHER: Eighty? I told you, forty is my safe limit.
+        (UVA, only when UVA is on: Forty is the safe number. What could work around it?)
+        concept: Positional haggling with a colleague · Session 1 Essential Kit · cost you
+        feedback shown: Haggling past his stated limit put Manu on the defensive.
+        meters: Team trust -5
+   [4] YOU: What would make orders like this easier to plan in future?
+        OTHER: Visibility. A six-month forecast, even a rough one.
+        (UVA, only when UVA is on: Predictability. Who else could help with that?)
+        concept: Interests behind the position · Session 1 Essential Kit · worked
+        feedback shown: You found what Operations really needs: predictability.
+        meters: Team trust +6, CEO time +2
+   [5] YOU: With weekend overtime you could do sixty, right?
+        OTHER: Right. And who pays for that? My crews.
+        (UVA, only when UVA is on: Manu, what would overtime cost your team?)
+        (then, only when UVA is on, OTHER: Tired crews and quality mistakes. Forty is safe.)
+        concept: Ask, don't assume · Session 3 Approaches to Conflict · cost you
+        feedback shown: You assumed his answer instead of asking. Manu heard a decision, not a question.
+        meters: Team trust -4
+
+state committed=0 angry=0 promoKnown=1 otherFactKnown=0 channel=side deal=40/60
+== BRUNA · ask1 · Chapter 3 · What's underneath (1 of 2)
+  NARRATOR: Time to look underneath the positions. You have time for two moves.
+   [1] YOU: What would need to be true for you to release some volume safely?
+        OTHER: Forty tonnes, without touching anyone else's order.
+        (UVA, only when UVA is on: So forty is the safe number. What does that open up?)
+        concept: Ask, don't assume · Session 3 Approaches to Conflict · worked
+        feedback shown: A good question surfaced his real limit: forty tonnes.
+        meters: Team trust +6
+   [2] YOU: Manu, if we offered them priority slots later, could I ask what they'd trade?
+        OTHER: Go ahead, ask them.
+        CUSTOMER: If it gets us priority production slots, we'd share a six-month forecast.
+        (UVA, only when UVA is on: A new issue on the table. That gives you something to trade.)
+        concept: More issues, more currency · Session 1 Essential Kit · worked
+        feedback shown: You found something the customer can give that costs them little.
+        meters: Customer trust +2
+   [3] YOU: Give me sixty next week, as a buffer for their launch.
+        OTHER: Sixty? Impossible. The schedule is full.
+        (UVA, only when UVA is on: Manu, is there any volume you could release safely?)
+        (then, only when UVA is on, OTHER: Forty, without touching other orders.)
+        concept: Anchoring a colleague, not a counterpart · Session 1 Essential Kit · cost you
+        feedback shown: Your anchor put Manu on the defensive.
+        meters: Team trust -5
+   [4] YOU: What would make orders like this easier to plan in future?
+        OTHER: Visibility. A six-month forecast, even a rough one.
+        (UVA, only when UVA is on: Predictability. Who else could help with that?)
+        concept: Interests behind the position · Session 1 Essential Kit · worked
+        feedback shown: You found what Operations really needs: predictability.
+        meters: Team trust +6, CEO time +2
+   [5] YOU: With weekend overtime you could do sixty, right?
+        OTHER: Right. And who pays for that? My crews.
+        (UVA, only when UVA is on: Manu, what would overtime cost your team?)
+        (then, only when UVA is on, OTHER: Tired crews and quality mistakes. Forty is safe.)
+        concept: Ask, don't assume · Session 3 Approaches to Conflict · cost you
+        feedback shown: You assumed his answer instead of asking. Manu heard a decision, not a question.
+        meters: Team trust -4
+
+state committed=0 angry=0 promoKnown=1 otherFactKnown=1 channel=side deal=40/60
+== BRUNA · ask1 · Chapter 3 · What's underneath (1 of 2)
+  NARRATOR: Time to look underneath the positions. You have time for two moves.
+   [1] YOU: Beyond forty tonnes, what would it take to do more?
+        OTHER: Weekend overtime. But tired crews make quality mistakes.
+        (UVA, only when UVA is on: So more volume has a quality cost. Worth knowing before you decide.)
+        concept: Open questions uncover interests · Session 4 Mediation · worked
+        feedback shown: A follow-up question showed the real cost of going past forty.
+        meters: Team trust +6
+   [2] YOU: Manu, if we offered them priority slots later, could I ask what they'd trade?
+        OTHER: Go ahead, ask them.
+        CUSTOMER: If it gets us priority production slots, we'd share a six-month forecast.
+        (UVA, only when UVA is on: A new issue on the table. That gives you something to trade.)
+        concept: More issues, more currency · Session 1 Essential Kit · worked
+        feedback shown: You found something the customer can give that costs them little.
+        meters: Customer trust +2
+   [3] YOU: Give me fifty next week. Just ten tonnes of buffer for their launch.
+        OTHER: Fifty? I told you, forty is my safe limit.
+        (UVA, only when UVA is on: Forty is the safe number. What could work around it?)
+        concept: Positional haggling with a colleague · Session 1 Essential Kit · cost you
+        feedback shown: Haggling past his stated limit put Manu on the defensive.
+        meters: Team trust -5
+   [4] YOU: What would make orders like this easier to plan in future?
+        OTHER: Visibility. A six-month forecast, even a rough one.
+        (UVA, only when UVA is on: Predictability. Who else could help with that?)
+        concept: Interests behind the position · Session 1 Essential Kit · worked
+        feedback shown: You found what Operations really needs: predictability.
+        meters: Team trust +6, CEO time +2
+   [5] YOU: With weekend overtime you could do sixty, right?
+        OTHER: Right. And who pays for that? My crews.
+        (UVA, only when UVA is on: Manu, what would overtime cost your team?)
+        (then, only when UVA is on, OTHER: Tired crews and quality mistakes. Forty is safe.)
+        concept: Ask, don't assume · Session 3 Approaches to Conflict · cost you
+        feedback shown: You assumed his answer instead of asking. Manu heard a decision, not a question.
+        meters: Team trust -4
+
+state committed=1 angry=0 promoKnown=0 otherFactKnown=0 channel=side deal=40/60
+== BRUNA · ask1 · Chapter 3 · What's underneath (1 of 2)
+  NARRATOR: Time to look underneath the positions. You have time for two moves.
+   [1] YOU: What would need to be true for you to release some volume safely?
+        OTHER: Forty tonnes, without touching anyone else's order.
+        (UVA, only when UVA is on: So forty is the safe number. What does that open up?)
+        concept: Ask, don't assume · Session 3 Approaches to Conflict · worked
+        feedback shown: A good question surfaced his real limit: forty tonnes.
+        meters: Team trust +6
+   [2] YOU: Step out and call the customer: which part is truly urgent?
+        CUSTOMER: You already confirmed a hundred. But honestly? Forty covers our launch if sixty follows the week after.
+        (UVA, only when UVA is on: Now you are working with facts, not assumptions.)
+        concept: Ask, don't assume · Session 3 Approaches to Conflict · worked
+        feedback shown: You checked the customer's real need instead of guessing.
+        meters: Customer trust +4
+   [3] YOU: Let's be practical: give me eighty tonnes next week.
+        OTHER: Eighty? Impossible. The schedule is full.
+        (UVA, only when UVA is on: Manu, is there any volume you could release safely?)
+        (then, only when UVA is on, OTHER: Forty, without touching other orders.)
+        concept: Anchoring a colleague, not a counterpart · Session 1 Essential Kit · cost you
+        feedback shown: Your anchor put Manu on the defensive.
+        meters: Team trust -5
+   [4] YOU: What would make orders like this easier to plan in future?
+        OTHER: Visibility. A six-month forecast, even a rough one.
+        (UVA, only when UVA is on: Predictability. Who else could help with that?)
+        concept: Interests behind the position · Session 1 Essential Kit · worked
+        feedback shown: You found what Operations really needs: predictability.
+        meters: Team trust +6, CEO time +2
+   [5] YOU: With weekend overtime you could do sixty, right?
+        OTHER: Right. And who pays for that? My crews.
+        (UVA, only when UVA is on: Manu, what would overtime cost your team?)
+        (then, only when UVA is on, OTHER: Tired crews and quality mistakes. Forty is safe.)
+        concept: Ask, don't assume · Session 3 Approaches to Conflict · cost you
+        feedback shown: You assumed his answer instead of asking. Manu heard a decision, not a question.
+        meters: Team trust -4
+
+state committed=1 angry=0 promoKnown=0 otherFactKnown=1 channel=side deal=40/60
+== BRUNA · ask1 · Chapter 3 · What's underneath (1 of 2)
+  NARRATOR: Time to look underneath the positions. You have time for two moves.
+   [1] YOU: Beyond forty tonnes, what would it take to do more?
+        OTHER: Weekend overtime. But tired crews make quality mistakes.
+        (UVA, only when UVA is on: So more volume has a quality cost. Worth knowing before you decide.)
+        concept: Open questions uncover interests · Session 4 Mediation · worked
+        feedback shown: A follow-up question showed the real cost of going past forty.
+        meters: Team trust +6
+   [2] YOU: Step out and call the customer: which part is truly urgent?
+        CUSTOMER: You already confirmed a hundred. But honestly? Forty covers our launch if sixty follows the week after.
+        (UVA, only when UVA is on: Now you are working with facts, not assumptions.)
+        concept: Ask, don't assume · Session 3 Approaches to Conflict · worked
+        feedback shown: You checked the customer's real need instead of guessing.
+        meters: Customer trust +4
+   [3] YOU: Let's be practical: give me eighty tonnes next week.
+        OTHER: Eighty? I told you, forty is my safe limit.
+        (UVA, only when UVA is on: Forty is the safe number. What could work around it?)
+        concept: Positional haggling with a colleague · Session 1 Essential Kit · cost you
+        feedback shown: Haggling past his stated limit put Manu on the defensive.
+        meters: Team trust -5
+   [4] YOU: What would make orders like this easier to plan in future?
+        OTHER: Visibility. A six-month forecast, even a rough one.
+        (UVA, only when UVA is on: Predictability. Who else could help with that?)
+        concept: Interests behind the position · Session 1 Essential Kit · worked
+        feedback shown: You found what Operations really needs: predictability.
+        meters: Team trust +6, CEO time +2
+   [5] YOU: With weekend overtime you could do sixty, right?
+        OTHER: Right. And who pays for that? My crews.
+        (UVA, only when UVA is on: Manu, what would overtime cost your team?)
+        (then, only when UVA is on, OTHER: Tired crews and quality mistakes. Forty is safe.)
+        concept: Ask, don't assume · Session 3 Approaches to Conflict · cost you
+        feedback shown: You assumed his answer instead of asking. Manu heard a decision, not a question.
+        meters: Team trust -4
+
+state committed=0 angry=0 promoKnown=0 otherFactKnown=0 channel=side deal=40/60
+== BRUNA · ask2 · Chapter 3 · What's underneath (2 of 2)
+  NARRATOR: One more move before you build the deal.
+   [1] YOU: What would need to be true for you to release some volume safely?
+        OTHER: Forty tonnes, without touching anyone else's order.
+        (UVA, only when UVA is on: So forty is the safe number. What does that open up?)
+        concept: Ask, don't assume · Session 3 Approaches to Conflict · worked
+        feedback shown: A good question surfaced his real limit: forty tonnes.
+        meters: Team trust +6
+   [2] YOU: Step out and call the customer: which part is truly urgent?
+        CUSTOMER: Honestly? We need 40 tonnes next week for our promo launch. The other 60 can follow a week later.
+        (UVA, only when UVA is on: Now you are working with facts, not assumptions.)
+        concept: Ask, don't assume · Session 3 Approaches to Conflict · worked
+        feedback shown: You checked the customer's real need instead of guessing.
+        meters: Customer trust +4
+   [3] YOU: Let's be practical: give me eighty tonnes next week.
+        OTHER: Eighty? Impossible. The schedule is full.
+        (UVA, only when UVA is on: Manu, is there any volume you could release safely?)
+        (then, only when UVA is on, OTHER: Forty, without touching other orders.)
+        concept: Anchoring a colleague, not a counterpart · Session 1 Essential Kit · cost you
+        feedback shown: Your anchor put Manu on the defensive.
+        meters: Team trust -5
+   [4] YOU: What would make orders like this easier to plan in future?
+        OTHER: Visibility. A six-month forecast, even a rough one.
+        (UVA, only when UVA is on: Predictability. Who else could help with that?)
+        concept: Interests behind the position · Session 1 Essential Kit · worked
+        feedback shown: You found what Operations really needs: predictability.
+        meters: Team trust +6, CEO time +2
+   [5] YOU: With weekend overtime you could do sixty, right?
+        OTHER: Right. And who pays for that? My crews.
+        (UVA, only when UVA is on: Manu, what would overtime cost your team?)
+        (then, only when UVA is on, OTHER: Tired crews and quality mistakes. Forty is safe.)
+        concept: Ask, don't assume · Session 3 Approaches to Conflict · cost you
+        feedback shown: You assumed his answer instead of asking. Manu heard a decision, not a question.
+        meters: Team trust -4
+
+state committed=0 angry=0 promoKnown=0 otherFactKnown=1 channel=side deal=40/60
+== BRUNA · ask2 · Chapter 3 · What's underneath (2 of 2)
+  NARRATOR: One more move before you build the deal.
+   [1] YOU: Beyond forty tonnes, what would it take to do more?
+        OTHER: Weekend overtime. But tired crews make quality mistakes.
+        (UVA, only when UVA is on: So more volume has a quality cost. Worth knowing before you decide.)
+        concept: Open questions uncover interests · Session 4 Mediation · worked
+        feedback shown: A follow-up question showed the real cost of going past forty.
+        meters: Team trust +6
+   [2] YOU: Step out and call the customer: which part is truly urgent?
+        CUSTOMER: Honestly? We need 40 tonnes next week for our promo launch. The other 60 can follow a week later.
+        (UVA, only when UVA is on: Now you are working with facts, not assumptions.)
+        concept: Ask, don't assume · Session 3 Approaches to Conflict · worked
+        feedback shown: You checked the customer's real need instead of guessing.
+        meters: Customer trust +4
+   [3] YOU: Let's be practical: give me eighty tonnes next week.
+        OTHER: Eighty? I told you, forty is my safe limit.
+        (UVA, only when UVA is on: Forty is the safe number. What could work around it?)
+        concept: Positional haggling with a colleague · Session 1 Essential Kit · cost you
+        feedback shown: Haggling past his stated limit put Manu on the defensive.
+        meters: Team trust -5
+   [4] YOU: What would make orders like this easier to plan in future?
+        OTHER: Visibility. A six-month forecast, even a rough one.
+        (UVA, only when UVA is on: Predictability. Who else could help with that?)
+        concept: Interests behind the position · Session 1 Essential Kit · worked
+        feedback shown: You found what Operations really needs: predictability.
+        meters: Team trust +6, CEO time +2
+   [5] YOU: With weekend overtime you could do sixty, right?
+        OTHER: Right. And who pays for that? My crews.
+        (UVA, only when UVA is on: Manu, what would overtime cost your team?)
+        (then, only when UVA is on, OTHER: Tired crews and quality mistakes. Forty is safe.)
+        concept: Ask, don't assume · Session 3 Approaches to Conflict · cost you
+        feedback shown: You assumed his answer instead of asking. Manu heard a decision, not a question.
+        meters: Team trust -4
+
+state committed=0 angry=0 promoKnown=1 otherFactKnown=0 channel=side deal=40/60
+== BRUNA · ask2 · Chapter 3 · What's underneath (2 of 2)
+  NARRATOR: One more move before you build the deal.
+   [1] YOU: What would need to be true for you to release some volume safely?
+        OTHER: Forty tonnes, without touching anyone else's order.
+        (UVA, only when UVA is on: So forty is the safe number. What does that open up?)
+        concept: Ask, don't assume · Session 3 Approaches to Conflict · worked
+        feedback shown: A good question surfaced his real limit: forty tonnes.
+        meters: Team trust +6
+   [2] YOU: Manu, if we offered them priority slots later, could I ask what they'd trade?
+        OTHER: Go ahead, ask them.
+        CUSTOMER: If it gets us priority production slots, we'd share a six-month forecast.
+        (UVA, only when UVA is on: A new issue on the table. That gives you something to trade.)
+        concept: More issues, more currency · Session 1 Essential Kit · worked
+        feedback shown: You found something the customer can give that costs them little.
+        meters: Customer trust +2
+   [3] YOU: Give me sixty next week, as a buffer for their launch.
+        OTHER: Sixty? Impossible. The schedule is full.
+        (UVA, only when UVA is on: Manu, is there any volume you could release safely?)
+        (then, only when UVA is on, OTHER: Forty, without touching other orders.)
+        concept: Anchoring a colleague, not a counterpart · Session 1 Essential Kit · cost you
+        feedback shown: Your anchor put Manu on the defensive.
+        meters: Team trust -5
+   [4] YOU: What would make orders like this easier to plan in future?
+        OTHER: Visibility. A six-month forecast, even a rough one.
+        (UVA, only when UVA is on: Predictability. Who else could help with that?)
+        concept: Interests behind the position · Session 1 Essential Kit · worked
+        feedback shown: You found what Operations really needs: predictability.
+        meters: Team trust +6, CEO time +2
+   [5] YOU: With weekend overtime you could do sixty, right?
+        OTHER: Right. And who pays for that? My crews.
+        (UVA, only when UVA is on: Manu, what would overtime cost your team?)
+        (then, only when UVA is on, OTHER: Tired crews and quality mistakes. Forty is safe.)
+        concept: Ask, don't assume · Session 3 Approaches to Conflict · cost you
+        feedback shown: You assumed his answer instead of asking. Manu heard a decision, not a question.
+        meters: Team trust -4
+
+state committed=0 angry=0 promoKnown=1 otherFactKnown=1 channel=side deal=40/60
+== BRUNA · ask2 · Chapter 3 · What's underneath (2 of 2)
+  NARRATOR: One more move before you build the deal.
+   [1] YOU: Beyond forty tonnes, what would it take to do more?
+        OTHER: Weekend overtime. But tired crews make quality mistakes.
+        (UVA, only when UVA is on: So more volume has a quality cost. Worth knowing before you decide.)
+        concept: Open questions uncover interests · Session 4 Mediation · worked
+        feedback shown: A follow-up question showed the real cost of going past forty.
+        meters: Team trust +6
+   [2] YOU: Manu, if we offered them priority slots later, could I ask what they'd trade?
+        OTHER: Go ahead, ask them.
+        CUSTOMER: If it gets us priority production slots, we'd share a six-month forecast.
+        (UVA, only when UVA is on: A new issue on the table. That gives you something to trade.)
+        concept: More issues, more currency · Session 1 Essential Kit · worked
+        feedback shown: You found something the customer can give that costs them little.
+        meters: Customer trust +2
+   [3] YOU: Give me fifty next week. Just ten tonnes of buffer for their launch.
+        OTHER: Fifty? I told you, forty is my safe limit.
+        (UVA, only when UVA is on: Forty is the safe number. What could work around it?)
+        concept: Positional haggling with a colleague · Session 1 Essential Kit · cost you
+        feedback shown: Haggling past his stated limit put Manu on the defensive.
+        meters: Team trust -5
+   [4] YOU: What would make orders like this easier to plan in future?
+        OTHER: Visibility. A six-month forecast, even a rough one.
+        (UVA, only when UVA is on: Predictability. Who else could help with that?)
+        concept: Interests behind the position · Session 1 Essential Kit · worked
+        feedback shown: You found what Operations really needs: predictability.
+        meters: Team trust +6, CEO time +2
+   [5] YOU: With weekend overtime you could do sixty, right?
+        OTHER: Right. And who pays for that? My crews.
+        (UVA, only when UVA is on: Manu, what would overtime cost your team?)
+        (then, only when UVA is on, OTHER: Tired crews and quality mistakes. Forty is safe.)
+        concept: Ask, don't assume · Session 3 Approaches to Conflict · cost you
+        feedback shown: You assumed his answer instead of asking. Manu heard a decision, not a question.
+        meters: Team trust -4
+
+state committed=1 angry=0 promoKnown=0 otherFactKnown=0 channel=side deal=40/60
+== BRUNA · ask2 · Chapter 3 · What's underneath (2 of 2)
+  NARRATOR: One more move before you build the deal.
+   [1] YOU: What would need to be true for you to release some volume safely?
+        OTHER: Forty tonnes, without touching anyone else's order.
+        (UVA, only when UVA is on: So forty is the safe number. What does that open up?)
+        concept: Ask, don't assume · Session 3 Approaches to Conflict · worked
+        feedback shown: A good question surfaced his real limit: forty tonnes.
+        meters: Team trust +6
+   [2] YOU: Step out and call the customer: which part is truly urgent?
+        CUSTOMER: You already confirmed a hundred. But honestly? Forty covers our launch if sixty follows the week after.
+        (UVA, only when UVA is on: Now you are working with facts, not assumptions.)
+        concept: Ask, don't assume · Session 3 Approaches to Conflict · worked
+        feedback shown: You checked the customer's real need instead of guessing.
+        meters: Customer trust +4
+   [3] YOU: Let's be practical: give me eighty tonnes next week.
+        OTHER: Eighty? Impossible. The schedule is full.
+        (UVA, only when UVA is on: Manu, is there any volume you could release safely?)
+        (then, only when UVA is on, OTHER: Forty, without touching other orders.)
+        concept: Anchoring a colleague, not a counterpart · Session 1 Essential Kit · cost you
+        feedback shown: Your anchor put Manu on the defensive.
+        meters: Team trust -5
+   [4] YOU: What would make orders like this easier to plan in future?
+        OTHER: Visibility. A six-month forecast, even a rough one.
+        (UVA, only when UVA is on: Predictability. Who else could help with that?)
+        concept: Interests behind the position · Session 1 Essential Kit · worked
+        feedback shown: You found what Operations really needs: predictability.
+        meters: Team trust +6, CEO time +2
+   [5] YOU: With weekend overtime you could do sixty, right?
+        OTHER: Right. And who pays for that? My crews.
+        (UVA, only when UVA is on: Manu, what would overtime cost your team?)
+        (then, only when UVA is on, OTHER: Tired crews and quality mistakes. Forty is safe.)
+        concept: Ask, don't assume · Session 3 Approaches to Conflict · cost you
+        feedback shown: You assumed his answer instead of asking. Manu heard a decision, not a question.
+        meters: Team trust -4
+
+state committed=1 angry=0 promoKnown=0 otherFactKnown=1 channel=side deal=40/60
+== BRUNA · ask2 · Chapter 3 · What's underneath (2 of 2)
+  NARRATOR: One more move before you build the deal.
+   [1] YOU: Beyond forty tonnes, what would it take to do more?
+        OTHER: Weekend overtime. But tired crews make quality mistakes.
+        (UVA, only when UVA is on: So more volume has a quality cost. Worth knowing before you decide.)
+        concept: Open questions uncover interests · Session 4 Mediation · worked
+        feedback shown: A follow-up question showed the real cost of going past forty.
+        meters: Team trust +6
+   [2] YOU: Step out and call the customer: which part is truly urgent?
+        CUSTOMER: You already confirmed a hundred. But honestly? Forty covers our launch if sixty follows the week after.
+        (UVA, only when UVA is on: Now you are working with facts, not assumptions.)
+        concept: Ask, don't assume · Session 3 Approaches to Conflict · worked
+        feedback shown: You checked the customer's real need instead of guessing.
+        meters: Customer trust +4
+   [3] YOU: Let's be practical: give me eighty tonnes next week.
+        OTHER: Eighty? I told you, forty is my safe limit.
+        (UVA, only when UVA is on: Forty is the safe number. What could work around it?)
+        concept: Positional haggling with a colleague · Session 1 Essential Kit · cost you
+        feedback shown: Haggling past his stated limit put Manu on the defensive.
+        meters: Team trust -5
+   [4] YOU: What would make orders like this easier to plan in future?
+        OTHER: Visibility. A six-month forecast, even a rough one.
+        (UVA, only when UVA is on: Predictability. Who else could help with that?)
+        concept: Interests behind the position · Session 1 Essential Kit · worked
+        feedback shown: You found what Operations really needs: predictability.
+        meters: Team trust +6, CEO time +2
+   [5] YOU: With weekend overtime you could do sixty, right?
+        OTHER: Right. And who pays for that? My crews.
+        (UVA, only when UVA is on: Manu, what would overtime cost your team?)
+        (then, only when UVA is on, OTHER: Tired crews and quality mistakes. Forty is safe.)
+        concept: Ask, don't assume · Session 3 Approaches to Conflict · cost you
+        feedback shown: You assumed his answer instead of asking. Manu heard a decision, not a question.
+        meters: Team trust -4
+
+state committed=0 angry=0 promoKnown=0 otherFactKnown=0 channel=side deal=40/60
+== BRUNA · customer · Chapter 4 · The customer
+  MANU: With a forecast in the deal, that I can plan for.
+  NARRATOR: Bruna puts the customer on speakerphone and reads out the plan.
+  CUSTOMER: Could you push next week to sixty? Otherwise we may have to look elsewhere.
+   [1] YOU: Next week stays as planned. The forecast and priority slots are already in the deal.
+        CUSTOMER: Fair enough. Let's go with it.
+        concept: Package deal: trade on different priorities · Session 2 Team Negotiation · worked
+        feedback shown: You held the line: the package already traded priority for a forecast.
+        meters: Customer trust +4, Team trust +4
+   [2] YOU: Okay, sixty next week. We'll make it work.
+        CUSTOMER: Perfect, thank you!
+        concept: Conceding under pressure · Session 1 Essential Kit · cost you
+        feedback shown: A concession for nothing: the customer smiled, Operations paid.
+        meters: Customer trust +8, Delivery -16, Team trust -10
+   [3] YOU: You're not planning to walk away, are you? This is the plan we can deliver reliably.
+        CUSTOMER: No, no. We just need to be sure of the launch.
+        concept: Responding to a threat · Session 5 Difficult Situations · worked
+        feedback shown: You named the threat calmly and did not give in.
+        meters: Customer trust +2, Team trust +4
+
+state committed=0 angry=0 promoKnown=0 otherFactKnown=0 channel=side deal=30/70
+== BRUNA · customer · Chapter 4 · The customer
+  MANU: That I can deliver.
+  NARRATOR: Bruna puts the customer on speakerphone and reads out the plan.
+  CUSTOMER: That won't cover our launch. We need at least forty next week.
+   [1] YOU: Fair. If Manu can cover that, what could you share with us for priority slots?
+        CUSTOMER: We could share a six-month forecast, if that gets us priority slots.
+        MANU: Forty next week is safe. I can do that.
+        concept: Concessions: quid pro quo · Session 1 Essential Kit · worked
+        feedback shown: You fixed the plan to their real need and traded for a forecast.
+        meters: Customer trust +10, Team trust +4
+   [2] YOU: Alright, we'll cover it. No conditions needed.
+        CUSTOMER: Great. Good to know we can count on you when things get tight.
+        concept: A concession for nothing in return · Session 1 Essential Kit · cost you
+        feedback shown: You fixed the plan, but asked for nothing back. They will expect it again.
+        meters: Customer trust +8, Team trust -4
+   [3] YOU: This is the plan we can promise reliably. Take it or leave it.
+        CUSTOMER: I'm sorry. Without forty next week, we can't launch.
+        concept: Holding a position that misses their line · Session 6 Multiparty · cost you
+        feedback shown: Calm and firm, but the plan did not cover what they needed.
+        meters: Customer trust -18
+
+state committed=0 angry=0 promoKnown=0 otherFactKnown=0 channel=side deal=40/40
+== BRUNA · customer · Chapter 4 · The customer
+  MANU: That I can deliver.
+  NARRATOR: Bruna puts the customer on speakerphone and reads out the plan.
+  CUSTOMER: That's short. We need the full hundred over the two weeks.
+   [1] YOU: Fair. If Manu can cover that, what could you share with us for priority slots?
+        CUSTOMER: We could share a six-month forecast, if that gets us priority slots.
+        MANU: Sixty the week after is fine. I can do that.
+        concept: Concessions: quid pro quo · Session 1 Essential Kit · worked
+        feedback shown: You fixed the plan to their real need and traded for a forecast.
+        meters: Customer trust +10, Team trust +4
+   [2] YOU: Alright, we'll cover it. No conditions needed.
+        CUSTOMER: Great. Good to know we can count on you when things get tight.
+        concept: A concession for nothing in return · Session 1 Essential Kit · cost you
+        feedback shown: You fixed the plan, but asked for nothing back. They will expect it again.
+        meters: Customer trust +8, Team trust -4
+   [3] YOU: This is the plan we can promise reliably. Take it or leave it.
+        CUSTOMER: Then we'll buy the missing tonnes elsewhere.
+        concept: Holding a position that misses their line · Session 6 Multiparty · cost you
+        feedback shown: Calm and firm, but the plan did not cover what they needed.
+        meters: Customer trust -18
+
+state committed=0 angry=0 promoKnown=0 otherFactKnown=0 channel=side deal=60/40
+== BRUNA · customer · Chapter 4 · The customer
+  MANU: That's more than I can release safely next week.
+  NARRATOR: Bruna puts the customer on speakerphone and reads out the plan.
+  CUSTOMER: Could you push next week to eighty? Otherwise we may have to look elsewhere.
+   [1] YOU: Next week stays as planned. What could you share with us, if we gave you priority slots?
+        CUSTOMER: We could share a six-month forecast, if that gets us priority slots.
+        CUSTOMER: Let's go with your plan, and we'll send the forecast.
+        NARRATOR: After the call, Manu turns to Bruna.
+        MANU: Remember, that plan already needs weekend shifts.
+        concept: More issues, more currency · Session 1 Essential Kit · worked
+        feedback shown: You held the line and asked what they could trade: a forecast for priority slots.
+        meters: Customer trust +6, Team trust +4
+   [2] YOU: Okay, eighty next week. We'll make it work.
+        CUSTOMER: Perfect, thank you!
+        concept: Conceding under pressure · Session 1 Essential Kit · cost you
+        feedback shown: A concession for nothing: the customer smiled, Operations paid.
+        meters: Customer trust +8, Delivery -16, Team trust -10
+   [3] YOU: Are you really walking away over this? We're already stretching our lines to offer this plan.
+        CUSTOMER: No, no. We just need to be sure of the launch.
+        NARRATOR: After the call, Manu turns to Bruna.
+        MANU: Remember, that plan already needs weekend shifts.
+        concept: Responding to a threat · Session 5 Difficult Situations · worked
+        feedback shown: You named the threat calmly and did not give in.
+        meters: Customer trust +2, Team trust 0
+
+state committed=0 angry=0 promoKnown=0 otherFactKnown=0 channel=side deal=80/20
+== BRUNA · customer · Chapter 4 · The customer
+  MANU: That's more than I can release safely next week.
+  NARRATOR: Bruna puts the customer on speakerphone and reads out the plan.
+  CUSTOMER: Could you push next week to the full hundred? Otherwise we may have to look elsewhere.
+   [1] YOU: Next week stays as planned. What could you share with us, if we gave you priority slots?
+        CUSTOMER: We could share a six-month forecast, if that gets us priority slots.
+        CUSTOMER: Let's go with your plan, and we'll send the forecast.
+        NARRATOR: After the call, Manu turns to Bruna.
+        MANU: Remember, that plan already needs weekend shifts.
+        concept: More issues, more currency · Session 1 Essential Kit · worked
+        feedback shown: You held the line and asked what they could trade: a forecast for priority slots.
+        meters: Customer trust +6, Team trust +4
+   [2] YOU: Okay, the full hundred next week. We'll make it work.
+        CUSTOMER: Perfect, thank you!
+        concept: Conceding under pressure · Session 1 Essential Kit · cost you
+        feedback shown: A concession for nothing: the customer smiled, Operations paid.
+        meters: Customer trust +8, Delivery -16, Team trust -10
+   [3] YOU: Are you really walking away over this? We're already stretching our lines to offer this plan.
+        CUSTOMER: No, no. We just need to be sure of the launch.
+        NARRATOR: After the call, Manu turns to Bruna.
+        MANU: Remember, that plan already needs weekend shifts.
+        concept: Responding to a threat · Session 5 Difficult Situations · worked
+        feedback shown: You named the threat calmly and did not give in.
+        meters: Customer trust +2, Team trust 0
+
+state committed=0 angry=0 promoKnown=0 otherFactKnown=0 channel=side deal=100/0
+== BRUNA · customer · Chapter 4 · The customer
+  MANU: That's more than I can release safely next week.
+  NARRATOR: Bruna puts the customer on speakerphone and reads out the plan.
+  CUSTOMER: That works. Can we count on the same again next month?
+   [1] YOU: Only if you send a six-month forecast, so we can reserve your slots in advance.
+        CUSTOMER: That's fair. We'll send the forecast.
+        concept: Concessions: quid pro quo · Session 1 Essential Kit · worked
+        feedback shown: You turned a one-off favour into a trade: priority slots for a forecast.
+        meters: Customer trust +6, Team trust +4
+   [2] YOU: We will do our best to match it. Just call us when you need it.
+        CUSTOMER: Perfect, thank you!
+        concept: A concession for nothing in return · Session 1 Essential Kit · cost you
+        feedback shown: You promised future rush orders for nothing in return.
+        meters: Customer trust +6, Delivery -10, Team trust -8
+   [3] YOU: Let's see how this month goes first, then plan next month together.
+        CUSTOMER: Fair enough. Let's talk after delivery.
+        concept: Concessions: don't rush · Session 1 Essential Kit · worked
+        feedback shown: You didn't rush into a second concession.
+        meters: Customer trust +2, Team trust +2
+
+state committed=0 angry=0 promoKnown=0 otherFactKnown=1 channel=side deal=30/70
+== BRUNA · customer · Chapter 4 · The customer
+  MANU: That I can deliver.
+  NARRATOR: Bruna puts the customer on speakerphone and reads out the plan.
+  CUSTOMER: That won't cover our launch. We need at least forty next week.
+   [1] YOU: Fair. If Manu can cover that, will you share a forecast for priority slots?
+        CUSTOMER: Yes, if the volume is there.
+        MANU: Forty next week is safe. I can do that.
+        concept: Concessions: quid pro quo · Session 1 Essential Kit · worked
+        feedback shown: You fixed the plan to their real need and traded for a forecast.
+        meters: Customer trust +10, Team trust +4
+   [2] YOU: Alright, we'll cover it. No conditions needed.
+        CUSTOMER: Great. Good to know we can count on you when things get tight.
+        concept: A concession for nothing in return · Session 1 Essential Kit · cost you
+        feedback shown: You fixed the plan, but asked for nothing back. They will expect it again.
+        meters: Customer trust +8, Team trust -4
+   [3] YOU: This is the plan we can promise reliably. Take it or leave it.
+        CUSTOMER: I'm sorry. Without forty next week, we can't launch.
+        concept: Holding a position that misses their line · Session 6 Multiparty · cost you
+        feedback shown: Calm and firm, but the plan did not cover what they needed.
+        meters: Customer trust -18
+
+state committed=0 angry=0 promoKnown=0 otherFactKnown=1 channel=side deal=40/40
+== BRUNA · customer · Chapter 4 · The customer
+  MANU: That I can deliver.
+  NARRATOR: Bruna puts the customer on speakerphone and reads out the plan.
+  CUSTOMER: That's short. We need the full hundred over the two weeks.
+   [1] YOU: Fair. If Manu can cover that, will you share a forecast for priority slots?
+        CUSTOMER: Yes, if the volume is there.
+        MANU: Sixty the week after is fine. I can do that.
+        concept: Concessions: quid pro quo · Session 1 Essential Kit · worked
+        feedback shown: You fixed the plan to their real need and traded for a forecast.
+        meters: Customer trust +10, Team trust +4
+   [2] YOU: Alright, we'll cover it. No conditions needed.
+        CUSTOMER: Great. Good to know we can count on you when things get tight.
+        concept: A concession for nothing in return · Session 1 Essential Kit · cost you
+        feedback shown: You fixed the plan, but asked for nothing back. They will expect it again.
+        meters: Customer trust +8, Team trust -4
+   [3] YOU: This is the plan we can promise reliably. Take it or leave it.
+        CUSTOMER: Then we'll buy the missing tonnes elsewhere.
+        concept: Holding a position that misses their line · Session 6 Multiparty · cost you
+        feedback shown: Calm and firm, but the plan did not cover what they needed.
+        meters: Customer trust -18
+
+state committed=0 angry=0 promoKnown=0 otherFactKnown=1 channel=side deal=60/40
+== BRUNA · customer · Chapter 4 · The customer
+  MANU: That's more than I can release safely next week.
+  NARRATOR: Bruna puts the customer on speakerphone and reads out the plan.
+  CUSTOMER: Could you push next week to eighty? Otherwise we may have to look elsewhere.
+   [1] YOU: Next week stays as planned. But share a six-month forecast and you get priority slots from now on.
+        CUSTOMER: That's fair. Let's go with your plan, and we'll send the forecast.
+        NARRATOR: After the call, Manu turns to Bruna.
+        MANU: Remember, that plan already needs weekend shifts.
+        concept: Concessions: quid pro quo · Session 1 Essential Kit · worked
+        feedback shown: You held the line and traded: priority slots for a forecast.
+        meters: Customer trust +6, Team trust +4
+   [2] YOU: Okay, eighty next week. We'll make it work.
+        CUSTOMER: Perfect, thank you!
+        concept: Conceding under pressure · Session 1 Essential Kit · cost you
+        feedback shown: A concession for nothing: the customer smiled, Operations paid.
+        meters: Customer trust +8, Delivery -16, Team trust -10
+   [3] YOU: Are you really walking away over this? We're already stretching our lines to offer this plan.
+        CUSTOMER: No, no. We just need to be sure of the launch.
+        NARRATOR: After the call, Manu turns to Bruna.
+        MANU: Remember, that plan already needs weekend shifts.
+        concept: Responding to a threat · Session 5 Difficult Situations · worked
+        feedback shown: You named the threat calmly and did not give in.
+        meters: Customer trust +2, Team trust 0
+
+state committed=0 angry=0 promoKnown=0 otherFactKnown=1 channel=side deal=80/20
+== BRUNA · customer · Chapter 4 · The customer
+  MANU: That's more than I can release safely next week.
+  NARRATOR: Bruna puts the customer on speakerphone and reads out the plan.
+  CUSTOMER: Could you push next week to the full hundred? Otherwise we may have to look elsewhere.
+   [1] YOU: Next week stays as planned. But share a six-month forecast and you get priority slots from now on.
+        CUSTOMER: That's fair. Let's go with your plan, and we'll send the forecast.
+        NARRATOR: After the call, Manu turns to Bruna.
+        MANU: Remember, that plan already needs weekend shifts.
+        concept: Concessions: quid pro quo · Session 1 Essential Kit · worked
+        feedback shown: You held the line and traded: priority slots for a forecast.
+        meters: Customer trust +6, Team trust +4
+   [2] YOU: Okay, the full hundred next week. We'll make it work.
+        CUSTOMER: Perfect, thank you!
+        concept: Conceding under pressure · Session 1 Essential Kit · cost you
+        feedback shown: A concession for nothing: the customer smiled, Operations paid.
+        meters: Customer trust +8, Delivery -16, Team trust -10
+   [3] YOU: Are you really walking away over this? We're already stretching our lines to offer this plan.
+        CUSTOMER: No, no. We just need to be sure of the launch.
+        NARRATOR: After the call, Manu turns to Bruna.
+        MANU: Remember, that plan already needs weekend shifts.
+        concept: Responding to a threat · Session 5 Difficult Situations · worked
+        feedback shown: You named the threat calmly and did not give in.
+        meters: Customer trust +2, Team trust 0
+
+state committed=0 angry=0 promoKnown=1 otherFactKnown=0 channel=side deal=40/60
+== BRUNA · customer · Chapter 4 · The customer
+  MANU: With a forecast in the deal, that I can plan for.
+  NARRATOR: Bruna puts the customer on speakerphone and reads out the plan.
+  CUSTOMER: Forty covers the launch, but sixty would be safer. Otherwise we may look elsewhere.
+   [1] YOU: Next week stays as planned. The forecast and priority slots are already in the deal.
+        CUSTOMER: Fair enough. Let's go with it.
+        concept: Package deal: trade on different priorities · Session 2 Team Negotiation · worked
+        feedback shown: You held the line: the package already traded priority for a forecast.
+        meters: Customer trust +4, Team trust +4
+   [2] YOU: Okay, sixty next week. We'll make it work.
+        CUSTOMER: Perfect, thank you!
+        concept: Conceding under pressure · Session 1 Essential Kit · cost you
+        feedback shown: A concession for nothing: the customer smiled, Operations paid.
+        meters: Customer trust +8, Delivery -16, Team trust -10
+   [3] YOU: You're not planning to walk away, are you? Our plan protects your launch.
+        CUSTOMER: No, no. We just need to be sure of the launch.
+        concept: Responding to a threat · Session 5 Difficult Situations · worked
+        feedback shown: You named the threat calmly and did not give in.
+        meters: Customer trust +2, Team trust +4
+
+state committed=0 angry=0 promoKnown=1 otherFactKnown=0 channel=side deal=60/40
+== BRUNA · customer · Chapter 4 · The customer
+  MANU: That's more than I can release safely next week.
+  NARRATOR: Bruna puts the customer on speakerphone and reads out the plan.
+  CUSTOMER: Forty covers the launch, but eighty would be safer. Otherwise we may look elsewhere.
+   [1] YOU: Next week stays as planned. What could you share with us, if we gave you priority slots?
+        CUSTOMER: We could share a six-month forecast, if that gets us priority slots.
+        CUSTOMER: Let's go with your plan, and we'll send the forecast.
+        NARRATOR: After the call, Manu turns to Bruna.
+        MANU: Remember, that plan already needs weekend shifts.
+        concept: More issues, more currency · Session 1 Essential Kit · worked
+        feedback shown: You held the line and asked what they could trade: a forecast for priority slots.
+        meters: Customer trust +6, Team trust +4
+   [2] YOU: Okay, eighty next week. We'll make it work.
+        CUSTOMER: Perfect, thank you!
+        concept: Conceding under pressure · Session 1 Essential Kit · cost you
+        feedback shown: A concession for nothing: the customer smiled, Operations paid.
+        meters: Customer trust +8, Delivery -16, Team trust -10
+   [3] YOU: Are you really walking away over this? We're already stretching our lines to offer this plan.
+        CUSTOMER: No, no. We just need to be sure of the launch.
+        NARRATOR: After the call, Manu turns to Bruna.
+        MANU: Remember, that plan already needs weekend shifts.
+        concept: Responding to a threat · Session 5 Difficult Situations · worked
+        feedback shown: You named the threat calmly and did not give in.
+        meters: Customer trust +2, Team trust 0
+
+state committed=0 angry=0 promoKnown=1 otherFactKnown=0 channel=side deal=80/20
+== BRUNA · customer · Chapter 4 · The customer
+  MANU: That's more than I can release safely next week.
+  NARRATOR: Bruna puts the customer on speakerphone and reads out the plan.
+  CUSTOMER: Forty covers the launch, but the full hundred would be safer. Otherwise we may look elsewhere.
+   [1] YOU: Next week stays as planned. What could you share with us, if we gave you priority slots?
+        CUSTOMER: We could share a six-month forecast, if that gets us priority slots.
+        CUSTOMER: Let's go with your plan, and we'll send the forecast.
+        NARRATOR: After the call, Manu turns to Bruna.
+        MANU: Remember, that plan already needs weekend shifts.
+        concept: More issues, more currency · Session 1 Essential Kit · worked
+        feedback shown: You held the line and asked what they could trade: a forecast for priority slots.
+        meters: Customer trust +6, Team trust +4
+   [2] YOU: Okay, the full hundred next week. We'll make it work.
+        CUSTOMER: Perfect, thank you!
+        concept: Conceding under pressure · Session 1 Essential Kit · cost you
+        feedback shown: A concession for nothing: the customer smiled, Operations paid.
+        meters: Customer trust +8, Delivery -16, Team trust -10
+   [3] YOU: Are you really walking away over this? We're already stretching our lines to offer this plan.
+        CUSTOMER: No, no. We just need to be sure of the launch.
+        NARRATOR: After the call, Manu turns to Bruna.
+        MANU: Remember, that plan already needs weekend shifts.
+        concept: Responding to a threat · Session 5 Difficult Situations · worked
+        feedback shown: You named the threat calmly and did not give in.
+        meters: Customer trust +2, Team trust 0
+
+state committed=0 angry=0 promoKnown=1 otherFactKnown=1 channel=side deal=60/40
+== BRUNA · customer · Chapter 4 · The customer
+  MANU: That's more than I can release safely next week.
+  NARRATOR: Bruna puts the customer on speakerphone and reads out the plan.
+  CUSTOMER: Forty covers the launch, but eighty would be safer. Otherwise we may look elsewhere.
+   [1] YOU: Next week stays as planned. But share a six-month forecast and you get priority slots from now on.
+        CUSTOMER: That's fair. Let's go with your plan, and we'll send the forecast.
+        NARRATOR: After the call, Manu turns to Bruna.
+        MANU: Remember, that plan already needs weekend shifts.
+        concept: Concessions: quid pro quo · Session 1 Essential Kit · worked
+        feedback shown: You held the line and traded: priority slots for a forecast.
+        meters: Customer trust +6, Team trust +4
+   [2] YOU: Okay, eighty next week. We'll make it work.
+        CUSTOMER: Perfect, thank you!
+        concept: Conceding under pressure · Session 1 Essential Kit · cost you
+        feedback shown: A concession for nothing: the customer smiled, Operations paid.
+        meters: Customer trust +8, Delivery -16, Team trust -10
+   [3] YOU: Are you really walking away over this? We're already stretching our lines to offer this plan.
+        CUSTOMER: No, no. We just need to be sure of the launch.
+        NARRATOR: After the call, Manu turns to Bruna.
+        MANU: Remember, that plan already needs weekend shifts.
+        concept: Responding to a threat · Session 5 Difficult Situations · worked
+        feedback shown: You named the threat calmly and did not give in.
+        meters: Customer trust +2, Team trust 0
+
+state committed=0 angry=0 promoKnown=1 otherFactKnown=1 channel=side deal=80/20
+== BRUNA · customer · Chapter 4 · The customer
+  MANU: That's more than I can release safely next week.
+  NARRATOR: Bruna puts the customer on speakerphone and reads out the plan.
+  CUSTOMER: Forty covers the launch, but the full hundred would be safer. Otherwise we may look elsewhere.
+   [1] YOU: Next week stays as planned. But share a six-month forecast and you get priority slots from now on.
+        CUSTOMER: That's fair. Let's go with your plan, and we'll send the forecast.
+        NARRATOR: After the call, Manu turns to Bruna.
+        MANU: Remember, that plan already needs weekend shifts.
+        concept: Concessions: quid pro quo · Session 1 Essential Kit · worked
+        feedback shown: You held the line and traded: priority slots for a forecast.
+        meters: Customer trust +6, Team trust +4
+   [2] YOU: Okay, the full hundred next week. We'll make it work.
+        CUSTOMER: Perfect, thank you!
+        concept: Conceding under pressure · Session 1 Essential Kit · cost you
+        feedback shown: A concession for nothing: the customer smiled, Operations paid.
+        meters: Customer trust +8, Delivery -16, Team trust -10
+   [3] YOU: Are you really walking away over this? We're already stretching our lines to offer this plan.
+        CUSTOMER: No, no. We just need to be sure of the launch.
+        NARRATOR: After the call, Manu turns to Bruna.
+        MANU: Remember, that plan already needs weekend shifts.
+        concept: Responding to a threat · Session 5 Difficult Situations · worked
+        feedback shown: You named the threat calmly and did not give in.
+        meters: Customer trust +2, Team trust 0
+
+state committed=1 angry=0 promoKnown=0 otherFactKnown=0 channel=side deal=40/60
+== BRUNA · customer · Chapter 4 · The customer
+  MANU: With a forecast in the deal, that I can plan for.
+  NARRATOR: Bruna puts the customer on speakerphone and reads out the plan.
+  CUSTOMER: You confirmed a hundred next week, and now it's less? Push it to sixty, or we look elsewhere.
+   [1] YOU: Next week stays as planned. The forecast and priority slots are already in the deal.
+        CUSTOMER: Fair enough. Let's go with it.
+        concept: Package deal: trade on different priorities · Session 2 Team Negotiation · worked
+        feedback shown: You held the line: the package already traded priority for a forecast.
+        meters: Customer trust +4, Team trust +4
+   [2] YOU: Okay, sixty next week. We'll make it work.
+        CUSTOMER: Perfect, thank you!
+        concept: Conceding under pressure · Session 1 Essential Kit · cost you
+        feedback shown: A concession for nothing: the customer smiled, Operations paid.
+        meters: Customer trust +8, Delivery -16, Team trust -10
+   [3] YOU: You're not planning to walk away, are you? This is the plan we can deliver reliably.
+        CUSTOMER: No, no. We just need to be sure of the launch.
+        concept: Responding to a threat · Session 5 Difficult Situations · worked
+        feedback shown: You named the threat calmly and did not give in.
+        meters: Customer trust +2, Team trust +4
+
+state committed=1 angry=0 promoKnown=0 otherFactKnown=0 channel=side deal=30/70
+== BRUNA · customer · Chapter 4 · The customer
+  MANU: That I can deliver.
+  NARRATOR: Bruna puts the customer on speakerphone and reads out the plan.
+  CUSTOMER: You confirmed a hundred this morning. That won't even cover our launch. We need at least forty next week.
+   [1] YOU: Fair. If Manu can cover that, what could you share with us for priority slots?
+        CUSTOMER: We could share a six-month forecast, if that gets us priority slots.
+        MANU: Forty next week is safe. I can do that.
+        concept: Concessions: quid pro quo · Session 1 Essential Kit · worked
+        feedback shown: You fixed the plan to their real need and traded for a forecast.
+        meters: Customer trust +10, Team trust +4
+   [2] YOU: Alright, we'll cover it. No conditions needed.
+        CUSTOMER: Great. Good to know we can count on you when things get tight.
+        concept: A concession for nothing in return · Session 1 Essential Kit · cost you
+        feedback shown: You fixed the plan, but asked for nothing back. They will expect it again.
+        meters: Customer trust +8, Team trust -4
+   [3] YOU: This is the plan we can promise reliably. Take it or leave it.
+        CUSTOMER: I'm sorry. Without forty next week, we can't launch.
+        concept: Holding a position that misses their line · Session 6 Multiparty · cost you
+        feedback shown: Calm and firm, but the plan did not cover what they needed.
+        meters: Customer trust -18
+
+state committed=1 angry=0 promoKnown=0 otherFactKnown=0 channel=side deal=40/40
+== BRUNA · customer · Chapter 4 · The customer
+  MANU: That I can deliver.
+  NARRATOR: Bruna puts the customer on speakerphone and reads out the plan.
+  CUSTOMER: You confirmed a hundred. That's short. We need the full hundred over the two weeks.
+   [1] YOU: Fair. If Manu can cover that, what could you share with us for priority slots?
+        CUSTOMER: We could share a six-month forecast, if that gets us priority slots.
+        MANU: Sixty the week after is fine. I can do that.
+        concept: Concessions: quid pro quo · Session 1 Essential Kit · worked
+        feedback shown: You fixed the plan to their real need and traded for a forecast.
+        meters: Customer trust +10, Team trust +4
+   [2] YOU: Alright, we'll cover it. No conditions needed.
+        CUSTOMER: Great. Good to know we can count on you when things get tight.
+        concept: A concession for nothing in return · Session 1 Essential Kit · cost you
+        feedback shown: You fixed the plan, but asked for nothing back. They will expect it again.
+        meters: Customer trust +8, Team trust -4
+   [3] YOU: This is the plan we can promise reliably. Take it or leave it.
+        CUSTOMER: Then we'll buy the missing tonnes elsewhere.
+        concept: Holding a position that misses their line · Session 6 Multiparty · cost you
+        feedback shown: Calm and firm, but the plan did not cover what they needed.
+        meters: Customer trust -18
+
+state committed=1 angry=0 promoKnown=0 otherFactKnown=0 channel=side deal=60/40
+== BRUNA · customer · Chapter 4 · The customer
+  MANU: That's more than I can release safely next week.
+  NARRATOR: Bruna puts the customer on speakerphone and reads out the plan.
+  CUSTOMER: You confirmed a hundred next week, and now it's less? Push it to eighty, or we look elsewhere.
+   [1] YOU: Next week stays as planned. What could you share with us, if we gave you priority slots?
+        CUSTOMER: We could share a six-month forecast, if that gets us priority slots.
+        CUSTOMER: Let's go with your plan, and we'll send the forecast.
+        NARRATOR: After the call, Manu turns to Bruna.
+        MANU: Remember, that plan already needs weekend shifts.
+        concept: More issues, more currency · Session 1 Essential Kit · worked
+        feedback shown: You held the line and asked what they could trade: a forecast for priority slots.
+        meters: Customer trust +6, Team trust +4
+   [2] YOU: Okay, eighty next week. We'll make it work.
+        CUSTOMER: Perfect, thank you!
+        concept: Conceding under pressure · Session 1 Essential Kit · cost you
+        feedback shown: A concession for nothing: the customer smiled, Operations paid.
+        meters: Customer trust +8, Delivery -16, Team trust -10
+   [3] YOU: Are you really walking away over this? We're already stretching our lines to offer this plan.
+        CUSTOMER: No, no. We just need to be sure of the launch.
+        NARRATOR: After the call, Manu turns to Bruna.
+        MANU: Remember, that plan already needs weekend shifts.
+        concept: Responding to a threat · Session 5 Difficult Situations · worked
+        feedback shown: You named the threat calmly and did not give in.
+        meters: Customer trust +2, Team trust 0
+
+state committed=1 angry=0 promoKnown=0 otherFactKnown=0 channel=side deal=80/20
+== BRUNA · customer · Chapter 4 · The customer
+  MANU: That's more than I can release safely next week.
+  NARRATOR: Bruna puts the customer on speakerphone and reads out the plan.
+  CUSTOMER: You confirmed a hundred next week, and now it's less? Push it to the full hundred, or we look elsewhere.
+   [1] YOU: Next week stays as planned. What could you share with us, if we gave you priority slots?
+        CUSTOMER: We could share a six-month forecast, if that gets us priority slots.
+        CUSTOMER: Let's go with your plan, and we'll send the forecast.
+        NARRATOR: After the call, Manu turns to Bruna.
+        MANU: Remember, that plan already needs weekend shifts.
+        concept: More issues, more currency · Session 1 Essential Kit · worked
+        feedback shown: You held the line and asked what they could trade: a forecast for priority slots.
+        meters: Customer trust +6, Team trust +4
+   [2] YOU: Okay, the full hundred next week. We'll make it work.
+        CUSTOMER: Perfect, thank you!
+        concept: Conceding under pressure · Session 1 Essential Kit · cost you
+        feedback shown: A concession for nothing: the customer smiled, Operations paid.
+        meters: Customer trust +8, Delivery -16, Team trust -10
+   [3] YOU: Are you really walking away over this? We're already stretching our lines to offer this plan.
+        CUSTOMER: No, no. We just need to be sure of the launch.
+        NARRATOR: After the call, Manu turns to Bruna.
+        MANU: Remember, that plan already needs weekend shifts.
+        concept: Responding to a threat · Session 5 Difficult Situations · worked
+        feedback shown: You named the threat calmly and did not give in.
+        meters: Customer trust +2, Team trust 0
+
+state committed=1 angry=0 promoKnown=0 otherFactKnown=1 channel=side deal=30/70
+== BRUNA · customer · Chapter 4 · The customer
+  MANU: That I can deliver.
+  NARRATOR: Bruna puts the customer on speakerphone and reads out the plan.
+  CUSTOMER: You confirmed a hundred this morning. That won't even cover our launch. We need at least forty next week.
+   [1] YOU: Fair. If Manu can cover that, will you share a forecast for priority slots?
+        CUSTOMER: Yes, if the volume is there.
+        MANU: Forty next week is safe. I can do that.
+        concept: Concessions: quid pro quo · Session 1 Essential Kit · worked
+        feedback shown: You fixed the plan to their real need and traded for a forecast.
+        meters: Customer trust +10, Team trust +4
+   [2] YOU: Alright, we'll cover it. No conditions needed.
+        CUSTOMER: Great. Good to know we can count on you when things get tight.
+        concept: A concession for nothing in return · Session 1 Essential Kit · cost you
+        feedback shown: You fixed the plan, but asked for nothing back. They will expect it again.
+        meters: Customer trust +8, Team trust -4
+   [3] YOU: This is the plan we can promise reliably. Take it or leave it.
+        CUSTOMER: I'm sorry. Without forty next week, we can't launch.
+        concept: Holding a position that misses their line · Session 6 Multiparty · cost you
+        feedback shown: Calm and firm, but the plan did not cover what they needed.
+        meters: Customer trust -18
+
+state committed=1 angry=0 promoKnown=0 otherFactKnown=1 channel=side deal=40/40
+== BRUNA · customer · Chapter 4 · The customer
+  MANU: That I can deliver.
+  NARRATOR: Bruna puts the customer on speakerphone and reads out the plan.
+  CUSTOMER: You confirmed a hundred. That's short. We need the full hundred over the two weeks.
+   [1] YOU: Fair. If Manu can cover that, will you share a forecast for priority slots?
+        CUSTOMER: Yes, if the volume is there.
+        MANU: Sixty the week after is fine. I can do that.
+        concept: Concessions: quid pro quo · Session 1 Essential Kit · worked
+        feedback shown: You fixed the plan to their real need and traded for a forecast.
+        meters: Customer trust +10, Team trust +4
+   [2] YOU: Alright, we'll cover it. No conditions needed.
+        CUSTOMER: Great. Good to know we can count on you when things get tight.
+        concept: A concession for nothing in return · Session 1 Essential Kit · cost you
+        feedback shown: You fixed the plan, but asked for nothing back. They will expect it again.
+        meters: Customer trust +8, Team trust -4
+   [3] YOU: This is the plan we can promise reliably. Take it or leave it.
+        CUSTOMER: Then we'll buy the missing tonnes elsewhere.
+        concept: Holding a position that misses their line · Session 6 Multiparty · cost you
+        feedback shown: Calm and firm, but the plan did not cover what they needed.
+        meters: Customer trust -18
+
+state committed=1 angry=0 promoKnown=0 otherFactKnown=1 channel=side deal=60/40
+== BRUNA · customer · Chapter 4 · The customer
+  MANU: That's more than I can release safely next week.
+  NARRATOR: Bruna puts the customer on speakerphone and reads out the plan.
+  CUSTOMER: You confirmed a hundred next week, and now it's less? Push it to eighty, or we look elsewhere.
+   [1] YOU: Next week stays as planned. But share a six-month forecast and you get priority slots from now on.
+        CUSTOMER: That's fair. Let's go with your plan, and we'll send the forecast.
+        NARRATOR: After the call, Manu turns to Bruna.
+        MANU: Remember, that plan already needs weekend shifts.
+        concept: Concessions: quid pro quo · Session 1 Essential Kit · worked
+        feedback shown: You held the line and traded: priority slots for a forecast.
+        meters: Customer trust +6, Team trust +4
+   [2] YOU: Okay, eighty next week. We'll make it work.
+        CUSTOMER: Perfect, thank you!
+        concept: Conceding under pressure · Session 1 Essential Kit · cost you
+        feedback shown: A concession for nothing: the customer smiled, Operations paid.
+        meters: Customer trust +8, Delivery -16, Team trust -10
+   [3] YOU: Are you really walking away over this? We're already stretching our lines to offer this plan.
+        CUSTOMER: No, no. We just need to be sure of the launch.
+        NARRATOR: After the call, Manu turns to Bruna.
+        MANU: Remember, that plan already needs weekend shifts.
+        concept: Responding to a threat · Session 5 Difficult Situations · worked
+        feedback shown: You named the threat calmly and did not give in.
+        meters: Customer trust +2, Team trust 0
+
+state committed=1 angry=0 promoKnown=0 otherFactKnown=1 channel=side deal=80/20
+== BRUNA · customer · Chapter 4 · The customer
+  MANU: That's more than I can release safely next week.
+  NARRATOR: Bruna puts the customer on speakerphone and reads out the plan.
+  CUSTOMER: You confirmed a hundred next week, and now it's less? Push it to the full hundred, or we look elsewhere.
+   [1] YOU: Next week stays as planned. But share a six-month forecast and you get priority slots from now on.
+        CUSTOMER: That's fair. Let's go with your plan, and we'll send the forecast.
+        NARRATOR: After the call, Manu turns to Bruna.
+        MANU: Remember, that plan already needs weekend shifts.
+        concept: Concessions: quid pro quo · Session 1 Essential Kit · worked
+        feedback shown: You held the line and traded: priority slots for a forecast.
+        meters: Customer trust +6, Team trust +4
+   [2] YOU: Okay, the full hundred next week. We'll make it work.
+        CUSTOMER: Perfect, thank you!
+        concept: Conceding under pressure · Session 1 Essential Kit · cost you
+        feedback shown: A concession for nothing: the customer smiled, Operations paid.
+        meters: Customer trust +8, Delivery -16, Team trust -10
+   [3] YOU: Are you really walking away over this? We're already stretching our lines to offer this plan.
+        CUSTOMER: No, no. We just need to be sure of the launch.
+        NARRATOR: After the call, Manu turns to Bruna.
+        MANU: Remember, that plan already needs weekend shifts.
+        concept: Responding to a threat · Session 5 Difficult Situations · worked
+        feedback shown: You named the threat calmly and did not give in.
+        meters: Customer trust +2, Team trust 0
+
+state committed=1 angry=0 promoKnown=1 otherFactKnown=0 channel=side deal=40/60
+== BRUNA · customer · Chapter 4 · The customer
+  MANU: With a forecast in the deal, that I can plan for.
+  NARRATOR: Bruna puts the customer on speakerphone and reads out the plan.
+  CUSTOMER: You confirmed a hundred next week, and now it's less? Push it to sixty, or we look elsewhere.
+   [1] YOU: Next week stays as planned. The forecast and priority slots are already in the deal.
+        CUSTOMER: Fair enough. Let's go with it.
+        concept: Package deal: trade on different priorities · Session 2 Team Negotiation · worked
+        feedback shown: You held the line: the package already traded priority for a forecast.
+        meters: Customer trust +4, Team trust +4
+   [2] YOU: Okay, sixty next week. We'll make it work.
+        CUSTOMER: Perfect, thank you!
+        concept: Conceding under pressure · Session 1 Essential Kit · cost you
+        feedback shown: A concession for nothing: the customer smiled, Operations paid.
+        meters: Customer trust +8, Delivery -16, Team trust -10
+   [3] YOU: You're not planning to walk away, are you? Our plan protects your launch.
+        CUSTOMER: No, no. We just need to be sure of the launch.
+        concept: Responding to a threat · Session 5 Difficult Situations · worked
+        feedback shown: You named the threat calmly and did not give in.
+        meters: Customer trust +2, Team trust +4
+
+state committed=1 angry=0 promoKnown=0 otherFactKnown=0 channel=side deal=40/60
+== MANU · call · Chapter 1 · The call
+  NARRATOR: Lagoa, Monday morning. Manu is finishing next week's production plan when Bruna walks in.
+  OTHER: Manu, great news! A major European supermarket wants one hundred extra tonnes. Next week! I've already said yes.
+   [1] YOU: Once again, Commercial committed without asking Operations.
+        OTHER: And once again, Operations is blocking growth before hearing me out.
+        concept: Villain story · Session 3 Approaches to Conflict · cost you
+        feedback shown: Bruna heard blame, not a question.
+        meters: Team trust -12
+   [2] YOU: Okay. Walk me through it. What's driving the rush?
+        OTHER: Their supplier let them down. If we deliver, this could become one of our biggest accounts.
+        concept: Active listening, step one of the FBI stairway · Session 5 Difficult Situations · worked
+        feedback shown: You listened first. Bruna noticed.
+        meters: Team trust +6
+   [3] YOU: Then call them back and say no. The schedule is full.
+        OTHER: I'm not calling anyone. If you won't help, I'm going to João.
+        concept: A position used as a wall · Session 3 Approaches to Conflict · cost you
+        feedback shown: A flat no turned this into a power contest.
+        meters: Team trust -10, Customer trust -4
+
+state committed=1 angry=0 promoKnown=0 otherFactKnown=0 channel=side deal=40/60
+== MANU · channel · Chapter 2 · First contact
+  NARRATOR: Manu says he will check the schedule. An hour later, he has his numbers. How does he get back to Bruna?
+   [1] YOU: Send Bruna a quick message: tight week, let's talk at two.
+        OTHER: At two? I already confirmed this morning. I need to know now, Manu.
+        (UVA, only when UVA is on: Messages lose tone. Could you two talk live for ten minutes?)
+        concept: Text is the worst channel for conflict · Session 4 Mediation · cost you
+        feedback shown: Text strips the tone. Bruna felt brushed off.
+        meters: Team trust -8, Customer trust -2
+   [2] YOU: Call her into your office to go through the numbers.
+        OTHER: Fine. I'm here. Let's hear the no.
+        (UVA, only when UVA is on: Formal rooms raise defences. Could you go over the schedule together instead?)
+        concept: Seating: across the table signals competition · Session 3 Approaches to Conflict · cost you
+        feedback shown: Across a desk, it felt like a hearing.
+        meters: Team trust -2
+   [3] YOU: Meet her at the planning board with the printed schedule.
+        OTHER: Okay. Show me what the week really looks like.
+        (UVA, only when UVA is on: Let's start with how each of you sees it.)
+        concept: Seating: side by side signals cooperation · Session 3 Approaches to Conflict · worked
+        feedback shown: Side by side, the problem sits in front of you both.
+        meters: Team trust +6
+
+state committed=1 angry=1 promoKnown=0 otherFactKnown=0 channel=side deal=40/60
+== MANU · channel · Chapter 2 · First contact
+  NARRATOR: Bruna leaves, still annoyed. An hour later, Manu has checked the schedule. How does he get back to her?
+   [1] YOU: Send Bruna a quick message: tight week, let's talk at two.
+        OTHER: At two? I already confirmed this morning. I need to know now, Manu.
+        (UVA, only when UVA is on: Messages lose tone. Could you two talk live for ten minutes?)
+        concept: Text is the worst channel for conflict · Session 4 Mediation · cost you
+        feedback shown: Text strips the tone. Bruna felt brushed off.
+        meters: Team trust -8, Customer trust -2
+   [2] YOU: Call her into your office to go through the numbers.
+        OTHER: Fine. I'm here. Let's hear the no.
+        (UVA, only when UVA is on: Formal rooms raise defences. Could you go over the schedule together instead?)
+        concept: Seating: across the table signals competition · Session 3 Approaches to Conflict · cost you
+        feedback shown: Across a desk, it felt like a hearing.
+        meters: Team trust -2
+   [3] YOU: Meet her at the planning board with the printed schedule.
+        OTHER: Okay. Show me what the week really looks like.
+        (UVA, only when UVA is on: Let's start with how each of you sees it.)
+        concept: Seating: side by side signals cooperation · Session 3 Approaches to Conflict · worked
+        feedback shown: Side by side, the problem sits in front of you both.
+        meters: Team trust +6
+
+state committed=1 angry=0 promoKnown=0 otherFactKnown=0 channel=side deal=40/60
+== MANU · story · Chapter 2 · Two stories
+  OTHER: So? Can we do it?
+   [1] YOU: Honestly, it's tight, and we may see it differently. Tell me how you see it, then I'll share mine.
+        OTHER: Thank you. If we nail this, they could become our anchor retailer in Europe.
+        (UVA, only when UVA is on: Both views are on the table. Let's list what each side must protect.)
+        concept: The Third Story · Session 3 Approaches to Conflict · worked
+        feedback shown: You opened with the Third Story: two views, no blame.
+        meters: Team trust +8
+   [2] YOU: This happens every time. Commercial promises, and my team pays for it.
+        OTHER: And every time, Operations finds a reason to say no.
+        (UVA, only when UVA is on: Let's move from who is right to what each of you needs.)
+        (then, only when UVA is on, OTHER: Fair. What I actually need is to keep this account.)
+        concept: Villain story · Session 3 Approaches to Conflict · cost you
+        feedback shown: A villain story. Bruna is now defending, not listening.
+        meters: Team trust -10
+   [3] YOU: There's nothing I can do. The lines are booked.
+        OTHER: Fine. If you won't look for options, I'll find my own.
+        (UVA, only when UVA is on: Let's look at what each of you can still do from here.)
+        concept: Helpless story · Session 3 Approaches to Conflict · cost you
+        feedback shown: A helpless story closes every door at once.
+        meters: Team trust -4
+
+state committed=1 angry=1 promoKnown=0 otherFactKnown=0 channel=side deal=40/60
+== MANU · story · Chapter 2 · Two stories
+  OTHER: So? Are you going to help or not?
+   [1] YOU: Honestly, it's tight, and we may see it differently. Tell me how you see it, then I'll share mine.
+        OTHER: Thank you. If we nail this, they could become our anchor retailer in Europe.
+        (UVA, only when UVA is on: Both views are on the table. Let's list what each side must protect.)
+        concept: The Third Story · Session 3 Approaches to Conflict · worked
+        feedback shown: You opened with the Third Story: two views, no blame.
+        meters: Team trust +8
+   [2] YOU: This happens every time. Commercial promises, and my team pays for it.
+        OTHER: And every time, Operations finds a reason to say no.
+        (UVA, only when UVA is on: Let's move from who is right to what each of you needs.)
+        (then, only when UVA is on, OTHER: Fair. What I actually need is to keep this account.)
+        concept: Villain story · Session 3 Approaches to Conflict · cost you
+        feedback shown: A villain story. Bruna is now defending, not listening.
+        meters: Team trust -10
+   [3] YOU: There's nothing I can do. The lines are booked.
+        OTHER: Fine. If you won't look for options, I'll find my own.
+        (UVA, only when UVA is on: Let's look at what each of you can still do from here.)
+        concept: Helpless story · Session 3 Approaches to Conflict · cost you
+        feedback shown: A helpless story closes every door at once.
+        meters: Team trust -4
+
+state committed=1 angry=0 promoKnown=0 otherFactKnown=0 channel=side deal=40/60
+== MANU · heat · Chapter 2 · The heat
+  NARRATOR: Bruna sees the full board. Months of lost deals come out at once.
+  OTHER: Every time I bring growth, I get a lecture about schedules! I have a target too!
+   [1] YOU: You're under real pressure. Tell me what's riding on this.
+        OTHER: My target, yes. But mostly a key account we may never get again.
+        (UVA, only when UVA is on: Thank you both. Now the real cost is on the table.)
+        concept: Handling genuine anger · Session 5 Difficult Situations · worked
+        feedback shown: You treated it as genuine anger: you acknowledged it and let it out.
+        meters: Team trust +10
+   [2] YOU: I understand, but the numbers don't change. The answer is no.
+        OTHER: Then I'm taking it to João.
+        (UVA, only when UVA is on: You're both heated. Let me talk to each of you separately for a few minutes.)
+        concept: Pushing a position against genuine anger · Session 5 Difficult Situations · cost you
+        feedback shown: "I understand, but" pushed your position. The anger was genuine and needed listening.
+        meters: Team trust -12, CEO time -6
+   [3] YOU: I want to answer this properly, not react. Give me ten minutes?
+        OTHER: Fine. Ten minutes. I've already promised them, remember.
+        (UVA, only when UVA is on: A break can help. When you're back, start with what's riding on this for Bruna.)
+        concept: Go to the balcony · Session 5 Difficult Situations · worked
+        feedback shown: You went to the balcony instead of reacting.
+        meters: Team trust +4
+
+state committed=1 angry=0 promoKnown=0 otherFactKnown=0 channel=side deal=40/60
+== MANU · joao · Chapter 2 · João's office
+  NARRATOR: Word of the order reaches João. He calls both directors in.
+  JOAO: Big order, full schedule. I have a board call in twenty minutes. What do you need?
+   [1] YOU: Bruna confirmed a hundred tonnes we can't make safely. Please decide.
+        JOAO: Fine. We ship the hundred tonnes. Operations, make it work.
+        NARRATOR: João's decision stands.
+        concept: Power: who is stronger? · Session 3 Approaches to Conflict · cost you
+        feedback shown: Power settled it fast. Someone had to lose.
+        meters: Customer trust +10, Delivery -22, Team trust -16, CEO time -25
+   [2] YOU: We need a rule: who signs off on large orders before we confirm them?
+        JOAO: This needs a proper sign-off policy. Bring it to Friday's exec meeting. Until then, nothing new ships.
+        NARRATOR: João's decision stands.
+        concept: Rights: a fair rule, but slow for this deal · Session 3 Approaches to Conflict · cost you
+        feedback shown: Rights gave you a fair rule, but it took days, and this customer was waiting.
+        meters: Customer trust -14, Team trust -4, CEO time -12, Delivery +6
+   [3] YOU: Give us one hour. We'll come back with a plan together.
+        JOAO: One hour. Then I decide.
+        concept: Interests before rights and power · Session 3 Approaches to Conflict · worked
+        feedback shown: You kept the decision with the people closest to it.
+        meters: Team trust +6, CEO time -8
+
+state committed=1 angry=0 promoKnown=0 otherFactKnown=0 channel=side deal=40/60
+== MANU · ask1 · Chapter 3 · What's underneath (1 of 2)
+  NARRATOR: Time to look underneath the positions. You have time for two moves.
+   [1] YOU: Beyond your target, what happens if we miss this launch?
+        OTHER: They lock in another supplier for the season, and we lose what could be one of our biggest accounts.
+        (UVA, only when UVA is on: So this is about the long-term account, not only this order.)
+        concept: Open questions uncover interests · Session 4 Mediation · worked
+        feedback shown: A good question showed what is really at stake for Bruna.
+        meters: Team trust +6
+   [2] YOU: Could you ask the customer which part is truly urgent?
+        OTHER: It's awkward since I said yes, but I'll ask.
+        CUSTOMER: You already confirmed a hundred. But honestly? Forty covers our launch if sixty follows the week after.
+        (UVA, only when UVA is on: Now you are working with facts, not assumptions.)
+        concept: Ask, don't assume · Session 3 Approaches to Conflict · worked
+        feedback shown: You asked about the customer's real need instead of assuming.
+        meters: Team trust +4, Customer trust +4
+   [3] YOU: Here's what I can do safely: forty tonnes next week.
+        OTHER: Forty. Okay, that's something real.
+        (UVA, only when UVA is on: A clear number helps. Now you can design around it.)
+        concept: Trust: share information · Session 1 Essential Kit · worked
+        feedback shown: Sharing your real limit built trust.
+        meters: Team trust +6
+   [4] YOU: To keep a safety buffer on existing lines, I can only commit twenty tonnes right now.
+        OTHER: Twenty? That's a fifth of what they asked for.
+        (UVA, only when UVA is on: Manu, what changes operationally if you go above twenty?)
+        (then, only when UVA is on, YOU: Honestly, forty is safe. Past that, we risk quality errors.)
+        concept: Lowball anchor with a colleague · Session 1 Essential Kit · cost you
+        feedback shown: A lowball opening put Bruna on the defensive.
+        meters: Team trust -8
+   [5] YOU: Can't you just tell them to wait a week?
+        OTHER: Tell a new key account to wait? That is my credibility on the line.
+        (UVA, only when UVA is on: Bruna, what would waiting cost you with this buyer?)
+        (then, only when UVA is on, OTHER: Their launch. And probably the account.)
+        concept: Ask, don't assume · Session 3 Approaches to Conflict · cost you
+        feedback shown: You assumed the customer could wait instead of asking. Bruna heard a dismissal.
+        meters: Team trust -4
+
+state committed=1 angry=0 promoKnown=0 otherFactKnown=1 channel=side deal=40/60
+== MANU · ask1 · Chapter 3 · What's underneath (1 of 2)
+  NARRATOR: Time to look underneath the positions. You have time for two moves.
+   [1] YOU: What would let you go back to them with confidence?
+        OTHER: A promise I can keep. I can't go back to them twice.
+        (UVA, only when UVA is on: So for Bruna, reliability matters as much as volume.)
+        concept: Open questions uncover interests · Session 4 Mediation · worked
+        feedback shown: A follow-up question showed Bruna needs reliability, not only volume.
+        meters: Team trust +6
+   [2] YOU: Could you ask the customer which part is truly urgent?
+        OTHER: It's awkward since I said yes, but I'll ask.
+        CUSTOMER: You already confirmed a hundred. But honestly? Forty covers our launch if sixty follows the week after.
+        (UVA, only when UVA is on: Now you are working with facts, not assumptions.)
+        concept: Ask, don't assume · Session 3 Approaches to Conflict · worked
+        feedback shown: You asked about the customer's real need instead of assuming.
+        meters: Team trust +4, Customer trust +4
+   [3] YOU: Here's what I can do safely: forty tonnes next week.
+        OTHER: Forty. Okay, that's something real.
+        (UVA, only when UVA is on: A clear number helps. Now you can design around it.)
+        concept: Trust: share information · Session 1 Essential Kit · worked
+        feedback shown: Sharing your real limit built trust.
+        meters: Team trust +6
+   [4] YOU: To keep a safety buffer on existing lines, I can only commit twenty tonnes right now.
+        OTHER: Twenty? That's a fifth of what they asked for.
+        (UVA, only when UVA is on: Manu, what changes operationally if you go above twenty?)
+        (then, only when UVA is on, YOU: Honestly, forty is safe. Past that, we risk quality errors.)
+        concept: Lowball anchor with a colleague · Session 1 Essential Kit · cost you
+        feedback shown: A lowball opening put Bruna on the defensive.
+        meters: Team trust -8
+   [5] YOU: Can't you just tell them to wait a week?
+        OTHER: Tell a new key account to wait? That is my credibility on the line.
+        (UVA, only when UVA is on: Bruna, what would waiting cost you with this buyer?)
+        (then, only when UVA is on, OTHER: Their launch. And probably the account.)
+        concept: Ask, don't assume · Session 3 Approaches to Conflict · cost you
+        feedback shown: You assumed the customer could wait instead of asking. Bruna heard a dismissal.
+        meters: Team trust -4
+
+state committed=1 angry=0 promoKnown=1 otherFactKnown=0 channel=side deal=40/60
+== MANU · ask1 · Chapter 3 · What's underneath (1 of 2)
+  NARRATOR: Time to look underneath the positions. You have time for two moves.
+   [1] YOU: Beyond your target, what happens if we miss this launch?
+        OTHER: They lock in another supplier for the season, and we lose what could be one of our biggest accounts.
+        (UVA, only when UVA is on: So this is about the long-term account, not only this order.)
+        concept: Open questions uncover interests · Session 4 Mediation · worked
+        feedback shown: A good question showed what is really at stake for Bruna.
+        meters: Team trust +6
+   [2] YOU: Could you ask them what they would trade for priority slots?
+        OTHER: I'll ask.
+        CUSTOMER: If it gets us priority production slots, we'd share a six-month forecast.
+        (UVA, only when UVA is on: A new issue on the table. That gives you something to trade.)
+        concept: More issues, more currency · Session 1 Essential Kit · worked
+        feedback shown: You found something the customer can give that costs them little.
+        meters: Customer trust +2, Team trust +2
+   [3] YOU: Here's what I can do safely: forty tonnes next week.
+        OTHER: Forty. Okay, that's something real.
+        (UVA, only when UVA is on: A clear number helps. Now you can design around it.)
+        concept: Trust: share information · Session 1 Essential Kit · worked
+        feedback shown: Sharing your real limit built trust.
+        meters: Team trust +6
+   [4] YOU: To keep a safety buffer on existing lines, I can only commit twenty tonnes right now.
+        OTHER: Twenty won't even cover their launch.
+        (UVA, only when UVA is on: Manu, what changes operationally if you go above twenty?)
+        (then, only when UVA is on, YOU: Honestly, forty is safe. Past that, we risk quality errors.)
+        concept: Lowball anchor with a colleague · Session 1 Essential Kit · cost you
+        feedback shown: A lowball opening put Bruna on the defensive.
+        meters: Team trust -8
+   [5] YOU: Can't you just tell them to wait a week?
+        OTHER: Tell a new key account to wait? That is my credibility on the line.
+        (UVA, only when UVA is on: Bruna, what would waiting cost you with this buyer?)
+        (then, only when UVA is on, OTHER: Their launch. And probably the account.)
+        concept: Ask, don't assume · Session 3 Approaches to Conflict · cost you
+        feedback shown: You assumed the customer could wait instead of asking. Bruna heard a dismissal.
+        meters: Team trust -4
+
+state committed=1 angry=0 promoKnown=1 otherFactKnown=1 channel=side deal=40/60
+== MANU · ask1 · Chapter 3 · What's underneath (1 of 2)
+  NARRATOR: Time to look underneath the positions. You have time for two moves.
+   [1] YOU: What would let you go back to them with confidence?
+        OTHER: A promise I can keep. I can't go back to them twice.
+        (UVA, only when UVA is on: So for Bruna, reliability matters as much as volume.)
+        concept: Open questions uncover interests · Session 4 Mediation · worked
+        feedback shown: A follow-up question showed Bruna needs reliability, not only volume.
+        meters: Team trust +6
+   [2] YOU: Could you ask them what they would trade for priority slots?
+        OTHER: I'll ask.
+        CUSTOMER: If it gets us priority production slots, we'd share a six-month forecast.
+        (UVA, only when UVA is on: A new issue on the table. That gives you something to trade.)
+        concept: More issues, more currency · Session 1 Essential Kit · worked
+        feedback shown: You found something the customer can give that costs them little.
+        meters: Customer trust +2, Team trust +2
+   [3] YOU: Here's what I can do safely: forty tonnes next week.
+        OTHER: Forty. Okay, that's something real.
+        (UVA, only when UVA is on: A clear number helps. Now you can design around it.)
+        concept: Trust: share information · Session 1 Essential Kit · worked
+        feedback shown: Sharing your real limit built trust.
+        meters: Team trust +6
+   [4] YOU: To keep a safety buffer on existing lines, I can only commit twenty tonnes right now.
+        OTHER: Twenty won't even cover their launch.
+        (UVA, only when UVA is on: Manu, what changes operationally if you go above twenty?)
+        (then, only when UVA is on, YOU: Honestly, forty is safe. Past that, we risk quality errors.)
+        concept: Lowball anchor with a colleague · Session 1 Essential Kit · cost you
+        feedback shown: A lowball opening put Bruna on the defensive.
+        meters: Team trust -8
+   [5] YOU: Can't you just tell them to wait a week?
+        OTHER: Tell a new key account to wait? That is my credibility on the line.
+        (UVA, only when UVA is on: Bruna, what would waiting cost you with this buyer?)
+        (then, only when UVA is on, OTHER: Their launch. And probably the account.)
+        concept: Ask, don't assume · Session 3 Approaches to Conflict · cost you
+        feedback shown: You assumed the customer could wait instead of asking. Bruna heard a dismissal.
+        meters: Team trust -4
+
+state committed=1 angry=0 promoKnown=0 otherFactKnown=0 channel=side deal=40/60
+== MANU · ask2 · Chapter 3 · What's underneath (2 of 2)
+  NARRATOR: One more move before you build the deal.
+   [1] YOU: Beyond your target, what happens if we miss this launch?
+        OTHER: They lock in another supplier for the season, and we lose what could be one of our biggest accounts.
+        (UVA, only when UVA is on: So this is about the long-term account, not only this order.)
+        concept: Open questions uncover interests · Session 4 Mediation · worked
+        feedback shown: A good question showed what is really at stake for Bruna.
+        meters: Team trust +6
+   [2] YOU: Could you ask the customer which part is truly urgent?
+        OTHER: It's awkward since I said yes, but I'll ask.
+        CUSTOMER: You already confirmed a hundred. But honestly? Forty covers our launch if sixty follows the week after.
+        (UVA, only when UVA is on: Now you are working with facts, not assumptions.)
+        concept: Ask, don't assume · Session 3 Approaches to Conflict · worked
+        feedback shown: You asked about the customer's real need instead of assuming.
+        meters: Team trust +4, Customer trust +4
+   [3] YOU: Here's what I can do safely: forty tonnes next week.
+        OTHER: Forty. Okay, that's something real.
+        (UVA, only when UVA is on: A clear number helps. Now you can design around it.)
+        concept: Trust: share information · Session 1 Essential Kit · worked
+        feedback shown: Sharing your real limit built trust.
+        meters: Team trust +6
+   [4] YOU: To keep a safety buffer on existing lines, I can only commit twenty tonnes right now.
+        OTHER: Twenty? That's a fifth of what they asked for.
+        (UVA, only when UVA is on: Manu, what changes operationally if you go above twenty?)
+        (then, only when UVA is on, YOU: Honestly, forty is safe. Past that, we risk quality errors.)
+        concept: Lowball anchor with a colleague · Session 1 Essential Kit · cost you
+        feedback shown: A lowball opening put Bruna on the defensive.
+        meters: Team trust -8
+   [5] YOU: Can't you just tell them to wait a week?
+        OTHER: Tell a new key account to wait? That is my credibility on the line.
+        (UVA, only when UVA is on: Bruna, what would waiting cost you with this buyer?)
+        (then, only when UVA is on, OTHER: Their launch. And probably the account.)
+        concept: Ask, don't assume · Session 3 Approaches to Conflict · cost you
+        feedback shown: You assumed the customer could wait instead of asking. Bruna heard a dismissal.
+        meters: Team trust -4
+
+state committed=1 angry=0 promoKnown=0 otherFactKnown=1 channel=side deal=40/60
+== MANU · ask2 · Chapter 3 · What's underneath (2 of 2)
+  NARRATOR: One more move before you build the deal.
+   [1] YOU: What would let you go back to them with confidence?
+        OTHER: A promise I can keep. I can't go back to them twice.
+        (UVA, only when UVA is on: So for Bruna, reliability matters as much as volume.)
+        concept: Open questions uncover interests · Session 4 Mediation · worked
+        feedback shown: A follow-up question showed Bruna needs reliability, not only volume.
+        meters: Team trust +6
+   [2] YOU: Could you ask the customer which part is truly urgent?
+        OTHER: It's awkward since I said yes, but I'll ask.
+        CUSTOMER: You already confirmed a hundred. But honestly? Forty covers our launch if sixty follows the week after.
+        (UVA, only when UVA is on: Now you are working with facts, not assumptions.)
+        concept: Ask, don't assume · Session 3 Approaches to Conflict · worked
+        feedback shown: You asked about the customer's real need instead of assuming.
+        meters: Team trust +4, Customer trust +4
+   [3] YOU: Here's what I can do safely: forty tonnes next week.
+        OTHER: Forty. Okay, that's something real.
+        (UVA, only when UVA is on: A clear number helps. Now you can design around it.)
+        concept: Trust: share information · Session 1 Essential Kit · worked
+        feedback shown: Sharing your real limit built trust.
+        meters: Team trust +6
+   [4] YOU: To keep a safety buffer on existing lines, I can only commit twenty tonnes right now.
+        OTHER: Twenty? That's a fifth of what they asked for.
+        (UVA, only when UVA is on: Manu, what changes operationally if you go above twenty?)
+        (then, only when UVA is on, YOU: Honestly, forty is safe. Past that, we risk quality errors.)
+        concept: Lowball anchor with a colleague · Session 1 Essential Kit · cost you
+        feedback shown: A lowball opening put Bruna on the defensive.
+        meters: Team trust -8
+   [5] YOU: Can't you just tell them to wait a week?
+        OTHER: Tell a new key account to wait? That is my credibility on the line.
+        (UVA, only when UVA is on: Bruna, what would waiting cost you with this buyer?)
+        (then, only when UVA is on, OTHER: Their launch. And probably the account.)
+        concept: Ask, don't assume · Session 3 Approaches to Conflict · cost you
+        feedback shown: You assumed the customer could wait instead of asking. Bruna heard a dismissal.
+        meters: Team trust -4
+
+state committed=1 angry=0 promoKnown=1 otherFactKnown=0 channel=side deal=40/60
+== MANU · ask2 · Chapter 3 · What's underneath (2 of 2)
+  NARRATOR: One more move before you build the deal.
+   [1] YOU: Beyond your target, what happens if we miss this launch?
+        OTHER: They lock in another supplier for the season, and we lose what could be one of our biggest accounts.
+        (UVA, only when UVA is on: So this is about the long-term account, not only this order.)
+        concept: Open questions uncover interests · Session 4 Mediation · worked
+        feedback shown: A good question showed what is really at stake for Bruna.
+        meters: Team trust +6
+   [2] YOU: Could you ask them what they would trade for priority slots?
+        OTHER: I'll ask.
+        CUSTOMER: If it gets us priority production slots, we'd share a six-month forecast.
+        (UVA, only when UVA is on: A new issue on the table. That gives you something to trade.)
+        concept: More issues, more currency · Session 1 Essential Kit · worked
+        feedback shown: You found something the customer can give that costs them little.
+        meters: Customer trust +2, Team trust +2
+   [3] YOU: Here's what I can do safely: forty tonnes next week.
+        OTHER: Forty. Okay, that's something real.
+        (UVA, only when UVA is on: A clear number helps. Now you can design around it.)
+        concept: Trust: share information · Session 1 Essential Kit · worked
+        feedback shown: Sharing your real limit built trust.
+        meters: Team trust +6
+   [4] YOU: To keep a safety buffer on existing lines, I can only commit twenty tonnes right now.
+        OTHER: Twenty won't even cover their launch.
+        (UVA, only when UVA is on: Manu, what changes operationally if you go above twenty?)
+        (then, only when UVA is on, YOU: Honestly, forty is safe. Past that, we risk quality errors.)
+        concept: Lowball anchor with a colleague · Session 1 Essential Kit · cost you
+        feedback shown: A lowball opening put Bruna on the defensive.
+        meters: Team trust -8
+   [5] YOU: Can't you just tell them to wait a week?
+        OTHER: Tell a new key account to wait? That is my credibility on the line.
+        (UVA, only when UVA is on: Bruna, what would waiting cost you with this buyer?)
+        (then, only when UVA is on, OTHER: Their launch. And probably the account.)
+        concept: Ask, don't assume · Session 3 Approaches to Conflict · cost you
+        feedback shown: You assumed the customer could wait instead of asking. Bruna heard a dismissal.
+        meters: Team trust -4
+
+state committed=1 angry=0 promoKnown=1 otherFactKnown=1 channel=side deal=40/60
+== MANU · ask2 · Chapter 3 · What's underneath (2 of 2)
+  NARRATOR: One more move before you build the deal.
+   [1] YOU: What would let you go back to them with confidence?
+        OTHER: A promise I can keep. I can't go back to them twice.
+        (UVA, only when UVA is on: So for Bruna, reliability matters as much as volume.)
+        concept: Open questions uncover interests · Session 4 Mediation · worked
+        feedback shown: A follow-up question showed Bruna needs reliability, not only volume.
+        meters: Team trust +6
+   [2] YOU: Could you ask them what they would trade for priority slots?
+        OTHER: I'll ask.
+        CUSTOMER: If it gets us priority production slots, we'd share a six-month forecast.
+        (UVA, only when UVA is on: A new issue on the table. That gives you something to trade.)
+        concept: More issues, more currency · Session 1 Essential Kit · worked
+        feedback shown: You found something the customer can give that costs them little.
+        meters: Customer trust +2, Team trust +2
+   [3] YOU: Here's what I can do safely: forty tonnes next week.
+        OTHER: Forty. Okay, that's something real.
+        (UVA, only when UVA is on: A clear number helps. Now you can design around it.)
+        concept: Trust: share information · Session 1 Essential Kit · worked
+        feedback shown: Sharing your real limit built trust.
+        meters: Team trust +6
+   [4] YOU: To keep a safety buffer on existing lines, I can only commit twenty tonnes right now.
+        OTHER: Twenty won't even cover their launch.
+        (UVA, only when UVA is on: Manu, what changes operationally if you go above twenty?)
+        (then, only when UVA is on, YOU: Honestly, forty is safe. Past that, we risk quality errors.)
+        concept: Lowball anchor with a colleague · Session 1 Essential Kit · cost you
+        feedback shown: A lowball opening put Bruna on the defensive.
+        meters: Team trust -8
+   [5] YOU: Can't you just tell them to wait a week?
+        OTHER: Tell a new key account to wait? That is my credibility on the line.
+        (UVA, only when UVA is on: Bruna, what would waiting cost you with this buyer?)
+        (then, only when UVA is on, OTHER: Their launch. And probably the account.)
+        concept: Ask, don't assume · Session 3 Approaches to Conflict · cost you
+        feedback shown: You assumed the customer could wait instead of asking. Bruna heard a dismissal.
+        meters: Team trust -4
+
+state committed=1 angry=0 promoKnown=0 otherFactKnown=0 channel=side deal=40/60
+== MANU · customer · Chapter 4 · The customer
+  BRUNA: Priority planning for a forecast. I can sell that.
+  NARRATOR: Bruna puts the customer on speakerphone and reads out the plan.
+  CUSTOMER: You confirmed a hundred next week, and now it's less? Push it to sixty, or we look elsewhere.
+   [1] YOU: Next week stays as planned. The forecast and priority slots are already in the deal.
+        CUSTOMER: Fair enough. Let's go with it.
+        concept: Package deal: trade on different priorities · Session 2 Team Negotiation · worked
+        feedback shown: You held the line: the package already traded priority for a forecast.
+        meters: Customer trust +4, Team trust +4
+   [2] YOU: Fine. I'll pull weekend shifts to hit sixty, though it's tight.
+        CUSTOMER: Perfect, thank you!
+        concept: Conceding under pressure · Session 1 Essential Kit · cost you
+        feedback shown: A concession for nothing: the customer smiled, Operations paid.
+        meters: Customer trust +8, Delivery -16, Team trust -10
+   [3] YOU: You're not planning to walk away, are you? This is the plan we can deliver reliably.
+        CUSTOMER: No, no. We just need to be sure of the launch.
+        concept: Responding to a threat · Session 5 Difficult Situations · worked
+        feedback shown: You named the threat calmly and did not give in.
+        meters: Customer trust +2, Team trust +4
+
+state committed=1 angry=0 promoKnown=0 otherFactKnown=0 channel=side deal=30/70
+== MANU · customer · Chapter 4 · The customer
+  BRUNA: Thirty next week? They'll push back on that.
+  NARRATOR: Bruna puts the customer on speakerphone and reads out the plan.
+  CUSTOMER: You confirmed a hundred this morning. That won't even cover our launch. We need at least forty next week.
+   [1] YOU: Fair. I can cover that. Share a six-month forecast and you get priority slots.
+        CUSTOMER: Deal. We'll send the forecast this week.
+        concept: Concessions: quid pro quo · Session 1 Essential Kit · worked
+        feedback shown: You fixed the plan to their real need and traded for a forecast.
+        meters: Customer trust +10, Team trust +4
+   [2] YOU: Alright, we'll cover it. No conditions needed.
+        CUSTOMER: Great. Good to know we can count on you when things get tight.
+        concept: A concession for nothing in return · Session 1 Essential Kit · cost you
+        feedback shown: You fixed the plan, but asked for nothing back. They will expect it again.
+        meters: Customer trust +8, Team trust 0
+   [3] YOU: This is the plan we can promise reliably. Take it or leave it.
+        CUSTOMER: I'm sorry. Without forty next week, we can't launch.
+        concept: Holding a position that misses their line · Session 6 Multiparty · cost you
+        feedback shown: Calm and firm, but the plan did not cover what they needed.
+        meters: Customer trust -18
+
+state committed=1 angry=0 promoKnown=0 otherFactKnown=0 channel=side deal=40/40
+== MANU · customer · Chapter 4 · The customer
+  BRUNA: Short of a hundred tonnes, I risk the account.
+  NARRATOR: Bruna puts the customer on speakerphone and reads out the plan.
+  CUSTOMER: You confirmed a hundred. That's short. We need the full hundred over the two weeks.
+   [1] YOU: Fair. I can cover that. Share a six-month forecast and you get priority slots.
+        CUSTOMER: Deal. We'll send the forecast this week.
+        concept: Concessions: quid pro quo · Session 1 Essential Kit · worked
+        feedback shown: You fixed the plan to their real need and traded for a forecast.
+        meters: Customer trust +10, Team trust +4
+   [2] YOU: Alright, we'll cover it. No conditions needed.
+        CUSTOMER: Great. Good to know we can count on you when things get tight.
+        concept: A concession for nothing in return · Session 1 Essential Kit · cost you
+        feedback shown: You fixed the plan, but asked for nothing back. They will expect it again.
+        meters: Customer trust +8, Team trust 0
+   [3] YOU: This is the plan we can promise reliably. Take it or leave it.
+        CUSTOMER: Then we'll buy the missing tonnes elsewhere.
+        concept: Holding a position that misses their line · Session 6 Multiparty · cost you
+        feedback shown: Calm and firm, but the plan did not cover what they needed.
+        meters: Customer trust -18
+
+state committed=1 angry=0 promoKnown=0 otherFactKnown=0 channel=side deal=60/40
+== MANU · customer · Chapter 4 · The customer
+  BRUNA: I can take that to them.
+  NARRATOR: Bruna puts the customer on speakerphone and reads out the plan.
+  CUSTOMER: You confirmed a hundred next week, and now it's less? Push it to eighty, or we look elsewhere.
+   [1] YOU: Next week stays as planned. But share a six-month forecast and you get priority slots from now on.
+        CUSTOMER: That's fair. Let's go with your plan, and we'll send the forecast.
+        concept: Concessions: quid pro quo · Session 1 Essential Kit · worked
+        feedback shown: You held the line and traded: priority slots for a forecast.
+        meters: Customer trust +6, Team trust +4
+   [2] YOU: Fine. I'll pull weekend shifts to hit eighty, though it's tight.
+        CUSTOMER: Perfect, thank you!
+        concept: Conceding under pressure · Session 1 Essential Kit · cost you
+        feedback shown: A concession for nothing: the customer smiled, Operations paid.
+        meters: Customer trust +8, Delivery -16, Team trust -10
+   [3] YOU: Are you really walking away over this? We're already stretching our lines to offer this plan.
+        CUSTOMER: No, no. We just need to be sure of the launch.
+        concept: Responding to a threat · Session 5 Difficult Situations · worked
+        feedback shown: You named the threat calmly and did not give in.
+        meters: Customer trust +2, Team trust 0
+
+state committed=1 angry=0 promoKnown=0 otherFactKnown=0 channel=side deal=80/20
+== MANU · customer · Chapter 4 · The customer
+  BRUNA: I can take that to them.
+  NARRATOR: Bruna puts the customer on speakerphone and reads out the plan.
+  CUSTOMER: You confirmed a hundred next week, and now it's less? Push it to the full hundred, or we look elsewhere.
+   [1] YOU: Next week stays as planned. But share a six-month forecast and you get priority slots from now on.
+        CUSTOMER: That's fair. Let's go with your plan, and we'll send the forecast.
+        concept: Concessions: quid pro quo · Session 1 Essential Kit · worked
+        feedback shown: You held the line and traded: priority slots for a forecast.
+        meters: Customer trust +6, Team trust +4
+   [2] YOU: Fine. I'll pull weekend shifts to hit the full hundred, though it's tight.
+        CUSTOMER: Perfect, thank you!
+        concept: Conceding under pressure · Session 1 Essential Kit · cost you
+        feedback shown: A concession for nothing: the customer smiled, Operations paid.
+        meters: Customer trust +8, Delivery -16, Team trust -10
+   [3] YOU: Are you really walking away over this? We're already stretching our lines to offer this plan.
+        CUSTOMER: No, no. We just need to be sure of the launch.
+        concept: Responding to a threat · Session 5 Difficult Situations · worked
+        feedback shown: You named the threat calmly and did not give in.
+        meters: Customer trust +2, Team trust 0
+
+state committed=1 angry=0 promoKnown=0 otherFactKnown=0 channel=side deal=100/0
+== MANU · customer · Chapter 4 · The customer
+  BRUNA: I can take that to them.
+  NARRATOR: Bruna puts the customer on speakerphone and reads out the plan.
+  CUSTOMER: That works. Can we count on the same again next month?
+   [1] YOU: Only if you send a six-month forecast, so we can reserve your slots in advance.
+        CUSTOMER: That's fair. We'll send the forecast.
+        concept: Concessions: quid pro quo · Session 1 Essential Kit · worked
+        feedback shown: You turned a one-off favour into a trade: priority slots for a forecast.
+        meters: Customer trust +6, Team trust +4
+   [2] YOU: Give us a week's notice and we'll pull overtime again.
+        CUSTOMER: Perfect, thank you!
+        concept: A concession for nothing in return · Session 1 Essential Kit · cost you
+        feedback shown: You promised future rush orders for nothing in return.
+        meters: Customer trust +6, Delivery -10, Team trust -8
+   [3] YOU: Let's see how this month goes first, then plan next month together.
+        CUSTOMER: Fair enough. Let's talk after delivery.
+        concept: Concessions: don't rush · Session 1 Essential Kit · worked
+        feedback shown: You didn't rush into a second concession.
+        meters: Customer trust +2, Team trust +2
+
+state committed=1 angry=0 promoKnown=1 otherFactKnown=0 channel=side deal=40/60
+== MANU · customer · Chapter 4 · The customer
+  BRUNA: Priority planning for a forecast. I can sell that.
+  NARRATOR: Bruna puts the customer on speakerphone and reads out the plan.
+  CUSTOMER: You confirmed a hundred next week, and now it's less? Push it to sixty, or we look elsewhere.
+   [1] YOU: Next week stays as planned. The forecast and priority slots are already in the deal.
+        CUSTOMER: Fair enough. Let's go with it.
+        concept: Package deal: trade on different priorities · Session 2 Team Negotiation · worked
+        feedback shown: You held the line: the package already traded priority for a forecast.
+        meters: Customer trust +4, Team trust +4
+   [2] YOU: Fine. I'll pull weekend shifts to hit sixty, though it's tight.
+        CUSTOMER: Perfect, thank you!
+        concept: Conceding under pressure · Session 1 Essential Kit · cost you
+        feedback shown: A concession for nothing: the customer smiled, Operations paid.
+        meters: Customer trust +8, Delivery -16, Team trust -10
+   [3] YOU: You're not planning to walk away, are you? Our plan protects your launch.
+        CUSTOMER: No, no. We just need to be sure of the launch.
+        concept: Responding to a threat · Session 5 Difficult Situations · worked
+        feedback shown: You named the threat calmly and did not give in.
+        meters: Customer trust +2, Team trust +4
+
+state committed=1 angry=0 promoKnown=1 otherFactKnown=0 channel=side deal=30/70
+== MANU · customer · Chapter 4 · The customer
+  BRUNA: They need more than that for the launch.
+  NARRATOR: Bruna puts the customer on speakerphone and reads out the plan.
+  CUSTOMER: You confirmed a hundred this morning. That won't even cover our launch. We need at least forty next week.
+   [1] YOU: Fair. I can cover that. Share a six-month forecast and you get priority slots.
+        CUSTOMER: Deal. We'll send the forecast this week.
+        concept: Concessions: quid pro quo · Session 1 Essential Kit · worked
+        feedback shown: You fixed the plan to their real need and traded for a forecast.
+        meters: Customer trust +10, Team trust +4
+   [2] YOU: Alright, we'll cover it. No conditions needed.
+        CUSTOMER: Great. Good to know we can count on you when things get tight.
+        concept: A concession for nothing in return · Session 1 Essential Kit · cost you
+        feedback shown: You fixed the plan, but asked for nothing back. They will expect it again.
+        meters: Customer trust +8, Team trust 0
+   [3] YOU: This is the plan we can promise reliably. Take it or leave it.
+        CUSTOMER: I'm sorry. Without forty next week, we can't launch.
+        concept: Holding a position that misses their line · Session 6 Multiparty · cost you
+        feedback shown: Calm and firm, but the plan did not cover what they needed.
+        meters: Customer trust -18
+
+== ENDINGS (checked in this order)
+1 Power path (João decides) → The Referee
+2 Rights path (João sets a rule) → The Rulebook
+3 Customer walks away → A Clean No if Team trust is 60+, otherwise The Walkout
+4 You gave in to the customer → Gave It Away
+5 Plan exceeds safe capacity, or uses overtime → Saved, With Scars
+6 Forecast and priority planning agreed (in the deal or on the call), Team trust 65+, Customer trust 60+ → The Bigger Pie
+7 Anything else → A Fair Split
+The Bigger Pie: Three months later, the supermarket is a key account. The forecast arrives every month, production runs smoothly, and Bruna and Manu plan big orders together. | Lesson shown: You traded on different priorities: timing for the customer, predictability for Operations. The pie got bigger instead of being split.
+A Fair Split: Three months later, the order shipped and the customer stayed. But trust between Commercial and Operations is still thin, so next month's request may start the same argument. | Lesson shown: You found a workable split. A trade the customer values, and more trust between the two of you, would have made the pie bigger.
+Saved, With Scars: Three months later, the customer is happy, but weekend shifts caused two late deliveries to existing clients, and Operations is exhausted. | Lesson shown: Overtime and over-capacity promises push the cost onto someone outside the room. Check that every side clears its line.
+Gave It Away: Three months later, the customer expects every rush order to be accepted, and Operations has started saying no first. | Lesson shown: A concession with nothing in return teaches the other side to push. Trade, do not give: quid pro quo.
+A Clean No: The customer went elsewhere this time. Bruna and Manu stayed aligned and called them back together, so the door is still open. | Lesson shown: You stayed united, but your plan missed their real need. Forty next week was always safe. A no is only clean when nothing better was possible.
+The Walkout: The customer signed with another supplier for the launch, and their next order went there too. | Lesson shown: A firm plan that misses their interest is still a no. Positions and blame used up the time you needed. Ask what they need first.
+The Referee: João's decision shipped the order. Existing customers got late deliveries, Manu updated his CV, and next month João refereed again. | Lesson shown: Power is fast but expensive: the side that loses rarely accepts it, so the conflict comes back.
+The Rulebook: The new sign-off rule is fair and clear, but it took until Friday, and the customer could not wait. The next big order went smoothly. | Lesson shown: Rights give fair, lasting rules, but they are slower than interests, and this customer needed an answer today.
