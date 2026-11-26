@@ -230,21 +230,23 @@ body::before{content:"";position:fixed;inset:0;background-image:radial-gradient(
 #stagebg .tile.tb{background:radial-gradient(90% 70% at 50% 18%,rgba(255,107,87,.22),transparent 70%),linear-gradient(180deg,#1a1626,#0d0f18)}
 #stagebg .tile.tm{background:radial-gradient(90% 70% at 50% 18%,rgba(76,141,255,.24),transparent 70%),linear-gradient(180deg,#121a2e,#0b0f1a)}
 #stagebg .tile.tg{background:radial-gradient(90% 70% at 50% 20%,rgba(212,163,115,.2),transparent 70%),linear-gradient(180deg,#1b1812,#0e0d0a)}
-#tiles .tile{border:1px solid rgba(255,255,255,.14);pointer-events:none;overflow:hidden}
+#tiles .tile{border:1px solid rgba(255,255,255,.14);pointer-events:none;overflow:hidden;box-shadow:inset 0 -46px 34px -14px rgba(8,10,18,.95)}
 #tiles .tile.tb{border-color:rgba(255,107,87,.45)}#tiles .tile.tm{border-color:rgba(76,141,255,.5)}
 #tiles .tile .nm{position:absolute;left:12px;bottom:12px;display:flex;gap:8px;align-items:center;padding:6px 11px 6px 9px;border-radius:999px;background:rgba(6,8,14,.62);backdrop-filter:blur(10px);font-size:13px;font-weight:650}
 #tiles .tile .nm i{width:8px;height:8px;border-radius:50%;background:currentColor}
 #tiles .tile .nm small{color:var(--sub);font-weight:500}
 #tiles .tb .nm{color:var(--b)}#tiles .tm .nm{color:var(--m)}#tiles .tg .nm{color:#e7b98a}
-#tiles .tile.talk{box-shadow:0 0 0 2px currentColor,0 0 40px currentColor}
+#tiles .tile.talk{box-shadow:inset 0 -46px 34px -14px rgba(8,10,18,.95),0 0 0 2px currentColor,0 0 40px currentColor}
 #tiles .tb.talk{color:var(--b)}#tiles .tm.talk{color:var(--m)}#tiles .tg.talk{color:#e7b98a}
-#tiles .tile.priv{box-shadow:0 0 0 2px var(--u),0 0 40px rgba(124,140,255,.6)}
+#tiles .tile.priv{box-shadow:inset 0 -46px 34px -14px rgba(8,10,18,.95),0 0 0 2px var(--u),0 0 40px rgba(124,140,255,.6)}
 #tiles .tile.priv::before{content:"UVA · private note";position:absolute;top:12px;left:12px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#c9cfff;background:rgba(40,46,110,.7);padding:5px 9px;border-radius:999px}
-#tiles .tile.away::after{content:"Not in this conversation";position:absolute;inset:0;display:grid;place-items:center;background:rgba(6,8,14,.72);color:var(--sub);font-size:13px}
+#tiles .tile.away::after{content:"Not in this conversation";position:absolute;inset:0;display:grid;place-items:center;padding:12px;text-align:center;background:rgba(6,8,14,.76);color:var(--sub);font-size:13px;line-height:1.3}
 #tiles .tile.you .nm::after{content:"you";font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#0b0d16;padding:2px 6px;border-radius:99px}
 #tiles .tb.you .nm::after{background:var(--b)}#tiles .tm.you .nm::after{background:var(--m)}
 .phone{position:absolute;inset:0;display:grid;place-items:center;align-content:center;gap:10px;color:#e7b98a}
 .phone b{font-size:13px;font-weight:650;letter-spacing:.02em}
+#tiles .tg.call .nm{display:none}
+#tiles .tg.call,#stagebg .tg.call{background:linear-gradient(180deg,#1d1914,#110f0c)}
 .wave{display:flex;gap:4px;height:34px;align-items:center}
 .wave i{width:4px;height:8px;border-radius:3px;background:currentColor;opacity:.6}
 .tg.talk .wave i{animation:wv .9s ease-in-out infinite}
@@ -296,7 +298,7 @@ body.wide #panel{max-width:860px}
 body.wide #hub{opacity:0}
 body.wide{--tile-w:200px;--tile-h:256px}
 @media(max-width:1300px){body.wide{--tile-w:150px;--tile-h:192px}}
-@media(max-width:760px){body.wide{--tile-w:124px;--tile-h:150px}}
+@media(max-width:760px){body.wide{--tile-h:150px;--tile-w:120px}}
 #panel.dark{background:rgba(10,12,22,.82)}
 .line{grid-template-columns:36px minmax(0,1fr);gap:12px;margin-top:14px}
 .av{width:36px;height:36px;font-size:14px;box-shadow:0 0 0 2px rgba(255,255,255,.12)}
@@ -344,7 +346,14 @@ body.guest #hub{top:calc(var(--tile-top) + var(--tile-h)*.62 + 26px)}
 @media(max-width:1180px){:root{--tile-w:210px;--tile-h:270px}}
 @media(max-width:760px){
  .chips>.chip{grid-template-columns:22px minmax(0,1fr);gap:10px}
- :root{--tile-w:124px;--tile-h:150px;--tile-top:206px;--side:14px}
+ :root{--tile-top:178px;--side:14px;--tile-h:clamp(96px,calc(100dvh - 178px - var(--panel-h,360px) - 26px),380px);--tile-w:min(calc(50vw - 21px),calc(var(--tile-h)*.8));--gap:max(96px,calc(100vw - 2*var(--side) - 2*var(--tile-w) - 12px))}
+ #pin{max-height:52vh;max-height:52dvh}
+ .tile.tg{width:44vw;margin-left:-22vw;height:calc(var(--tile-h)*.58);top:calc(var(--tile-top) + 14px)}
+ .tile.tg.call{width:var(--gap);margin-left:calc(var(--gap)/-2);height:min(84px,var(--tile-h));top:calc(var(--tile-top) + var(--tile-h)/2 - min(42px,var(--tile-h)/2));border-radius:20px}
+ #tiles .tg.call .phone{gap:6px}
+ #tiles .tg.call .wave{height:22px}
+ #tiles .tg.call .phone b{font-size:12px;text-align:center;line-height:1.25}
+ #tiles .tile{box-shadow:inset 0 -30px 24px -10px rgba(8,10,18,.95)}
  #hub{display:none}
  #tiles .tile .nm{left:6px;bottom:6px;padding:4px 8px;font-size:11px}#tiles .tile .nm small{display:none}
  #tiles .tile.priv::before{display:none}
@@ -365,7 +374,7 @@ body.guest #hub{top:calc(var(--tile-top) + var(--tile-h)*.62 + 26px)}
 <canvas id="scene" aria-hidden="true"></canvas>
 <div id="surf" aria-hidden="true"></div>
 <div id="hud">
- <div id="tiles" aria-hidden="true"><div class="tile tb"><div class="nm"><i></i>Bruna <small>Commercial</small></div></div><div class="tile tm"><div class="nm"><i></i>Manu <small>Operations</small></div></div><div class="tile tg" hidden><div class="phone"><div class="wave"><i></i><i></i><i></i><i></i><i></i></div><b>Customer · on the phone</b></div><div class="nm"><i></i><span class="gn">João</span> <small class="gr">CEO</small></div></div></div>
+ <div id="tiles" aria-hidden="true"><div class="tile tb"><div class="nm"><i></i>Bruna <small>Commercial</small></div></div><div class="tile tm"><div class="nm"><i></i>Manu <small>Operations</small></div></div><div class="tile tg" hidden><div class="phone"><div class="wave"><i></i><i></i><i></i><i></i><i></i></div><b>Customer<br><span style="font-weight:500;opacity:.75">on the phone</span></b></div><div class="nm"><i></i><span class="gn">João</span> <small class="gr">CEO</small></div></div></div>
  <div id="hub" aria-hidden="true"><svg id="links" viewBox="0 0 100 100" preserveAspectRatio="none"></svg><div class="hd" id="hubhd">Shared screen · interest map</div><div id="orb"></div></div>
  <div id="chapT" aria-hidden="true"><small></small><b></b></div>
  <div class="top">
@@ -1124,14 +1133,14 @@ function init3D(){
  let guest=null,frm=0;const tbg=document.querySelectorAll('#stagebg .tile'),tfr=document.querySelectorAll('#tiles .tile');
  function tiles(){
   const g=(S.stage==='joao'||R.joaoOn)?'j':(S.stage==='customer'||S.talking==='c'||(S.stage==='call'&&S.role==='bruna'))?'c':null;
-  if(g!==guest){guest=g;[tbg[2],tfr[2]].forEach(x=>x.hidden=!g);document.body.classList.toggle('guest',!!g);if(g){tfr[2].querySelector('.phone').hidden=g!=='c';tfr[2].querySelector('.gn').textContent=g==='c'?'Customer':'João';tfr[2].querySelector('.gr').textContent=g==='c'?'Supermarket buyer':'CEO'}}
+  if(g!==guest){guest=g;[tbg[2],tfr[2]].forEach(x=>x.hidden=!g);document.body.classList.toggle('guest',!!g);[tbg[2],tfr[2]].forEach(x=>x.classList.toggle('call',g==='c'));if(g){tfr[2].querySelector('.phone').hidden=g!=='c';tfr[2].querySelector('.gn').textContent=g==='c'?'Customer':'João';tfr[2].querySelector('.gr').textContent=g==='c'?'Supermarket buyer':'CEO'}}
   const tk=S.talking,me=S.role==='bruna'?0:1;
   tfr[0].classList.toggle('talk',tk==='b');tfr[1].classList.toggle('talk',tk==='m');tfr[2].classList.toggle('talk',!!g&&tk===(g==='c'?'c':'j'));
   tfr.forEach((x,i)=>{x.classList.toggle('you',i===me);x.classList.toggle('priv',i===me&&tk==='v')});tfr[1].classList.toggle('away',S.stage==='call'&&S.role==='bruna');tfr[0].classList.toggle('away',false);
   $('orb').classList.toggle('talk',tk==='u');
   if(frm++%12===0){const ph=$('panel').offsetHeight;document.documentElement.style.setProperty('--panel-h',ph+'px');const hb=$('hub');hb.classList.toggle('tight',hb.offsetHeight<170)}
   ren.setScissorTest(false);ren.setViewport(0,0,innerWidth,innerHeight);ren.clear();ren.setScissorTest(true);
-  [[tbg[0],camB],[tbg[1],camM],[g==='j'?tbg[2]:null,camJ]].forEach(([t,c])=>{if(!t||t.hidden)return;const r=t.getBoundingClientRect();if(r.width<4)return;const y=innerHeight-r.bottom;ren.setScissor(r.left,y,r.width,r.height);ren.setViewport(r.left,y,r.width,r.height);c.aspect=r.width/r.height;c.updateProjectionMatrix();ren.render(sc,c)});
+  [[tbg[0],camB],[tbg[1],camM],[g==='j'?tbg[2]:null,camJ]].forEach(([t,c])=>{if(!t||t.hidden)return;const q=t.getBoundingClientRect();if(q.width<8)return;const r={left:q.left+2,bottom:q.bottom-2,width:q.width-4,height:q.height-4};const y=innerHeight-r.bottom;ren.setScissor(r.left,y,r.width,r.height);ren.setViewport(r.left,y,r.width,r.height);c.aspect=r.width/r.height;c.updateProjectionMatrix();ren.render(sc,c)});
   ren.setScissorTest(false)}
  const clock=new T.Clock();let bl=0,lastTalk=null;
  (function loop(){
