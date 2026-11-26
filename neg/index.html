@@ -246,31 +246,32 @@ call(){return{chap:'Chapter 1 · The call',
   {t:'Okay. Walk me through it. What exactly did they ask for?',res:[['O','One hundred tonnes, next week. It could become one of our biggest accounts.',"He's actually listening."]],d:{trust:6},gain:['b_longterm'],rip:['You listened first. Bruna noticed.',1],k:[K('Active listening, step one of the FBI stairway',5,1)]},
   {t:'Then call them back and say no. The schedule is full.',res:[['O',"I'm not calling anyone. If you won't help, I'm going to João.","He didn't even look."]],d:{trust:-10,cust:-4},set:{angry:1,threat:1},rip:['A flat no turned this into a power contest.',0],k:[K('A position used as a wall',3,0)]}])};},
 channel(){return{chap:'Chapter 2 · First contact',
- intro:[['n',PR('Bruna needs Operations on board before five. How does she start the conversation?','Bruna wants an answer before five. How does Manu start the conversation?')]],
+ intro:[['n',PR('Bruna needs Operations on board before five. How does she start the conversation?',has('angry')?'Bruna leaves, still annoyed. An hour later, Manu has checked the schedule. How does he get back to her?':'Manu says he will check the schedule. An hour later, he has his numbers. How does he get back to Bruna?')]],
  tip:'Hard conversations go better live and side by side than by message.',
  choices:PR([
-  {t:'Send Manu a quick message: need 100 t next week, can you make it work?',res:[['O','Next week? The schedule has been full for a month. Thanks for the heads-up.','Another drive-by request.']],d:{trust:-8},set:{ch:'text'},rip:['Text strips the tone. Manu read it as an order.',0],k:[K('Text is the worst channel for conflict',4,0)],u:'Messages lose tone. Could you two talk live for ten minutes?',act:'Tone check: moved a tense message to a live talk'},
+  {t:'Send Manu a quick message: need 100 t next week, can you make it work?',res:[['O','Busy on the line. We can talk at two.','Another drive-by request.']],d:{trust:-8},set:{ch:'text'},rip:['Text strips the tone. Manu read it as an order.',0],k:[K('Text is the worst channel for conflict',4,0)],u:'Messages lose tone. Could you two talk live for ten minutes?',act:'Tone check: moved a tense message to a live talk'},
   {t:'Book a meeting room and sit across the table from him.',res:[['O','A meeting room. This must be serious.',"Across the table. She's here to win."]],d:{trust:-2},set:{ch:'across'},rip:['Across the table feels like a contest.',0],k:[K('Seating: across the table signals competition',3,0)],u:'Shall we sit on the same side of the problem?',act:'Suggested a cooperative seating'},
   {t:'Walk over with two coffees and sit beside him.',res:[['O','Coffee. Okay, what do you need?','At least she came in person.']],d:{trust:6},set:{ch:'side'},rip:['Side by side, the problem sits in front of you both.',1],k:[K('Seating: side by side signals cooperation',3,1)],u:"Good setup. Let's start with how each of you sees it."}],
- [{t:"Reply later by message once you've checked the schedule.",res:[['O',"A message? I've got a customer waiting, Manu.","He's hiding behind his inbox."]],d:{trust:-8,cust:-2},set:{ch:'text'},rip:['Text strips the tone. Bruna felt brushed off.',0],k:[K('Text is the worst channel for conflict',4,0)],u:'Messages lose tone. Could you two talk live for ten minutes?',act:'Tone check: moved a tense message to a live talk'},
+ [{t:"Send Bruna a quick message: tight week, let's talk at two.",res:[['O',"At two? I've got a customer waiting, Manu.","He's hiding behind his inbox."]],d:{trust:-8,cust:-2},set:{ch:'text'},rip:['Text strips the tone. Bruna felt brushed off.',0],k:[K('Text is the worst channel for conflict',4,0)],u:'Messages lose tone. Could you two talk live for ten minutes?',act:'Tone check: moved a tense message to a live talk'},
   {t:'Call her into your office and sit behind your desk.',res:[['O',"Fine. I'm here. Let's hear the no.",'Across a desk, like a hearing.']],d:{trust:-2},set:{ch:'across'},rip:['Behind a desk, it felt like a hearing.',0],k:[K('Seating: across the table signals competition',3,0)],u:'Shall we sit on the same side of the problem?',act:'Suggested a cooperative seating'},
   {t:'Pull up two chairs at the planning board, side by side.',res:[['O','Okay. Show me what the week really looks like.',"He's letting me see the real schedule."]],d:{trust:6},set:{ch:'side'},rip:['Side by side, the problem sits in front of you both.',1],k:[K('Seating: side by side signals cooperation',3,1)],u:"Good setup. Let's start with how each of you sees it."}])};},
-story(){return{chap:'Chapter 2 · Two stories',
- intro:[PR(has('committed')?['O','So. Did you already promise them?']:['O',"So what's the request?"],has('angry')?['O','So? Are you going to help or not?']:['O','So, can we do it?'])],
+story(){const cm=has('committed');return{chap:'Chapter 2 · Two stories',
+ intro:PR([['n','Bruna explains the request.'],cm?['O','You already said yes? Without asking me?']:['O',"Next week? Impossible. The schedule has been full for a month."]],
+  [has('angry')?['O','So? Are you going to help or not?']:['O','So? Can we do it?']]),
  tip:'Describe the situation the way a neutral observer would: two views, no blame.',
  choices:PR([
-  {t:'I think we see this differently. Let me share how I see it, then I want to hear your side.',res:[['O',"Fair. I'll hear you out.","No blame. That's new."]],d:{trust:8},set:{angry:0},rip:['You opened with the Third Story: two views, no blame.',1],k:[K('The Third Story',3,1)],u:"Thank you. Two views and no blame. That's a strong start."},
-  {t:'Operations blocks every big order. This one matters.',res:[['O','Blocks? We protect the customers you already sold to.','So I am the villain again.']],d:{trust:-10},set:{angry:1},rip:['A villain story. Manu is now defending, not listening.',0],k:[K('Villain story',3,0)],u:"Let's move from who is right to what each of you needs.",act:'Turned blame into needs'},
-  {t:'I had no choice. The customer needed an answer on the spot.',res:[['O','You always have a choice. You could have called me.',"So now it's my problem."]],d:{trust:-4},rip:['A helpless story hands the problem to Manu.',0],k:[K('Helpless story',3,0)],u:"Let's look at the choices you both still have. Nothing is decided yet.",act:'Reopened options after a helpless story'}],
- [{t:"I think we see this differently. Tell me how you see it, then I'll share mine.",res:[['O','Thank you. This client could become one of our largest accounts.',"He's actually asking."]],d:{trust:8},set:{angry:0},gain:['b_longterm'],rip:['You opened with the Third Story: two views, no blame.',1],k:[K('The Third Story',3,1)],u:"Thank you. Two views and no blame. That's a strong start."},
+  {t:cm?'I can see why that bothers you. Let me tell you how it happened, then I want to hear what it does to your side.':"We probably see this differently. Let me tell you how I see it, then I want to hear yours.",res:[['O',"Fair. I'll hear you out.","No blame. That's new."]],d:{trust:8},set:{angry:0},rip:['You opened with the Third Story: two views, no blame.',1],k:[K('The Third Story',3,1)],u:"Thank you. Two views and no blame. That's a strong start."},
+  {t:cm?"If I waited for Operations, we would never win anything. This one matters.":'Operations says impossible to every big order. This one matters.',res:[['O','We protect the customers you already sold to.','So I am the villain again.']],d:{trust:-10},set:{angry:1},rip:['A villain story. Manu is now defending, not listening.',0],k:[K('Villain story',3,0)],u:"Let's move from who is right to what each of you needs.",act:'Turned blame into needs'},
+  {t:cm?'I had no choice. The customer needed an answer on the spot.':"Then I don't know what to tell them. My hands are tied.",res:[cm?['O','You always have a choice. You could have called me.',"So now it's my problem."]:['O','Your hands are not tied. We just have not looked at the options yet.','She gave up before we started.']],d:{trust:-4},rip:['A helpless story hands the problem to someone else.',0],k:[K('Helpless story',3,0)],u:"Let's look at the choices you both still have. Nothing is decided yet.",act:'Reopened options after a helpless story'}],
+ [{t:"Honestly, it's tight, and we may see it differently. Tell me how you see it, then I'll share mine.",res:[['O','Thank you. This client could become one of our largest accounts.',"He's actually asking."]],d:{trust:8},set:{angry:0},gain:['b_longterm'],rip:['You opened with the Third Story: two views, no blame.',1],k:[K('The Third Story',3,1)],u:"Thank you. Two views and no blame. That's a strong start."},
   {t:'Commercial sells first and thinks later. Every time.',res:[['O','And Operations says no first and thinks never.','This is personal now.']],d:{trust:-10},set:{angry:1},rip:['A villain story. Bruna is now defending, not listening.',0],k:[K('Villain story',3,0)],u:"Let's move from who is right to what each of you needs.",act:'Turned blame into needs'},
   {t:"There's nothing I can do. The lines are booked.",res:[['O',"Nothing? You haven't even looked.",'He gave up before we started.']],d:{trust:-4},rip:['A helpless story closes every door at once.',0],k:[K('Helpless story',3,0)],u:"Let's look at the choices you both still have. Nothing is decided yet.",act:'Reopened options after a helpless story'}])};},
 heat(){return{chap:'Chapter 2 · The heat',
- intro:[PR(['O','Every month it is the same. You promise, my crews work weekends, and nobody asks us first!'],['O','Every time I bring growth, I get a lecture about schedules! I have a target too!'])],
+ intro:[PR(has('committed')?['O','Every month it is the same. You promise, my crews work weekends, and nobody asks us first!']:['O','Every month it is the same. Commercial chases a target, my crews work weekends, and nobody asks how!'],['O','Every time I bring growth, I get a lecture about schedules! I have a target too!'])],
  tip:'Anger that built up over time needs listening, not matching.',
  choices:[
   {t:PR("You're right to be frustrated. Tell me what this does to your team's week.","You're under real pressure. Tell me what's riding on this."),res:[PR(['O','Honestly? Current orders slip, and the crews are already tired.','Finally, someone asks.'],['O','My target, yes. But mostly a key account we may never get again.','He gets it.'])],d:{trust:10},gain:PR(['m_existing','m_quality'],['b_target','b_longterm']),set:{angry:0},rip:['You treated it as genuine anger: you acknowledged it and let it out.',1],k:[K('Handling genuine anger',5,1)],u:'That took courage. Feelings first, then facts.',calm:1},
-  {t:PR("Don't raise your voice at me. This order is happening.","Don't shout at me. The answer is still no."),res:[PR(['O','Then it happens without Operations.','She wants a fight.'],['O',"Then I'm taking it to João.",'He wants a fight.'])],d:{trust:-12,ceo:-6},set:{escalate:1},rip:['Power-matching is for strategic anger. This anger was genuine.',0],k:[K('Matching genuine anger with power',5,0)],u:'Strong words on both sides. Let me speak with each of you separately for a few minutes.'},
+  {t:PR("Don't raise your voice at me. We are doing this order.","Don't shout at me. The answer is still no."),res:[PR(['O','Then it happens without Operations.','She wants a fight.'],['O',"Then I'm taking it to João.",'He wants a fight.'])],d:{trust:-12,ceo:-6},set:{escalate:1},rip:['Power-matching is for strategic anger. This anger was genuine.',0],k:[K('Matching genuine anger with power',5,0)],u:'Strong words on both sides. Let me speak with each of you separately for a few minutes.'},
   {t:"Let's take ten minutes and come back with fresh heads.",res:[PR(['O','Fine. Ten minutes.','Maybe that is wise.'],['O','Fine. But the customer is waiting.','At least he did not slam the door.'])],d:{trust:4,ceo:-2},set:{angry:0},rip:['You went to the balcony instead of reacting.',1],k:[K('Go to the balcony',5,1)],u:'A short break often saves the conversation.',act:'Backed a cooling-off break'}]};},
 joao(){return{chap:"Chapter 2 · João's office",
  intro:[['n',"Ten minutes later, both directors are standing in João's office."],['j','I have a board call at eleven. What do you need from me?']],
@@ -279,31 +280,43 @@ joao(){return{chap:"Chapter 2 · João's office",
   {t:'We need a rule. Who signs off on large orders?',res:[['j',"From today, any order over fifty tonnes needs Operations' sign-off first. That includes this one."]],d:{cust:-14,trust:-4,ceo:-12,del:6},set:{path:'rights'},rip:['Rights gave you a fair rule, but the customer was still waiting.',0],k:[K('Rights: who is right?',3,0)]},
   {t:"Give us one hour. We'll come back with a plan together.",res:[['j','One hour. Then I decide.']],d:{trust:6,ceo:-8},set:{escalate:0},rip:['You kept the decision with the people closest to it.',1],k:[K('Interests before rights and power',3,1)]}]};},
 ask1(){return askScene(1)},ask2(){return askScene(2)},
-customer(){const D=S.deal,tot=D.w1+D.w2,fails=D.w1<40||tot<100,x=S.final||computeDeal();
- const ask=D.w1<40?"That won't cover our launch. We need at least forty tonnes next week.":tot<100?"We need the full hundred. Otherwise we'll have to look elsewhere.":'Could you push next week to sixty? Otherwise we may have to look elsewhere.';
+customer(){const D=S.deal,tot=D.w1+D.w2,short=D.w1<40||tot<100,x=S.final||computeDeal();
+ const more=D.w1<60?'sixty':D.w1<80?'eighty':'the full hundred',all=D.w1>=100;
+ const ask=D.w1<40?"That won't cover our launch. We need at least forty tonnes next week.":tot<100?"That's short. We need the full hundred over the two weeks.":all?'That works. Can we count on the same again next month?':`Could you push next week to ${more}? Otherwise we may have to look elsewhere.`;
+ const ch=short?[
+  {t:"Fair. We'll adjust the plan to cover that, if you share a six-month forecast.",fix:1,res:[['c',"Deal. We'll send the forecast this week."]],d:{cust:10,trust:2},rip:['You fixed the plan to their real need and traded for a forecast.',1],k:[K('Concessions: quid pro quo',1,1)]},
+  {t:"Okay. Whatever you need, we'll make it work.",res:[['c','Perfect. Then all hundred tonnes next week, please.']],d:{cust:8,del:-18,trust:-10},set:{gaveIn:1},rip:['A blank check: the customer took the maximum, Operations paid.',0],k:[K('Conceding under pressure',1,0)]},
+  {t:"I hope you're not saying you'd walk away. Our plan is the reliable one.",res:[['c',"I'm sorry. Without the volume, we really can't wait."]],d:{cust:-18},set:{lost:1},rip:['Calm and firm, but the plan did not cover what they needed.',0],k:[K('Holding a position that misses their interest',3,0)]}]
+ :all?[
+  {t:'If you share a six-month forecast, yes. You would get priority slots from now on.',trade:1,res:[['c',"That's fair. We'll send the forecast."]],d:{cust:6,trust:4},rip:['You turned a one-off favour into a trade: priority slots for a forecast.',1],k:[K('Concessions: quid pro quo',1,1)]},
+  {t:'Of course. Whatever you need, any time.',res:[['c','Perfect, thank you!']],d:{cust:6,del:-10,trust:-8},set:{gaveIn:1},rip:['You promised every future rush order for nothing in return.',0],k:[K('Conceding under pressure',1,0)]},
+  {t:"Let's see how this month goes first, then plan next month together.",res:[['c',"Fair enough. Let's talk after delivery."]],d:{cust:2,trust:2},rip:['You kept your options open without promising more.',1],k:[K('Nothing is final until everything is final',4,1)]}]
+ :[
+  {t:'Next week stays as planned. But share a six-month forecast and you get priority slots from now on.',trade:1,res:[['c',"That's fair. Let's go with your plan, and we'll send the forecast."]],d:{cust:6,trust:4},rip:['You held the line and traded: priority slots for a forecast.',1],k:[K('Concessions: quid pro quo',1,1)]},
+  {t:`Okay, ${more} next week. We'll make it work.`,res:[['c','Perfect, thank you!']],d:{cust:8,del:-16,trust:-10},set:{gaveIn:1},rip:['A concession for nothing: the customer smiled, Operations paid.',0],k:[K('Conceding under pressure',1,0)]},
+  {t:"I hope you're not saying you'd walk away. Here's why our plan is the reliable one.",res:[['c','No, no. We just need to be sure of the launch.']],d:{cust:2,trust:4},rip:['You named the threat calmly and did not give in.',1],k:[K('Responding to a threat',5,1)]}];
  return{chap:'Chapter 4 · The customer',
- intro:[x.says[0],['n','Bruna puts the customer on speakerphone.'],['c',ask]],
+ intro:[x.says[0],['n','Bruna puts the customer on speakerphone and reads out the plan.'],['c',ask]],
  tip:'If you give something, get something back. And a threat is not a reason to give in.',
- choices:[
-  {t:PR('We can look at more, if you share a six-month forecast so we can plan for it.','With a six-month forecast, we can plan for more next time. This week, our plan is the reliable one.'),res:[fails?['c',"I understand, but without the volume we can't launch. We'll go elsewhere."]:['c',"That's fair. Let's go with your plan, and we'll send the forecast."]],d:fails?{cust:-22}:{cust:6,trust:4},set:fails?{lost:1}:{fcPromised:1},rip:fails?['A good trade, but the plan itself did not cover their need.',0]:['You traded: more volume later for a forecast now.',1],k:[K('Concessions: quid pro quo',1,1)]},
-  {t:"Okay. Whatever you need, we'll make it work.",res:[['c','Perfect, thank you!']],d:{cust:8,del:-16,trust:-10},set:{gaveIn:1},rip:['A concession for nothing: the customer smiled, Operations paid.',0],k:[K('Conceding under pressure',1,0)]},
-  {t:"I hope you're not saying you'd walk away. Here's why our plan is the reliable one.",res:[fails?['c',"I'm sorry. Without the volume, we really can't wait."]:['c','No, no. We just need to be sure of the launch.']],d:fails?{cust:-18}:{cust:2,trust:4},set:fails?{lost:1}:{},rip:fails?['Calm and firm, but the plan did not cover their need.',0]:['You named the threat calmly and did not give in.',1],k:[K('Responding to a threat',5,1)]}]};}
+ choices:ch};}
 };
 function askScene(n){
- const used=S.f.asked||[];
+ const used=S.f.asked||[],cap=S.found.has('m_capacity40'),acct=S.found.has('b_longterm');
  const opts=PR([
-  {id:'q1',t:'What would need to be true for you to release some volume safely?',res:[['O',"Forty tonnes, without touching anyone else's order.",'She asked instead of pushing.']],gain:['m_capacity40','m_existing'],d:{trust:6},rip:['A good question revealed the safe number.',1],k:[K('Open questions uncover interests',4,1)],u:'Good question. Now you both know the safe number.'},
+  cap?{id:'q1',t:'Beyond forty tonnes, what would it take to do more?',res:[['O','Weekend overtime. But tired crews make quality mistakes.','At least she is asking.']],gain:['m_quality','m_existing'],d:{trust:6},rip:['A follow-up question showed the real cost of going past forty.',1],k:[K('Open questions uncover interests',4,1)],u:'So more volume has a quality cost. Good to know before you decide.'}
+     :{id:'q1',t:'What would need to be true for you to release some volume safely?',res:[['O',"Forty tonnes, without touching anyone else's order.",'She asked instead of pushing.']],gain:['m_capacity40','m_existing'],d:{trust:6},rip:['A good question revealed the safe number.',1],k:[K('Open questions uncover interests',4,1)],u:'Good question. Now you both know the safe number.'},
   S.found.has('k_promo')
    ?{id:'q2',t:'Call the customer: would they share a demand forecast?',res:[['c',FCOK]],gain:['k_fcok'],d:{cust:2},rip:['You found something the customer can give that costs them little.',1],k:[K('More issues, more currency',1,1)],u:'A new issue on the table. That gives you something to trade.'}
    :{id:'q2',t:'Step out and call the customer: which part is truly urgent?',res:[['c',CUST]],gain:['k_promo'],d:{cust:4},rip:["You checked the customer's real need instead of guessing.",1],k:[K("Ask, don't assume",3,1)],u:'Now you are working with facts, not assumptions.'},
-  {id:'q3',t:"Let's be practical: give me eighty tonnes next week.",res:[['O','Eighty? Impossible. Forty is my safe limit.','Is she even listening?']],gain:['m_capacity40'],d:{trust:-5},rip:['Your anchor pulled out a real number, at a cost in goodwill.',0],k:[K('Anchoring a colleague, not a counterpart',1,0)],u:'Manu, you mentioned forty. What makes that the safe number?',act:'Turned an anchor into a question'},
+  {id:'q3',t:"Let's be practical: give me eighty tonnes next week.",res:[cap?['O','Eighty? I told you, forty is my safe limit.','Is she even listening?']:['O','Eighty? Impossible. Forty is my safe limit.','Is she even listening?']],gain:['m_capacity40'],d:{trust:-5},rip:['Your anchor pulled out a real number, at a cost in goodwill.',0],k:[K('Anchoring a colleague, not a counterpart',1,0)],u:'Manu, you mentioned forty. What makes that the safe number?',act:'Turned an anchor into a question'},
   {id:'q4',t:'What would make orders like this easier to plan in future?',res:[['O','Visibility. A six-month forecast, even a rough one.','If I could see it coming, I could say yes.']],gain:['m_forecast'],d:{trust:6,ceo:2},rip:['You found what Operations really needs: predictability.',1],k:[K('Interests behind the position',1,1)],u:'Predictability. That might be something the customer can help with.'}],
- [{id:'q1',t:'What does this account mean for us long-term?',res:[['O','It could become one of our largest accounts. And my target depends on it.','He is actually asking.']],gain:['b_longterm','b_target'],d:{trust:6},rip:['A good question showed what is really at stake for Bruna.',1],k:[K('Open questions uncover interests',4,1)],u:'So this is about the long-term account, not only this order.'},
+ [acct?{id:'q1',t:'Besides the account, what else is riding on this for you?',res:[['O','My target. Without this order, I miss it this quarter.','He is actually asking.']],gain:['b_target'],d:{trust:6},rip:['A follow-up question showed the pressure Bruna is under.',1],k:[K('Open questions uncover interests',4,1)],u:'So there is a quarterly target behind the urgency.'}
+     :{id:'q1',t:'What does this account mean for us long-term?',res:[['O','It could become one of our largest accounts. And my target depends on it.','He is actually asking.']],gain:['b_longterm','b_target'],d:{trust:6},rip:['A good question showed what is really at stake for Bruna.',1],k:[K('Open questions uncover interests',4,1)],u:'So this is about the long-term account, not only this order.'},
   S.found.has('k_promo')
    ?{id:'q2',t:'Could you ask them for a demand forecast?',res:[['O',"I'll ask."],['c',FCOK]],gain:['k_fcok'],d:{cust:2,trust:2},rip:['You found something the customer can give that costs them little.',1],k:[K('More issues, more currency',1,1)],u:'A new issue on the table. That gives you something to trade.'}
    :{id:'q2',t:'Could you ask the customer which part is truly urgent?',res:[['O',"Good idea. I'll call them now."],['c',CUST]],gain:['k_promo'],d:{trust:4,cust:4},rip:["You asked about the customer's real need instead of assuming.",1],k:[K("Ask, don't assume",3,1)],u:'Now you are working with facts, not assumptions.'},
   {id:'q3',t:"Here's what I can do safely: forty tonnes next week.",res:[['O',"Forty. Okay, that's something real.",'At least I have a number.']],d:{trust:6},rip:['Sharing your real limit built trust.',1],k:[K('Trust: share information',1,1)],u:'A clear number helps. Now you can design around it.'},
-  {id:'q4',t:'Best case, twenty tonnes. Take it or leave it.',res:[['O',"Twenty won't even cover their launch.",'An ultimatum. Great.']],d:{trust:-8,cust:-2},rip:['An ultimatum put Bruna on the defensive.',0],k:[K('Take-it-or-leave-it ultimatum',5,0)],u:'Manu, is twenty the safe limit, or a starting point?',act:'Questioned an ultimatum'}]);
+  {id:'q4',t:'Best case, twenty tonnes. Take it or leave it.',res:[S.found.has('k_promo')?['O',"Twenty won't even cover their launch.",'An ultimatum. Great.']:['O',"Twenty? That's a fifth of what they asked for.",'An ultimatum. Great.']],d:{trust:-8,cust:-2},rip:['An ultimatum put Bruna on the defensive.',0],k:[K('Take-it-or-leave-it ultimatum',5,0)],u:'Manu, is twenty the safe limit, or a starting point?',act:'Questioned an ultimatum'}]);
  return{chap:`Chapter 3 · What's underneath (${n} of 2)`,
   intro:[['n',n===1?'Time to look underneath the positions. You have time for two moves.':'One more move before you build the deal.']],
   tip:'Open questions reveal what is underneath. Each move uncovers something different.',
@@ -326,12 +339,12 @@ function endingId(){const f=S.f,D=S.deal,x=S.final||{};
  if(f.lost)return S.m.trust>=60?'cleanno':'walkout';
  if(f.gaveIn)return'gaveaway';
  if(x.over>0||D.ot)return'scars';
- if(D.fc&&D.pr&&S.m.trust>=65&&S.m.cust>=60)return'pie';
+ if(((D.fc&&D.pr)||f.trade)&&S.m.trust>=65&&S.m.cust>=60)return'pie';
  return'compromise';}
 // every scripted line, so each can be recorded in advance
 function ALL_LINES(){
  const L=[],keep={role:S.role,f:S.f,found:S.found,deal:S.deal,final:S.final};
- const DEALS=[{w1:30,w2:70},{w1:40,w2:40},{w1:40,w2:60,fc:true,pr:true},{w1:60,w2:40,ot:true},{w1:100,w2:0},{w1:40,w2:60,fc:true}];
+ const DEALS=[{w1:30,w2:70},{w1:40,w2:40},{w1:40,w2:60,fc:true,pr:true},{w1:60,w2:40,ot:true},{w1:80,w2:20,ot:true,pg:true},{w1:100,w2:0},{w1:40,w2:60,fc:true}];
  const add=ls=>ls.forEach(l=>{if(l&&l[1])L.push(rl(l))});
  for(const role of['bruna','manu']){S.role=role;
   for(const cm of[0,1])for(const an of[0,1])for(const pk of[0,1])for(const dl of DEALS){
@@ -346,6 +359,25 @@ function ALL_LINES(){
  const seen=new Set();return L.filter(([w,t])=>{const k=w+'|'+t;if(seen.has(k))return false;seen.add(k);return true});
 }
 window.UVA_LINES=()=>ALL_LINES().map(([w,t])=>({w,t,k:hk(w,t)}));
+// readable dump of every scene version, for script review
+window.UVA_DUMP=()=>{
+ const out=[],keep={role:S.role,f:S.f,found:S.found,deal:S.deal,final:S.final};
+ const NM=w=>({P:'YOU',O:'OTHER',c:'CUSTOMER',n:'NARRATOR',u:'UVA',j:'JOAO',b:'BRUNA',m:'MANU'}[w]||w);
+ const states=[];
+ for(const cm of[0,1])for(const an of[0,1])for(const pk of[0,1])for(const kn of[0,1])states.push({cm,an,pk,kn});
+ const DEALS=[{w1:40,w2:60,fc:true,pr:true},{w1:30,w2:70},{w1:40,w2:40},{w1:60,w2:40,ot:true},{w1:80,w2:20,ot:true,pg:true},{w1:100,w2:0}];
+ for(const role of['bruna','manu']){S.role=role;
+  for(const id of SCENES){const seen=new Set();
+   for(const st of states)for(const dl of(id==='customer'?DEALS:[DEALS[0]])){
+    S.f={committed:role==='manu'?1:st.cm,angry:st.an,asked:[]};S.found=new Set(OWN[role]);if(st.pk)S.found.add('k_promo');if(st.kn){S.found.add(role==='bruna'?'m_capacity40':'b_longterm')}
+    S.deal=Object.assign({w1:100,w2:0,fc:false,pr:false,ot:false,pg:false},dl);S.final=computeDeal();
+    const sc=SC[id]();let txt=`== ${role.toUpperCase()} · ${id} · ${sc.chap}\n`;
+    sc.intro.forEach(l=>txt+=`  ${NM(l[0])}: ${l[1]}\n`);
+    sc.choices.forEach((c,i)=>{txt+=`   [${i+1}] YOU: ${c.t}\n`;(c.res||[]).forEach(l=>txt+=`        ${NM(l[0])}: ${l[1]}\n`);if(c.u)txt+=`        (UVA: ${c.u})\n`});
+    if(!seen.has(txt)){seen.add(txt);out.push(`state committed=${S.f.committed} angry=${st.an} promoKnown=${st.pk} otherFactKnown=${st.kn} deal=${dl.w1}/${dl.w2}\n`+txt)}}
+  }}
+ Object.assign(S,keep);return out.join('\n');
+};
 
 // ---------- small DOM helpers ----------
 function el(tag,cls,text){const e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e}
@@ -447,6 +479,8 @@ function choose(id,sc,c){
  S.dmg+=negs*Math.abs(1.3-k)*(S.uva?1:-1);
  apply(c.d||{},k);
  if(c.set)for(const x in c.set)S.f[x]=c.set[x];
+ if(c.fix){const D=S.deal;D.w1=Math.max(D.w1,40);D.w2=Math.max(D.w2,100-D.w1);D.fc=true;S.f.trade=1;S.final=computeDeal()}
+ if(c.trade){S.f.trade=1;S.deal.fc=true;S.deal.pr=true}
  if(c.id)S.f.asked=(S.f.asked||[]).concat(c.id);
  const lines=[['P',c.t]].concat(c.res||[]).map(rl);
  gain(c.gain);
