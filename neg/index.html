@@ -294,6 +294,9 @@ body.dive #hub .hd{color:#9fe9f7}
 body.wide #pin{max-height:calc(100vh - 150px)}
 body.wide #panel{max-width:860px}
 body.wide #hub{opacity:0}
+body.wide{--tile-w:200px;--tile-h:256px}
+@media(max-width:1300px){body.wide{--tile-w:150px;--tile-h:192px}}
+@media(max-width:760px){body.wide{--tile-w:124px;--tile-h:150px}}
 #panel.dark{background:rgba(10,12,22,.82)}
 .line{grid-template-columns:36px minmax(0,1fr);gap:12px;margin-top:14px}
 .av{width:36px;height:36px;font-size:14px;box-shadow:0 0 0 2px rgba(255,255,255,.12)}
