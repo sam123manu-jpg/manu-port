@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UVA Negotiation Table</title>
+<meta name="description" content="A fully voiced 3D story game about disagreeing better: negotiate a 100-tonne grape order at Algarve Grapes, with or without UVA, an AI mediator.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="The Negotiation Table">
+<meta property="og:description" content="Negotiate a 100-tonne grape order, with or without UVA, an AI mediator.">
+<meta property="og:url" content="https://manupratap.com/neg/">
+<meta property="og:image" content="https://manupratap.com/og.jpg">
+<style>
+/* VOICE occasion: a story game, warm and calm, never shouty
+   IDEA a glass pavilion in an Algarve vineyard at golden hour, where the negotiation actually happens
+   PICTURE full-bleed 3D scene: two directors at a round table, UVA as a glowing grape bunch, a light bridge that grows with trust
+   COLOUR golden-hour sky and ochre hills; white HUD cards, black pills; blue only for UVA; green/amber/red only for meters
+   TYPE system sans (SF / Inter fallback), bold titles, monospace for the clock
+   LAYOUT scene fills the screen; meters top, interest board right, story card bottom-centre; phone: board becomes a sheet */
+:root{color-scheme:light dark;--card:light-dark(#ffffff,#1c1c1e);--ink:light-dark(#111113,#f2f2f4);--sub:light-dark(#6b6b70,#a1a1a8);--line:light-dark(#e7e7eb,#2e2e32);--chip:light-dark(#f2f2f4,#2a2a2e);--blue:#2f5bff;--blueT:light-dark(#eef2ff,#18214a);--green:#1f9d55;--amber:#d98a00;--red:#d6453d;--b:#e2553f;--m:#2c5d8f}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html,body{height:100%;margin:0}
+body{background:#efc48a;color:var(--ink);font:16px/1.45 -apple-system,BlinkMacSystemFont,"SF Pro Text",Inter,system-ui,sans-serif;overflow:hidden}
+#scene{position:fixed;inset:0;width:100%;height:100%;display:block;background:linear-gradient(#8fbfe0,#f6c27e 60%,#c8a66b 61%)}
+#hud{position:fixed;inset:0;pointer-events:none}
+#hud>*{pointer-events:auto}
+.card{background:var(--card);border-radius:20px;box-shadow:0 8px 30px rgba(40,20,0,.18)}
+.top{position:absolute;top:12px;left:16px;right:16px;display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap;pointer-events:none}
+.top>*{pointer-events:auto}
+.brand{padding:10px 14px;border-radius:999px;font-weight:700;font-size:14px;display:flex;gap:8px;align-items:center;white-space:nowrap}
+.brand small{font-weight:500;color:var(--sub)}
+.meters{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;padding:10px 14px;flex:1 1 360px;max-width:560px}
+.mt{font-size:12px;color:var(--sub)}
+.sm{display:none}
+.mt b{float:right;color:var(--ink);font-variant-numeric:tabular-nums}
+.bar{height:6px;border-radius:9px;background:var(--chip);margin-top:4px;overflow:hidden}
+.bar i{display:block;height:100%;border-radius:9px;transition:width .6s ease,background .6s}
+.tools{display:flex;gap:8px;margin-left:auto}
+.ghost{border:0;background:var(--card);color:var(--ink);border-radius:999px;padding:10px 14px;font:600 14px/1 inherit;min-height:40px;cursor:pointer;box-shadow:0 8px 30px rgba(40,20,0,.18)}
+#board{position:absolute;right:16px;top:92px;width:270px;padding:16px;max-height:calc(100% - 120px);overflow:auto}
+#board h3{margin:0 0 2px;font-size:17px}
+.eb{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--sub);font-weight:600}
+.grp{margin-top:12px}
+.it{font-size:14px;padding:8px 10px;border-radius:12px;background:var(--chip);margin-top:6px;transition:transform .4s}
+.it.off{background:transparent;border:1.5px dashed var(--line);color:var(--sub)}
+.it.k{background:light-dark(#fff4df,#3a2c10)}
+.it.s{background:light-dark(#e6f6ec,#11301f)}
+.it.new{animation:pop .7s ease}
+@keyframes pop{0%{transform:scale(.85);opacity:0}60%{transform:scale(1.05)}100%{transform:scale(1);opacity:1}}
+#boardBtn{display:none}
+#panel{position:absolute;left:16px;right:16px;bottom:16px;margin-inline:auto;max-width:660px;overflow:hidden}
+#pin{max-height:58vh;max-height:58dvh;overflow:auto;padding:18px 20px}
+#panel.dark{background:#111113;color:#f2f2f4}
+#panel.dark .sub{color:#a1a1a8}
+h1{font-size:clamp(30px,5vw,44px);line-height:1.05;letter-spacing:-.02em;margin:6px 0 8px;text-wrap:balance}
+h2{font-size:24px;line-height:1.15;letter-spacing:-.01em;margin:4px 0 8px}
+.sub{color:var(--sub);font-size:15px}
+.mono{font-family:ui-monospace,"SF Mono",Menlo,monospace}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;align-items:center}
+.pill{border:0;border-radius:999px;background:#111113;color:#fff;font:600 15px/1 inherit;padding:14px 20px;min-height:46px;cursor:pointer}
+:root:not([data-theme=light]) .pill{background:light-dark(#111113,#f2f2f4);color:light-dark(#fff,#111113)}
+#panel.dark .pill{background:#fff;color:#111113}
+.pill:disabled{opacity:.4;cursor:default}
+.chip{border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:16px;padding:12px 14px;font:500 15px/1.3 inherit;text-align:left;cursor:pointer;width:100%;min-height:46px}
+.chip:hover,.chip:focus-visible{border-color:var(--ink);outline:none}
+button:focus-visible,input:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.chips{display:grid;gap:8px;margin-top:12px}
+.seg{display:flex;background:#2a2a2e;border-radius:999px;padding:4px;gap:4px}
+.seg button{flex:1;border:0;border-radius:999px;background:transparent;color:#d6d6da;font:600 14px/1.2 inherit;padding:10px 12px;min-height:42px;cursor:pointer}
+.seg button[aria-pressed=true]{background:#fff;color:#111113}
+.sw{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--line);font-size:15px;cursor:pointer}
+#panel.dark .sw{border-color:#2e2e32}
+.sw input{width:46px;height:26px;appearance:none;background:#c7c7cc;border-radius:99px;position:relative;cursor:pointer;flex:none;transition:background .2s}
+.sw input::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:left .2s}
+.sw input:checked{background:var(--green)}
+.sw input:checked::after{left:23px}
+.line{display:grid;grid-template-columns:34px minmax(0,1fr);gap:10px;margin-top:10px;animation:pop .45s ease both}
+.av{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:#fff;font:700 14px/1 inherit}
+.who{font-size:13px;font-weight:700}
+.say{font-size:16px}
+.think{font-size:14px;color:var(--sub);font-style:italic;margin-top:2px}
+.line.u .bub{background:var(--blueT);border-radius:14px;padding:8px 12px}
+.line.u .who{color:var(--blue)}
+.pillTag{display:inline-block;font-size:12px;font-weight:600;padding:4px 10px;border-radius:99px;background:var(--blueT);color:var(--blue)}
+#panel.dark .pillTag{background:#18214a;color:#9fb3ff}
+.ask{display:flex;gap:8px;margin-top:10px}
+.ask input{flex:1;font:16px inherit;padding:12px 14px;border-radius:14px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);min-height:46px}
+.ask .pill{padding:12px 16px}
+.note{font-size:13px;color:var(--sub);margin-top:8px}
+.hints{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:10px}
+.hint{border-radius:14px;padding:10px;background:var(--chip);font-size:13px}
+.hint b{display:block;font-size:14px;margin-top:2px}
+.hint.unk{background:light-dark(#fff4df,#3a2c10)}
+.hint.unk b{color:var(--amber)}
+.rng{margin-top:12px}
+.rng label{display:flex;justify-content:space-between;font-size:15px;font-weight:600}
+.rng output{font-variant-numeric:tabular-nums;white-space:nowrap}
+input[type=range]{width:100%;height:30px;accent-color:#111113;margin:4px 0 0}
+.proj{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:12px}
+.proj .d{font-size:12px;font-weight:700;font-variant-numeric:tabular-nums}
+.big{font-size:clamp(36px,7vw,56px);font-weight:800;letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
+.case{border-radius:16px;background:var(--chip);padding:14px;margin-top:14px}
+.runs{font-size:14px;margin-top:8px}
+.src{font-size:12px;color:var(--sub);margin-top:8px}
+.src a{color:inherit}
+[hidden]{display:none!important}
+#load{position:fixed;inset:0;z-index:10;display:grid;place-items:center;padding:16px;overflow:auto;background:linear-gradient(#86b8de,#f7c27a 56%,#d9b277 56.3%,#b38d55);transition:opacity .8s}
+#load.gone{opacity:0;pointer-events:none}
+.lc{background:#111113;color:#f2f2f4;border-radius:24px;padding:28px;width:min(470px,100%);box-shadow:0 20px 60px rgba(40,20,0,.35)}
+.lc .sub{color:#a1a1a8}
+.grapes{width:64px;height:64px;display:block;margin-bottom:6px;animation:bob 3s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-5px)}}
+.lbar{height:8px;border-radius:9px;background:#2a2a2e;margin:18px 0 8px;overflow:hidden}
+.lbar i{display:block;height:100%;width:0;background:#5266ff;border-radius:9px;transition:width .3s}
+#lmsg{font-size:14px;color:#c7c7cc;font-variant-numeric:tabular-nums}
+.lfacts{margin:14px 0 0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:6px}
+.lfacts li{font-size:13px;color:#d6d6da;background:#2a2a2e;border-radius:99px;padding:6px 10px}
+#load .pill{background:#fff;color:#111113;margin-top:18px;width:100%}
+@media(max-width:760px){
+ #board{display:none;left:16px;right:16px;width:auto;top:132px;z-index:3}
+ #board.open{display:block}
+ #boardBtn{display:inline-flex}
+ .meters{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;padding:8px 10px;order:3;flex-basis:100%;max-width:none}
+ .mt{font-size:11px}
+ .mt .lg{display:none}
+ .mt .sm{display:inline}
+ .brand small{display:none}
+ #pin{max-height:62vh;max-height:62dvh;padding:16px}
+ .hints{grid-template-columns:minmax(0,1fr)}
+ .proj{gap:6px}
+}
+@media(prefers-reduced-motion:reduce){.line,.it.new,.grapes{animation:none}.bar i{transition:none}}
+</style>
+</head>
+<body>
+<canvas id="scene" aria-hidden="true"></canvas>
+<div id="hud">
+ <div class="top">
+  <div class="brand card">Algarve Grapes <small id="chap">Lagoa, 08:42</small></div>
+  <div class="meters card" id="meters" aria-label="Meters"></div>
+  <div class="tools">
+   <button class="ghost" id="boardBtn" type="button">Interests</button>
+   <button class="ghost" id="soundBtn" type="button" hidden aria-pressed="true">Sound on</button>
+  </div>
+ </div>
+ <aside id="board" class="card" aria-label="Interest board"></aside>
+ <section id="panel" class="card"><div id="pin" aria-live="polite"></div></section>
+</div>
+<div id="load">
+ <div class="lc">
+  <svg class="grapes" viewBox="0 0 120 120" aria-hidden="true"><path d="M60 8 C60 16 58 20 56 24" stroke="#8a6a3a" stroke-width="4" fill="none" stroke-linecap="round"/><ellipse cx="74" cy="18" rx="14" ry="6" fill="#5b8a32" transform="rotate(-20 74 18)"/><g fill="#5266ff">
+   <circle cx="33" cy="40" r="11"/><circle cx="51" cy="38" r="11"/><circle cx="69" cy="38" r="11"/><circle cx="87" cy="40" r="11"/>
+   <circle cx="42" cy="59" r="11"/><circle cx="60" cy="58" r="11"/><circle cx="78" cy="59" r="11"/>
+   <circle cx="51" cy="78" r="11"/><circle cx="69" cy="78" r="11"/><circle cx="60" cy="97" r="11"/></g><g fill="#fff" opacity=".35"><circle cx="29" cy="36" r="3"/><circle cx="47" cy="34" r="3"/><circle cx="65" cy="34" r="3"/><circle cx="56" cy="54" r="3"/><circle cx="56" cy="93" r="3"/></g></svg>
+  <div class="eb">Algarve Grapes · a story game</div>
+  <h1>The Negotiation Table</h1>
+  <p class="sub">Two directors, one impossible order and four turns to find a deal. Play once with UVA, the AI mediator, and once without.</p>
+  <div class="lbar"><i id="lfill"></i></div>
+  <div id="lmsg">Planting the vineyard…</div>
+  <ul class="lfacts"><li>Sound on, headphones if you have them</li><li>About 6 minutes a run</li><li>Fully voiced, no sign-in</li></ul>
+  <button class="pill" id="enter" type="button" disabled>Loading…</button>
+ </div>
+</div>
+<script>
+{
+const $=id=>document.getElementById(id);
+const clamp=v=>Math.max(0,Math.min(100,Math.round(v)));
+const S={stage:'title',role:'bruna',uva:true,t:0,m:{},found:new Set(),log:[],flags:{},deal:{w1:100,w2:0,fc:false,pr:false,ot:false,pg:false},runs:[],live:null,tts:null,voice:false,speaker:null,busy:false};
+const ML={cust:'Customer trust',del:'Delivery',trust:'Team trust',ceo:'CEO time'},MS={cust:'Customer',del:'Delivery',trust:'Team',ceo:'CEO'};
+const IN={
+ b_target:{who:'b',label:'Hit the sales target'},
+ b_longterm:{who:'b',label:'Win a long-term key account'},
+ m_existing:{who:'m',label:"Protect current customers' deliveries"},
+ m_quality:{who:'m',label:'Keep quality: no exhausted crews'},
+ m_forecast:{who:'m',label:'Predictability: see demand early'},
+ m_capacity40:{who:'k',label:'40 t can be freed next week, safely'},
+ k_promo:{who:'k',label:'Customer needs 40 t now, 60 t can follow'},
+ s_goal:{who:'s',label:'Profitable growth with reliable delivery'}};
+const OWN={bruna:['b_target','b_longterm'],manu:['m_existing','m_quality','m_forecast','m_capacity40']};
+const NAME={b:'Bruna',m:'Manu',u:'UVA',c:'Customer',n:'Narrator',j:'João'};
+const COL={b:'#e2553f',m:'#2c5d8f',u:'#2f5bff',c:'#6b6b70',n:'#111113',j:'#7a4a2e'};
+const VOICE={b:'rounded',m:'glassy',u:'airy',c:'buttery',n:'buttery',j:'buttery'};
+const CUST='Honestly? We need 40 tonnes next week for our promo launch. The other 60 can follow a week later.';
+const me=()=>S.role==='bruna'?'b':'m', ot=()=>S.role==='bruna'?'m':'b';
+const CALL={
+ bruna:{open:[['n','Algarve Grapes, Lagoa. Eight forty-two on a Monday morning. The phone rings.'],['c','Bruna, we have an urgent request. Can you deliver an additional one hundred tonnes next week?']],
+  chips:[{t:'Absolutely! Consider it done.',f(){S.flags.yes=true;apply({cust:8,trust:-12,del:-6})}},{t:'Let me confirm with Operations and call you back by five.',f(){apply({cust:-3,trust:6})}}]},
+ manu:{open:[['n',"Lagoa, Monday morning. Manu is finishing next week's production plan when Bruna walks in."],['b',"Manu, great news! A major European supermarket wants one hundred extra tonnes. Next week! I've already said yes."]],
+  chips:[{t:'Once again, Commercial committed without asking Operations.',f(){S.flags.angry=true;S.flags.yes=true;apply({trust:-16,ceo:-10})}},{t:"Okay. Let's look at it together.",f(){S.flags.yes=true;apply({trust:6})}}]}};
+const SUMMARY={bruna:'Bruna needs growth and a long-term account. Manu needs reliable delivery and predictability. Different positions, compatible interests: profitable growth with reliable delivery. What deal protects both?',
+ manu:'Manu needs reliable delivery and predictability. Bruna needs growth and a long-term account. Different positions, compatible interests: profitable growth with reliable delivery. What deal protects both?'};
+const DS={m_over:"That's more than I can release safely next week.",m_ot:'Overtime works, once. Don’t make it a habit.',m_fc:'With a forecast, I can finally plan ahead.',m_ok:'That I can deliver.',
+ b_low:'They need more than that for the launch.',b_short:'Short of a hundred tonnes, I risk the account.',b_good:'Priority planning for a forecast. I can sell that.',b_ok:'I can take that to them.',
+ c_low:"That won't cover our launch.",c_short:"We'll need another supplier for the rest.",c_fc:'A forecast? What do we get in return?',c_pr:"Priority planning? We'll share a forecast.",c_ok:'Works for us.'};
+const STORIES=['The supermarket stayed, production runs smoothly and the forecast arrives every month. João spent his week on strategy, not refereeing.',
+ 'The order shipped, but it cost late nights and some goodwill. The next big request will start the same argument.',
+ 'Deliveries slipped, the customer heard the uncertainty and signed with another supplier. The problem reached João when it was too late to act.'];
+const PILOT="Let's pilot UVA. Ninety days, then we decide with the numbers.";
+
+// Scripted turns. Each chip: q quality, reply, think, gain, d deltas, call (customer speaks)
+const SCRIPT={
+bruna:[
+ {say:()=>S.flags.yes?"Next week? The schedule is full. Why do I hear about this after you've promised it?":"Thanks for asking first. But next week is already full.",
+  chips:[
+   {q:'good',t:'Fair. What would it take to do this without hurting current customers?',reply:'Honestly? I could free some capacity. Not a hundred tonnes.',think:"She's asking, not telling. That's new.",gain:['m_existing'],d:{trust:12,ceo:4}},
+   {q:'mid',t:'This client is huge. We have to find a way.',reply:'Every client is huge to Commercial. The lines are booked.',think:'Same pressure, still no plan.',d:{trust:-4}},
+   {q:'bad',t:'Operations always blocks growth.',reply:'And Commercial always promises what we can’t make.',think:'Here we go again.',d:{trust:-16,ceo:-12}}],
+  uva:{good:"Thank you both. Manu is protecting deliveries we've already promised. Let's keep that in view.",mid:'Before deciding anything: Manu, what worries you most about next week?',bad:"Let's move from who is right to what each of you needs. Manu, what's your main concern?",rescue:['m_existing']}},
+ {say:()=>'So what exactly does the customer need, and by when?',
+  chips:[
+   {q:'good',t:'Good question. Let me ask them which part is truly urgent.',reply:"Do that. I'd rather plan with facts.",think:'Finally, real numbers.',gain:['k_promo'],call:true,d:{trust:8,cust:8}},
+   {q:'mid',t:"All hundred tonnes, next week. That's the deal.",reply:"Then I can't see how we make it.",think:"If it's all or nothing, it's nothing.",d:{trust:-6,cust:-2}},
+   {q:'bad',t:'Does it matter? I already said yes.',reply:"It matters to the customers we'd let down.",think:"She hasn't even asked them.",d:{trust:-14,cust:-4}}],
+  uva:{good:"Asking what's urgent is a good step. Now you're both working with facts.",mid:'Bruna, would it help to check what the customer needs next week versus later?',bad:'Bruna, would it help to check what the customer needs next week versus later?',rescue:['k_promo']}},
+ {say:()=>"Look, I'm not trying to block you. I'm trying to protect what we already promised.",
+  chips:[
+   {q:'good',t:'I know. How much could you release safely next week?',reply:"Forty tonnes, without touching anyone else's order.",think:'She heard me.',gain:['m_capacity40'],d:{trust:10,del:4}},
+   {q:'mid',t:"Can't we just run weekend overtime?",reply:'We can, but tired crews make quality mistakes.',think:'Overtime is not a strategy.',gain:['m_quality'],d:{trust:2}},
+   {q:'bad',t:'Push harder. Find the capacity.',reply:'"Push harder" is how we lost the last customer.',think:'She wants a miracle, not a plan.',d:{trust:-12,del:-4}}],
+  uva:{good:"So the question isn't yes or no any more. It's how much, and when.",mid:"Manu, without overtime, what's the safe number for next week?",bad:"Let's slow down. Manu, without overtime, what's the safe number?",rescue:['m_capacity40']}},
+ {say:()=>"And next time? I can't keep finding out on a Friday.",
+  chips:[
+   {q:'good',t:'What would help you plan for orders like this?',reply:'Visibility. A six-month forecast, even a rough one.',think:'If I could see it coming, I could say yes.',gain:['m_forecast'],d:{trust:10,ceo:6}},
+   {q:'mid',t:"I'll try to tell you sooner.",reply:"Trying isn't a process.",think:'We need something real.',d:{trust:1}},
+   {q:'bad',t:"That's how sales works. Deal with it.",reply:'Then Operations will keep saying no.',think:'Nothing will change.',d:{trust:-14,ceo:-10}}],
+  uva:{good:'A forecast would give Operations predictability. Could the customer trade one for something they value?',mid:'Manu, what would make future orders easier to plan?',bad:'Manu, what would make future orders easier to plan?',rescue:['m_forecast']}}],
+manu:[
+ {say:()=>S.flags.angry?'And once again, Operations is blocking growth before hearing me out.':'Thank you. I know the schedule is tight.',
+  chips:[
+   {q:'good',t:'What does this account mean for us long-term?',reply:'It could become one of our largest accounts. And my target depends on it.',think:"He's actually asking.",gain:['b_longterm','b_target'],d:{trust:12,ceo:4}},
+   {q:'mid',t:"The schedule is full. I can't conjure capacity.",reply:'Then find some. This is growth!',think:'Why is it always no?',d:{trust:-4}},
+   {q:'bad',t:'You care more about your target than this company.',reply:'And you care more about your schedule than our customers.',think:'This is personal now.',d:{trust:-16,ceo:-12}}],
+  uva:{good:"Bruna is thinking about the long-term account, not only this order.",mid:"Let's step back. Bruna, what makes this order so important?",bad:"Let's move from who is right to what each of you needs. Bruna, what makes this order so important?",rescue:['b_longterm','b_target']}},
+ {say:()=>'So can you do it or not?',
+  chips:[
+   {q:'good',t:'I can release forty tonnes safely next week. More would hit current customers.',reply:"Forty. Okay, that's something real.",think:'At least I have a number.',d:{trust:10,del:4}},
+   {q:'mid',t:'Maybe, with weekend overtime. Quality could suffer.',reply:'Quality problems would hurt the account too.',think:"I can't sell a risk.",d:{trust:2,del:-4}},
+   {q:'bad',t:'No. Not next week.',reply:"Then I'll have to call them and lose it.",think:"He didn't even look.",d:{trust:-14,cust:-8}}],
+  uva:{good:'A clear number helps. Now you can design around it.',mid:"Manu, is there an amount you could release with no risk at all?",bad:"Manu, is there an amount you could release with no risk at all?"}},
+ {say:()=>'They asked for a hundred. What do I tell them?',
+  chips:[
+   {q:'good',t:'Could you ask them which part is truly urgent?',reply:"Good idea. I'll call them now.",think:'I never asked them that.',gain:['k_promo'],call:true,d:{trust:8,cust:8}},
+   {q:'mid',t:"Tell them they'll have to wait.",reply:"They won't wait. They'll switch supplier.",think:"He doesn't see the risk.",d:{trust:-6,cust:-8}},
+   {q:'bad',t:'Not my problem. You made the promise.',reply:"It's the company's problem, Manu.",think:"I'm on my own here.",d:{trust:-14,ceo:-8}}],
+  uva:{good:'Separating urgent from later turns a no into options.',mid:'Bruna, do you know which part of the order is needed next week?',bad:'Bruna, do you know which part of the order is needed next week?',rescue:['k_promo']}},
+ {say:()=>'What would make this easier for you next time?',
+  chips:[
+   {q:'good',t:'A forecast. If I see demand early, I can plan for it.',reply:'I could ask them for a six-month forecast.',think:"That's something I can actually get.",d:{trust:10,ceo:6}},
+   {q:'mid',t:'Ask me before you say yes.',reply:'Fair. But I need answers fast.',think:"He's not wrong.",d:{trust:3}},
+   {q:'bad',t:"Stop selling what we can't make.",reply:'Stop treating every order like a threat.',think:'Same fight, every month.',d:{trust:-14,ceo:-10}}],
+  uva:{good:'A forecast in exchange for priority planning could work for both sides.',mid:'Manu, what would help you plan future orders?',bad:'Manu, what would help you plan future orders?'}}]};
+
+// ---------- small DOM helpers ----------
+function el(tag,cls,text){const e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e}
+function btn(cls,text,fn){const b=el('button',cls,text);b.type='button';b.onclick=fn;return b}
+const P=$('pin');
+function setPanel(dark){$('panel').className='card'+(dark?' dark':'');P.replaceChildren();P.scrollTop=0;return P}
+function chap(t){$('chap').textContent=t}
+function tone(v){return v>=65?'var(--green)':v>=40?'var(--amber)':'var(--red)'}
+function renderMeters(){
+ $('meters').innerHTML=Object.keys(ML).map(k=>`<div><div class="mt"><span class="lg">${ML[k]}</span><span class="sm">${MS[k]}</span> <b>${S.m[k]}</b></div><div class="bar"><i style="width:${S.m[k]}%;background:${tone(S.m[k])}"></i></div></div>`).join('');
+ if(R)R.mood();
+}
+function apply(d,neg=1){for(const k in d){let v=d[k];if(v<0)v*=neg;S.m[k]=clamp(S.m[k]+v)}renderMeters()}
+function discoverable(){return Object.keys(IN).filter(id=>!OWN[S.role].includes(id))}
+function gain(ids){const n=[];(ids||[]).forEach(id=>{if(IN[id]&&!S.found.has(id)){S.found.add(id);n.push(id)}});if(n.length){renderBoard(n);blip()}return n}
+function renderBoard(fresh=[]){
+ const g={b:'Bruna needs',m:'Manu needs',k:'Key facts',s:'Shared goal'};
+ const B=$('board');B.replaceChildren();
+ const disc=discoverable(),got=disc.filter(i=>S.found.has(i)).length;
+ B.append(el('div','eb','Interest board'),el('h3',null,`${got} of ${disc.length} uncovered`));
+ for(const w in g){const box=el('div','grp');box.append(el('div','eb',g[w]));
+  Object.keys(IN).filter(id=>IN[id].who===w).forEach(id=>{const f=S.found.has(id);const it=el('div','it'+(f?'':' off')+(f&&(w==='k'||w==='s')?' '+w:'')+(fresh.includes(id)?' new':''),f?IN[id].label:'Not uncovered yet');box.append(it)});
+  B.append(box)}
+ B.append(el('div','note',S.uva?'UVA adds what it hears. Positions are what people demand; interests are why.':'No mediator this time. You only learn what people tell you.'));
+ $('boardBtn').textContent=`Interests ${got}/${disc.length}`;
+}
+function lineEl(w,text,think){
+ const L=el('div','line '+w);const a=el('div','av',w==='u'?'U':NAME[w][0]);a.style.background=COL[w];
+ const box=el('div','bub');box.append(el('div','who',w===me()?NAME[w]+' (you)':NAME[w]),el('div','say',text));
+ if(think&&S.uva)box.append(el('div','think','Underneath: '+think));
+ L.append(a,box);return L}
+// ---------- audio: pre-recorded voices, ambient pad, small sounds ----------
+const AU={on:true,urls:{},el:null,tok:0,ctx:null,pad:null};
+const SYN={b:{p:1.15,r:1.05},m:{p:0.85,r:1},u:{p:1,r:0.92},c:{p:0.95,r:1},n:{p:0.8,r:0.95},j:{p:0.75,r:0.95}};
+function hk(w,t){let h=0x811c9dc5;const x=w+'|'+t;for(let i=0;i<x.length;i++){h^=x.charCodeAt(i);h=Math.imul(h,0x01000193)>>>0}return h.toString(16).padStart(8,'0')}
+function pickVoice(w){try{const vs=speechSynthesis.getVoices().filter(v=>/^en/i.test(v.lang));if(!vs.length)return null;const fem=/female|samantha|victoria|karen|serena|moira|tessa|zira|susan|kate|emma/i,mal=/male|daniel|alex|fred|david|george|arthur|oliver|guy/i;const want='bu'.includes(w)?fem:mal;return vs.find(v=>want.test(v.name)&&!(want===fem&&/\bmale/i.test(v.name)))||vs[0]}catch(e){return null}}
+function padTo(v,t){if(AU.pad&&AU.ctx)AU.pad.gain.setTargetAtTime(AU.on?v:0,AU.ctx.currentTime,t)}
+function duck(on){padTo(on?0.012:0.035,0.4)}
+function stopAudio(){AU.tok++;if(AU.el){AU.el.onended=null;AU.el.onerror=null;try{AU.el.pause()}catch(e){}}try{speechSynthesis.cancel()}catch(e){}S.talking=null;duck(false)}
+function playLines(lines,onStart,onDone){
+ stopAudio();const tok=AU.tok;let i=0;
+ const next=()=>{
+  if(tok!==AU.tok)return;
+  if(i>=lines.length){S.talking=null;duck(false);if(onDone)onDone();return}
+  const[w,t]=lines[i],idx=i++;if(onStart)onStart(idx);S.speaker=w;
+  const fin=d=>{if(tok!==AU.tok)return;S.talking=null;setTimeout(next,d)};
+  if(!AU.on||!AU.ctx){fin(idx===lines.length-1?0:380);return}
+  const u=AU.urls[hk(w,t)];S.talking=w;duck(true);
+  if(u&&AU.el){AU.el.onended=()=>fin(260);AU.el.onerror=()=>fin(100);AU.el.src=u;AU.el.play().catch(()=>fin(500))}
+  else if('speechSynthesis' in window){const ut=new SpeechSynthesisUtterance(t),F=SYN[w]||{};ut.rate=F.r||1;ut.pitch=F.p||1;const v=pickVoice(w);if(v)ut.voice=v;ut.onend=()=>fin(200);ut.onerror=()=>fin(100);speechSynthesis.speak(ut)}
+  else fin(500)};
+ next();
+}
+function ambient(){
+ try{const C=new(window.AudioContext||window.webkitAudioContext)();AU.ctx=C;
+  const out=C.createGain();out.gain.value=0;out.connect(C.destination);
+  const lp=C.createBiquadFilter();lp.type='lowpass';lp.frequency.value=650;lp.connect(out);
+  const ch=[[220,261.63,329.63,392],[174.61,220,261.63,329.63],[196,246.94,293.66,349.23],[164.81,207.65,246.94,329.63]];
+  const osc=ch[0].map(f=>{const o=C.createOscillator();o.type='triangle';o.frequency.value=f;const g=C.createGain();g.gain.value=0.22;o.connect(g);g.connect(lp);o.start();return o});
+  let ci=0;setInterval(()=>{ci=(ci+1)%ch.length;osc.forEach((o,k)=>o.frequency.setTargetAtTime(ch[ci][k],C.currentTime,1.4))},9000);
+  AU.pad=out;padTo(0.035,3)}catch(e){AU.ctx=null}
+}
+function blip(){if(!AU.ctx||!AU.on)return;const C=AU.ctx,t=C.currentTime,o=C.createOscillator(),g=C.createGain();o.type='sine';o.frequency.setValueAtTime(880,t);o.frequency.exponentialRampToValueAtTime(1320,t+0.12);g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(0.1,t+0.02);g.gain.exponentialRampToValueAtTime(0.0001,t+0.35);o.connect(g);g.connect(C.destination);o.start(t);o.stop(t+0.4)}
+function ring(){if(!AU.ctx||!AU.on)return;const C=AU.ctx,t=C.currentTime,g=C.createGain();g.gain.value=0;g.connect(C.destination);[400,450].forEach(f=>{const o=C.createOscillator();o.frequency.value=f;o.connect(g);o.start(t);o.stop(t+1.1)});[[0,.4],[.6,1]].forEach(([a,b])=>{g.gain.setValueAtTime(0.045,t+a);g.gain.setValueAtTime(0,t+b)})}
+function showLines(lines){const els=lines.map(l=>{const e=lineEl(...l);e.hidden=true;P.append(e);return e});return i=>{els[i].hidden=false;const pin=P;if(i>0)pin.scrollTop=pin.scrollHeight}}
+function beat(lines,label,next){
+ setPanel();const show=showLines(lines);
+ const r=el('div','row');r.append(btn('pill',label,next));P.append(r);
+ playLines(lines,show);
+}
+// every scripted line, so each can be recorded in advance
+function ALL_LINES(){
+ const L=[],sv={role:S.role,flags:S.flags};
+ for(const role of['bruna','manu']){S.role=role;const m=role==='bruna'?'b':'m',o=role==='bruna'?'m':'b';
+  CALL[role].open.forEach(l=>L.push(l));CALL[role].chips.forEach(c=>L.push([m,c.t]));
+  SCRIPT[role].forEach(T=>{[{},{yes:true},{yes:true,angry:true}].forEach(f=>{S.flags=f;L.push([o,T.say()])});T.chips.forEach(c=>L.push([m,c.t],[o,c.reply]));['good','mid','bad'].forEach(q=>{if(T.uva[q])L.push(['u',T.uva[q]])})});
+  L.push(['u',SUMMARY[role]])}
+ S.role=sv.role;S.flags=sv.flags;
+ L.push(['c',CUST]);for(const k in DS)L.push([k[0],DS[k]]);L.push(['n','Three months later.']);STORIES.forEach(x=>L.push(['n',x]));L.push(['j',PILOT]);
+ const seen=new Set();return L.filter(([w,t])=>{const k=w+'|'+t;if(seen.has(k))return false;seen.add(k);return true});
+}
+window.UVA_LINES=()=>ALL_LINES().map(([w,t])=>({w,t,k:hk(w,t)}));
+
+// ---------- stages ----------
+function go(st){stopAudio();S.stage=st;({title:renderTitle,call:renderCall,turn:renderTurn,deal:renderDeal,end:renderEnd})[st]();if(R)R.cam(st)}
+function reset(){S.t=0;S.m={cust:60,del:70,trust:55,ceo:80};S.found=new Set(OWN[S.role]);S.log=[];S.flags={};S.deal={w1:100,w2:0,fc:false,pr:false,ot:false,pg:false};renderMeters();renderBoard()}
+
+function renderTitle(){
+ chap('Lagoa, 08:42');setPanel(true);
+ P.append(el('div','eb','A story game about disagreeing better'),el('h1',null,'The Negotiation Table'),
+  el('p','sub','A European supermarket wants 100 extra tonnes of grapes, next week. The schedule is already full. Commercial and Operations have four turns to find a deal, or lose the customer.'));
+ const seg=el('div','seg');seg.setAttribute('role','group');
+ [['bruna','Play Bruna · Commercial'],['manu','Play Manu · Operations']].forEach(([r,t])=>{const b=btn('',t,()=>{S.role=r;renderTitle()});b.setAttribute('aria-pressed',S.role===r);seg.append(b)});
+ const sw=el('label','sw');sw.append(el('span',null,'UVA mediates the conversation'));const cb=el('input');cb.type='checkbox';cb.id='uvaToggle';cb.checked=S.uva;cb.onchange=()=>{S.uva=cb.checked;if(R)R.mood()};sw.append(cb);
+ P.append(seg,sw);
+ const r=el('div','row');r.append(btn('pill','Start the morning',()=>{reset();go('call')}));
+ if(S.live)r.append(el('span','pillTag','Live AI on: type your own replies'));
+ P.append(r);
+ if(S.runs.length)P.append(el('div','runs sub','Your runs: '+S.runs.map(x=>`${NAME[x.role==='bruna'?'b':'m']}, UVA ${x.uva?'on':'off'}: ${x.score}`).join(' · ')));
+}
+function renderCall(){
+ chap('Chapter 1 · The call');setPanel();
+ const C=CALL[S.role],show=showLines(C.open);
+ const c=el('div','chips');C.chips.forEach(o=>c.append(btn('chip',o.t,()=>{S.log.push([me(),o.t]);S.carry=[me(),o.t];o.f();go('turn')})));P.append(c);
+ if(S.role==='bruna'&&AU.on&&AU.ctx){ring();S.speaker='b';setTimeout(()=>{if(S.stage==='call')playLines(C.open,show)},1500)}else playLines(C.open,show);
+}
+function renderTurn(){
+ const T=SCRIPT[S.role][S.t];chap(`Chapter 2 · The table · Turn ${S.t+1} of 4`);setPanel();
+ const say=T.say();
+ if(!S.liveSaid){const ls=(S.carry?[S.carry]:[]).concat([[ot(),say]]);S.carry=null;S.log.push([ot(),say]);const show=showLines(ls);playLines(ls,show)}else{P.append(lineEl(ot(),S.liveSaid))}
+ S.liveSaid=null;S.speaker=ot();
+ const c=el('div','chips');T.chips.forEach((ch,i)=>c.append(btn('chip',ch.t,()=>choose(i))));P.append(c);
+ if(S.live){const f=el('form','ask');const i=el('input');i.id='say';i.placeholder='Or say it in your own words…';i.maxLength=300;i.autocomplete='off';const b=el('button','pill','Say');b.type='submit';f.append(i,b);f.onsubmit=e=>{e.preventDefault();const v=i.value.trim();if(v&&!S.busy)liveTurn(v)};P.append(f)}
+}
+function afterTurn(lines){
+ S.t++;
+ const next=S.t>=4?()=>{if(S.uva){gain(['s_goal']);const sum=SUMMARY[S.role];beat([['u',sum]],'Build the deal',()=>go('deal'))}else go('deal')}:()=>go('turn');
+ beat(lines,S.t>=4?'Continue':'Next turn',next);
+}
+function choose(ci){
+ const T=SCRIPT[S.role][S.t],c=T.chips[ci];
+ apply(c.d,c.q==='bad'?(S.uva?0.6:1.5):1);
+ const lines=[[me(),c.t],[ot(),c.reply,c.think]];S.log.push([me(),c.t],[ot(),c.reply]);
+ let fresh=gain(c.gain);
+ if(c.call)lines.push(['c',CUST]);
+ if(S.uva){lines.push(['u',T.uva[c.q]]);if(c.q!=='good'&&T.uva.rescue){const n=gain(T.uva.rescue);if(n.includes('k_promo'))lines.push(['c',CUST]);apply({trust:3})}}
+ afterTurn(lines);
+}
+async function liveTurn(text){
+ S.busy=true;const T=SCRIPT[S.role][S.t];const O=NAME[ot()],Pn=NAME[me()];
+ const note=el('div','note','…'+O+(S.uva?' and UVA are':' is')+' thinking');P.append(note);
+ const facts=S.role==='bruna'
+  ?'He can release 40 t next week safely without hurting current customers (id m_capacity40). He protects current customers\' deliveries (m_existing). Overtime hurts quality (m_quality). He wants predictability through a demand forecast (m_forecast).'
+  :'The account could become one of the company\'s largest (b_longterm). Her sales target depends on it (b_target).';
+ const persona=S.role==='bruna'?'Manu, Operations Director: calm, analytical, protective of quality, tired of surprises':'Bruna, Commercial Director: energetic, ambitious, customer-focused, afraid of losing the deal';
+ const open=discoverable().filter(i=>!S.found.has(i)&&i!=='s_goal').map(i=>`${i} = ${IN[i].label}`).join('; ')||'none';
+ const prompt=`You are the game engine of "The Negotiation Table", a short negotiation game at Algarve Grapes, a Portuguese grape exporter.
+The player is ${Pn}. You voice ${persona}${S.uva?', and UVA, a calm, neutral AI mediator':''}.
+Situation: a major European supermarket asked for 100 extra tonnes next week. The production schedule is full. ${S.flags.yes?'Bruna already said yes to the customer without asking Operations.':'Bruna has not committed yet.'}
+${O}'s private facts, revealed only when the player asks a genuine open question about needs or constraints, never when blamed: ${facts}
+Customer's private fact: they need 40 t next week for a promo launch and the other 60 t can follow a week later (id k_promo). Only if someone asks the customer what is truly urgent, put the customer's one-sentence answer in "customer".
+${O} reacts to tone: blame, ultimatums and sarcasm lower trust and make them defensive; curiosity, acknowledgement and sharing information raise trust. Stay in character, plain spoken, no stage directions.
+${S.uva?'UVA never takes sides, never decides, never proposes the final deal. It reflects interests, turns blame into needs, and asks one open question. One or two sentences.':'There is no mediator in this session, so "uva" must be "".'}
+Interest ids still hidden from the player: ${open}. Include an id in "interests" only if this reply actually reveals it.
+Conversation so far:
+${S.log.slice(-8).map(([w,t])=>`${NAME[w]}: ${t}`).join('\n')}
+${Pn} now says: ${JSON.stringify(text.slice(0,300))}
+Answer with JSON only: {"reply": "${O}'s answer, under 35 words", "think": "${O}'s unspoken feeling, under 14 words", "customer": "", "uva": "", "interests": [], "delta": {"trust": 0, "cust": 0, "del": 0, "ceo": 0}} with deltas as integers: trust -20..15, cust -15..10, del -15..10, ceo -15..8.`;
+ let v=null;
+ try{v=await S.live.json(prompt,{modelTier:'quick'})}catch(e){if(e&&e.code==='not_granted'){S.live=null}else{try{const r=await S.live(prompt,{modelTier:'quick'});const s=r.text;v=JSON.parse(s.slice(s.indexOf('{'),s.lastIndexOf('}')+1))}catch(e2){v=null}}}
+ S.busy=false;
+ if(!v||typeof v.reply!=='string'||!v.reply.trim()){note.textContent='The live AI did not answer this time. Pick one of the replies above.';return}
+ const d=v.delta||{},lim={trust:[-20,15],cust:[-15,10],del:[-15,10],ceo:[-15,8]},dd={};
+ for(const k in lim){const n=Math.round(Number(d[k])||0);dd[k]=Math.max(lim[k][0],Math.min(lim[k][1],n))}
+ apply(dd,S.uva?0.7:1.3);
+ const lines=[[me(),text],[ot(),String(v.reply).slice(0,280),typeof v.think==='string'?v.think.slice(0,120):'']];
+ S.log.push([me(),text],[ot(),String(v.reply).slice(0,280)]);
+ gain((Array.isArray(v.interests)?v.interests:[]).filter(i=>discoverable().includes(i)&&i!=='s_goal'));
+ if(typeof v.customer==='string'&&v.customer.trim()){lines.push(['c',v.customer.slice(0,200)]);gain(['k_promo'])}
+ if(S.uva&&typeof v.uva==='string'&&v.uva.trim())lines.push(['u',v.uva.slice(0,280)]);
+ afterTurn(lines);
+}
+
+function computeDeal(){
+ const D=S.deal,cap=40+(D.ot?15:0)+(D.pg?20:0),over=Math.max(0,D.w1-cap),tot=D.w1+D.w2;
+ const d={cust:(D.w1>=40?12:-Math.round((40-D.w1)*0.8))+(tot>=100?10:-Math.round((100-tot)*0.4))+(D.pr?6:0)+(D.fc&&!D.pr?-6:0),
+  del:-Math.round(over*0.9)+(D.ot?-6:0)+(D.pg?-4:0)+(D.fc?8:0)+(D.w1<=40&&!D.ot?6:0),
+  trust:(D.fc?6:0)+(D.pr?3:0)+(over>0?-12:0)+(over===0&&tot>=100?8:0),
+  ceo:(over>0?-10:6)+(D.fc&&D.pr?4:0)};
+ const says=[];
+ if(S.role==='bruna')says.push(['m',over>0?DS.m_over:D.ot?DS.m_ot:D.fc?DS.m_fc:DS.m_ok]);
+ else says.push(['b',D.w1<40?DS.b_low:tot<100?DS.b_short:D.pr&&D.fc?DS.b_good:DS.b_ok]);
+ says.push(['c',D.w1<40?DS.c_low:tot<100?DS.c_short:D.fc&&!D.pr?DS.c_fc:D.pr?DS.c_pr:DS.c_ok]);
+ return{d,says,cap,over};
+}
+function renderDeal(){
+ chap('Chapter 3 · The deal');setPanel();S.speaker='u';
+ P.append(el('div','eb','Build the agreement'),el('h2',null,'Design a deal both of you can sign'));
+ const H=[[S.found.has('m_capacity40'),'Safe capacity next week','40 t'],[S.found.has('k_promo'),'What the customer needs now','40 t, then 60 t'],[S.found.has('m_forecast'),"Operations' planning need",'A demand forecast']];
+ const h=el('div','hints');H.forEach(([k,a,b])=>{const x=el('div','hint'+(k?'':' unk'));x.append(el('span',null,a),el('b',null,k?b:'Unknown'));h.append(x)});P.append(h);
+ const D=S.deal;
+ [['w1','Next week','Week 1'],['w2','The week after','Week 2']].forEach(([k,lab])=>{const w=el('div','rng');const l=el('label');l.htmlFor='r_'+k;const o=el('output');o.id='o_'+k;o.textContent=D[k]+' t';l.append(el('span',null,lab),o);const r=el('input');r.type='range';r.id='r_'+k;r.min=0;r.max=100;r.step=5;r.value=D[k];r.oninput=()=>{D[k]=+r.value;o.textContent=D[k]+' t';upd()};w.append(l,r);P.append(w)});
+ [['fc','Ask the customer for a six-month forecast'],['pr','Offer them priority production planning'],['ot','Run weekend overtime (+15 t, quality risk)'],['pg','Buy 20 t from a partner grower (lower margin)']].forEach(([k,t])=>{const s=el('label','sw');s.append(el('span',null,t));const c=el('input');c.type='checkbox';c.id='t_'+k;c.checked=D[k];c.onchange=()=>{D[k]=c.checked;upd()};s.append(c);P.append(s)});
+ const pj=el('div','proj');pj.id='proj';P.append(pj);
+ const re=el('div');re.id='react';P.append(re);
+ const r=el('div','row');r.append(btn('pill','Propose it at the table',()=>{const x=computeDeal();apply(x.d);S.final=x;S.stage='verdict';beat(x.says,'Three months later',()=>go('end'))}));P.append(r);
+ upd();
+ function upd(){const x=computeDeal();
+  $('proj').innerHTML=Object.keys(ML).map(k=>{const v=clamp(S.m[k]+x.d[k]),dv=v-S.m[k];return`<div><div class="mt"><span class="lg">${ML[k]}</span><span class="sm">${MS[k]}</span> <b>${v}</b></div><div class="bar"><i style="width:${v}%;background:${tone(v)}"></i></div><div class="d" style="color:${dv>=0?'var(--green)':'var(--red)'}">${dv>=0?'+':''}${dv}</div></div>`}).join('');
+  const rr=$('react');rr.replaceChildren(...x.says.map(s=>lineEl(s[0],s[1])));}
+}
+function renderEnd(){
+ chap('Three months later');setPanel();S.speaker=null;
+ const sc=Math.round((S.m.cust+S.m.del+S.m.trust+S.m.ceo)/4);
+ S.runs.push({role:S.role,uva:S.uva,score:sc});
+ const tier=sc>=72?0:sc>=52?1:2;
+ const head=['Account won. Team stronger.','Deal saved, with scars.','The customer walked.'][tier];
+ const story=STORIES[tier];
+ P.append(el('div','eb',`Score ${sc} / 100 · UVA ${S.uva?'on':'off'}`),el('h2',null,head),el('p','sub',story));
+ const pj=el('div','proj');pj.innerHTML=Object.keys(ML).map(k=>`<div><div class="mt"><span class="lg">${ML[k]}</span><span class="sm">${MS[k]}</span> <b>${S.m[k]}</b></div><div class="bar"><i style="width:${S.m[k]}%;background:${tone(S.m[k])}"></i></div></div>`).join('');P.append(pj);
+ const on=S.runs.filter(x=>x.uva).map(x=>x.score),off=S.runs.filter(x=>!x.uva).map(x=>x.score);
+ const best=a=>a.length?Math.max(...a):'not played';
+ P.append(el('div','runs',`Best with UVA: ${best(on)} · Best without UVA: ${best(off)}`));
+ // business case
+ const cs=el('div','case');cs.append(el('div','eb','The pilot case for João'));
+ const res=el('div','big');res.id='gbp';
+ const ctl=[['hc','Employees',50,1000,10,250],['rc','Share of conflict cost UVA reaches',10,50,5,20],['cut','Cost reduction where it reaches',25,75,5,50]];
+ const vals={};
+ const calc=()=>{const v=vals.hc*1000*(vals.rc/100)*(vals.cut/100);res.textContent='£'+Math.round(v).toLocaleString('en-GB');$('expo').textContent=`of £${(vals.hc*1000).toLocaleString('en-GB')} yearly exposure protected`};
+ cs.append(res);const ex=el('div','sub');ex.id='expo';cs.append(ex);
+ ctl.forEach(([k,lab,mn,mx,st,dv])=>{vals[k]=dv;const w=el('div','rng');const l=el('label');l.htmlFor='c_'+k;const o=el('output');o.textContent=dv+(k==='hc'?'':'%');l.append(el('span',null,lab),o);const r=el('input');r.type='range';r.id='c_'+k;r.min=mn;r.max=mx;r.step=st;r.value=dv;r.oninput=()=>{vals[k]=+r.value;o.textContent=r.value+(k==='hc'?'':'%');calc()};w.append(l,r);cs.append(w)});
+ const src=el('div','src');src.append('Benchmark: Acas estimates workplace conflict costs UK employers just over £1,000 per employee a year (2021 report, 2018–19 data). Illustrative, not a forecast. ');const a=el('a',null,'Source');a.href='https://www.acas.org.uk/research-and-commentary/estimating-the-costs-of-workplace-conflict/report';a.target='_blank';a.rel='noopener';src.append(a);cs.append(src);
+ P.append(cs);calc();
+ const r=el('div','row');
+ r.append(btn('pill','João: pilot UVA',()=>{if(R)R.party();blip();playLines([['j',PILOT]]);const n=$('pilotNote');n.textContent='Pilot approved: 90 days, measure resolution time and escalations to the CEO, scale only if the numbers hold. People keep every decision.'}));
+ r.append(btn('chip',S.uva?'Replay without UVA':'Replay with UVA',()=>{S.uva=!S.uva;reset();go('call')}));
+ r.append(btn('chip',`Play as ${S.role==='bruna'?'Manu':'Bruna'}`,()=>{S.role=S.role==='bruna'?'manu':'bruna';reset();go('call')}));
+ r.querySelectorAll('.chip').forEach(b=>b.style.width='auto');
+ P.append(r);const pn=el('div','note');pn.id='pilotNote';P.append(pn);
+ playLines([['n','Three months later.'],['n',story]]);
+}
+
+// ---------- 3D scene ----------
+let R=null;
+function init3D(){
+ if(!window.THREE)return;
+ try{
+ const T=THREE,cv=$('scene');
+ const ren=new T.WebGLRenderer({canvas:cv,antialias:true});ren.setPixelRatio(Math.min(devicePixelRatio,2));
+ const sc=new T.Scene();sc.fog=new T.Fog(0xf3c98e,45,150);
+ const cam=new T.PerspectiveCamera(45,1,0.1,600);
+ const sky=new T.Mesh(new T.SphereGeometry(320,24,12),new T.ShaderMaterial({side:T.BackSide,fog:false,uniforms:{a:{value:new T.Color(0x86b8de)},b:{value:new T.Color(0xf7c27a)}},vertexShader:'varying vec3 w;void main(){w=(modelMatrix*vec4(position,1.)).xyz;gl_Position=projectionMatrix*viewMatrix*vec4(w,1.);}',fragmentShader:'uniform vec3 a;uniform vec3 b;varying vec3 w;void main(){float h=max(normalize(w).y,0.);gl_FragColor=vec4(mix(b,a,pow(h,.55)),1.);}'}));sc.add(sky);
+ const sunDisc=new T.Mesh(new T.CircleGeometry(9,32),new T.MeshBasicMaterial({color:0xfff0c8,fog:false}));sunDisc.position.set(-120,26,-260);sunDisc.lookAt(0,0,0);sc.add(sunDisc);
+ const hemi=new T.HemisphereLight(0xfff1d6,0x8a6a3a,0.8);sc.add(hemi);
+ const sun=new T.DirectionalLight(0xffd29a,0.95);sun.position.set(-30,24,12);sc.add(sun);
+ const Hf=(x,z)=>{const d=Math.max(0,-z-14),f=Math.min(1,d/12);return f*(Math.sin(x*0.05)*1.8+Math.cos(z*0.07+x*0.02)*1.4)+d*0.06};
+ const gg=new T.PlaneGeometry(500,500,90,90);gg.rotateX(-Math.PI/2);const p=gg.attributes.position;
+ for(let i=0;i<p.count;i++)p.setY(i,Hf(p.getX(i),p.getZ(i))-0.02);gg.computeVertexNormals();
+ sc.add(new T.Mesh(gg,new T.MeshLambertMaterial({color:0xc9a46a,flatShading:true})));
+ // vineyard rows, stamped with instancing and a seeded random
+ let s=7;const rnd=()=>(s=s*16807%2147483647)/2147483647;
+ const rows=[];for(let z=-18;z>-120;z-=3.2)for(let x=-100;x<=100;x+=1.7)rows.push([x+rnd()*0.4,z]);
+ for(let z=-10;z<14;z+=3.2)for(let x of[-60,-48,-36,-24,24,36,48,60])for(let k=0;k<6;k++)rows.push([x+k*1.7,z]);
+ const vg=new T.IcosahedronGeometry(0.72,0),vm=new T.MeshLambertMaterial({flatShading:true});
+ const vines=new T.InstancedMesh(vg,vm,rows.length);const dm=new T.Object3D(),c=new T.Color();
+ rows.forEach(([x,z],i)=>{dm.position.set(x,Hf(x,z)+0.55,z);const k=0.8+rnd()*0.4;dm.scale.set(k,0.85*k,k*1.2);dm.rotation.y=rnd()*3;dm.updateMatrix();vines.setMatrixAt(i,dm.matrix);c.setHSL(0.24+rnd()*0.05,0.45,0.28+rnd()*0.08);vines.setColorAt(i,c)});
+ sc.add(vines);
+ // pavilion
+ const M=(col,o={})=>new T.MeshLambertMaterial(Object.assign({color:col},o));
+ const add=(g,m,x=0,y=0,z=0,par=sc)=>{const o=new T.Mesh(g,m);o.position.set(x,y,z);par.add(o);return o};
+ add(new T.CylinderGeometry(8.6,8.9,0.32,56),M(0xefe7da),0,0.16,0);
+ for(let i=0;i<8;i++){const a=i/8*Math.PI*2+Math.PI/8;add(new T.CylinderGeometry(0.09,0.09,4.2,10),M(0xffffff),Math.cos(a)*8.1,2.3,Math.sin(a)*8.1)}
+ add(new T.CylinderGeometry(9.2,9.2,0.16,56),M(0xfafafa,{transparent:true,opacity:0.92}),0,4.45,0);
+ add(new T.CylinderGeometry(2.45,2.45,0.16,56),M(0x7a4a2e),0,1.05,0);
+ add(new T.CylinderGeometry(0.22,0.45,1,16),M(0x5d3822),0,0.5,0);
+ const crate=add(new T.BoxGeometry(0.9,0.5,0.6),M(0xb07a45),5.6,0.57,-3);add(new T.BoxGeometry(0.9,0.5,0.6),M(0xa06c3a),5.5,1.07,-3.1);crate.rotation.y=0.3;
+ function person(x,dir,coat,hair,skin,long){
+  const g=new T.Group();g.position.x=x;g.rotation.y=dir;sc.add(g);
+  add(new T.BoxGeometry(1.1,0.14,1.1),M(0x2b2b2e),0,0.62,-0.1,g);add(new T.BoxGeometry(1.1,1.3,0.14),M(0x2b2b2e),0,1.3,-0.68,g);
+  const body=new T.Group();g.add(body);
+  add(new T.CylinderGeometry(0.4,0.56,1.25,24),M(coat),0,1.3,0,body);
+  const sh=add(new T.SphereGeometry(0.42,24,12),M(coat),0,1.9,0,body);sh.scale.set(1.05,0.5,0.9);
+  [-0.42,0.42].forEach(ax=>{const a=add(new T.CylinderGeometry(0.11,0.12,0.85,10),M(coat),ax,1.55,0.32,body);a.rotation.x=1.1});
+  const head=new T.Group();head.position.y=2.32;body.add(head);
+  add(new T.SphereGeometry(0.36,28,18),M(skin),0,0,0,head);
+  const hr=add(new T.SphereGeometry(0.385,28,18),M(hair),0,0.07,-0.06,head);hr.scale.set(1,0.85,1);
+  if(long){const l=add(new T.CylinderGeometry(0.34,0.42,0.75,20,1,true),M(hair,{side:T.DoubleSide}),0,-0.3,-0.1,head);l.scale.z=0.8}
+  [-0.12,0.12].forEach(ex=>add(new T.SphereGeometry(0.045,10,8),M(0x1b1b1b),ex,0.03,0.33,head));
+  return{g,body,head};
+ }
+ const PB=person(-3.15,Math.PI/2,0xe2553f,0x3a2418,0xe8b48f,true),PM=person(3.15,-Math.PI/2,0x2c5d8f,0x1d1d1f,0xc98d64,false);
+ // UVA: a glowing grape bunch
+ const U=new T.Group();U.position.set(0,2.55,0);sc.add(U);
+ const um=new T.MeshStandardMaterial({color:0x5266ff,emissive:0x2a3bff,emissiveIntensity:0.6,roughness:0.3,metalness:0.1});
+ const gs=[];for(let r=0;r<4;r++)for(let k=0;k<4-r;k++){const o=add(new T.SphereGeometry(0.15,20,14),um,(k-(3-r)/2)*0.27,-r*0.24,(r+k)%2?0.09:-0.09,U);gs.push(o)}
+ add(new T.CylinderGeometry(0.025,0.035,0.3,8),M(0x6b4a2a),0,0.24,0,U);
+ const lf=add(new T.SphereGeometry(0.16,12,8),M(0x5b8a32),0.16,0.22,0,U);lf.scale.set(1.3,0.3,0.8);lf.rotation.z=-0.4;
+ const ul=new T.PointLight(0x7f8cff,1.1,9);U.add(ul);
+ // trust bridge: two beams that meet under UVA when trust is high
+ const bg=new T.CylinderGeometry(0.035,0.035,1,8);bg.rotateZ(Math.PI/2);
+ const bmat=new T.MeshBasicMaterial({color:0xffc65a,transparent:true,opacity:0.9});
+ const BL=add(bg,bmat,0,1.28,0),BR=add(bg,bmat,0,1.28,0);
+ const conf=[];
+ const V=T.Vector3,camPos=new V(0,10,26),camLook=new V(0,2,-20),tp=camPos.clone(),tl=camLook.clone();
+ const SHOTS={title:[[0,10,26],[0,2,-20]],call:[[0,3.6,9.5],[0,1.7,0]],turn:[[0,3.6,9.5],[0,1.7,0]],deal:[[0,3.9,10.5],[0,1.3,0]],end:[[6,13,30],[0,3,-30]]};
+ const hemiTense=new T.Color(0xff9c7e),hemiCalm=new T.Color(0xfff1d6),fogT=new T.Color(0xe9a27c),fogC=new T.Color(0xf3c98e);
+ const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+ function resize(){const w=innerWidth,h=innerHeight;ren.setSize(w,h,false);cam.aspect=w/h;cam.fov=w<600?58:45;cam.updateProjectionMatrix()}
+ addEventListener('resize',resize);resize();
+ R={
+  cam(st){const s=SHOTS[st]||SHOTS.turn;tp.set(...s[0]);tl.set(...s[1])},
+  mood(){const t=(S.m.trust??55)/100;hemi.color.copy(hemiTense).lerp(hemiCalm,t);sc.fog.color.copy(fogT).lerp(fogC,t);
+   um.color.set(S.uva?0x5266ff:0x8a8a96);um.emissive.set(S.uva?0x2a3bff:0x000000);ul.intensity=S.uva?1.1:0},
+  party(){for(let i=0;i<70;i++){const o=new T.Mesh(new T.SphereGeometry(0.12+Math.random()*0.08,10,8),um);o.position.set((Math.random()-0.5)*10,7+Math.random()*5,(Math.random()-0.5)*8);o.userData.v=0.02+Math.random()*0.04;sc.add(o);conf.push(o)}tp.set(0,4,11);tl.set(0,2,0)}
+ };
+ const clock=new T.Clock();let bl=0;
+ (function loop(){
+  requestAnimationFrame(loop);const t=clock.getElapsedTime(),k=reduce?1:0.035;
+  if(S.stage==='turn'&&S.speaker&&!reduce){const sp=S.speaker;const f=sp==='b'?[[2.4,3.3,8.2],[-2.2,1.9,0]]:sp==='m'?[[-2.4,3.3,8.2],[2.2,1.9,0]]:sp==='u'?[[0,3.3,7.2],[0,2.2,0]]:null;if(f){tp.set(...f[0]);tl.set(...f[1])}}
+  camPos.lerp(tp,k);camLook.lerp(tl,k);cam.position.copy(camPos);cam.lookAt(camLook);
+  [[PB,'b'],[PM,'m']].forEach(([p,w])=>{const on=S.talking===w&&!reduce;p.body.position.y=on?Math.abs(Math.sin(t*7))*0.04:0;p.head.rotation.x=on?Math.sin(t*5)*0.06:0;p.head.rotation.y=Math.sin(t*0.6+(w==='b'?0:2))*0.08});
+  U.position.y=2.55+(reduce?0:Math.sin(t*1.6)*0.08);U.rotation.y=reduce?0:t*0.4;
+  um.emissiveIntensity=S.uva?(S.talking==='u'?0.9+Math.sin(t*6)*0.2:0.55):0;
+  bl+=(((S.m.trust??0)/100)*2.3-bl)*(reduce?1:0.05);const L=Math.max(0.001,bl);
+  BL.scale.x=L;BL.position.x=-2.3+L/2;BR.scale.x=L;BR.position.x=2.3-L/2;bmat.opacity=S.stage==='title'?0:0.9;
+  for(let i=conf.length-1;i>=0;i--){const o=conf[i];o.position.y-=o.userData.v*(reduce?3:1);if(o.position.y<0.4){sc.remove(o);o.geometry.dispose();conf.splice(i,1)}}
+  ren.render(sc,cam);
+ })();
+ }catch(e){R=null}
+}
+
+// ---------- boot ----------
+$('boardBtn').onclick=()=>$('board').classList.toggle('open');
+$('soundBtn').onclick=()=>{AU.on=!AU.on;const b=$('soundBtn');b.textContent=AU.on?'Sound on':'Sound off';b.setAttribute('aria-pressed',AU.on);if(!AU.on)stopAudio();padTo(0.035,0.3)};
+function hookCaps(){
+ const C=window.claude;if(!C||!C.use)return;
+ C.use('sample').then(x=>{if(x){S.live=x;if(S.stage==='title')renderTitle();if(S.stage==='turn'&&!S.busy){const ls=P.querySelectorAll('.line .say');S.liveSaid=ls.length?ls[ls.length-1].textContent:null;renderTurn()}}}).catch(()=>{});
+}
+function loadThree(){return new Promise(res=>{if(window.THREE)return res(true);const sc=document.createElement('script');sc.src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';sc.onload=()=>res(true);sc.onerror=()=>res(false);document.head.append(sc)})}
+async function pool(arr,n,fn){let i=0;await Promise.all(Array.from({length:n},async()=>{while(i<arr.length)await fn(arr[i++])}))}
+async function boot(){
+ const keys=[...new Set(ALL_LINES().map(([w,t])=>hk(w,t)))],total=keys.length+2;let done=0,got=0;
+ const prog=m=>{$('lfill').style.width=Math.round(done/total*100)+'%';$('lmsg').textContent=m};
+ prog('Planting the vineyard…');
+ const ok=await loadThree();done++;if(ok)init3D();renderMeters();renderBoard();go('title');done++;
+ prog(`Recording the voices · 0 of ${keys.length}`);
+ await pool(keys,6,async k=>{try{const r=await fetch('audio/'+k+'.mp3');if(r.ok){AU.urls[k]=URL.createObjectURL(await r.blob());got++}}catch(e){}done++;prog(`Recording the voices · ${done-2} of ${keys.length}`)});
+ prog(got?`Ready · ${got} voice lines loaded`:'Ready · voices use your browser here');
+ const b=$('enter');b.disabled=false;b.textContent='Enter the vineyard';b.focus();
+}
+$('enter').onclick=()=>{
+ AU.el=new Audio();AU.el.preload='auto';
+ const first=Object.values(AU.urls)[0];if(first){AU.el.src=first;AU.el.muted=true;AU.el.play().then(()=>{AU.el.pause();AU.el.muted=false}).catch(()=>{AU.el.muted=false})}
+ ambient();$('soundBtn').hidden=false;
+ const L=$('load');L.classList.add('gone');setTimeout(()=>L.remove(),900);
+ $('pin').querySelector('button')?.focus();
+};
+function start(d){
+ if(d&&Array.isArray(d.runs))S.runs=d.runs;
+ S.m={cust:60,del:70,trust:55,ceo:80};S.found=new Set(OWN[S.role]);
+ boot();hookCaps();
+}
+window.claude?.hot?.snapshot?.(()=>({runs:S.runs}));
+window.claude?.hot?.ready?window.claude.hot.ready(start):start(window.claude?.hot?.data??{});
+}
+</script>
+</body>
+</html>
